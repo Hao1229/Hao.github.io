@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,THE F2E,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章目的有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。">
+<meta name="keywords" content="JavaScript,THE F2E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The F2E Freecell Part 1">
+<meta property="og:url" content="Hao.github.io/2019/07/25/freecell/index.html">
+<meta property="og:site_name" content="Hao&#39;s The Front End world">
+<meta property="og:description" content="文章目的有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="/2019/07/25/freecell/freecellversion.png">
+<meta property="og:updated_time" content="2019-07-25T13:50:06.806Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The F2E Freecell Part 1">
+<meta name="twitter:description" content="文章目的有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。">
+<meta name="twitter:image" content="/2019/07/25/freecell/freecellversion.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="Hao.github.io/2019/07/25/freecell/">
+
+
+
+
+
+  <title>The F2E Freecell Part 1 | Hao's The Front End world</title>
+  
+
+
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXXX-1');
+    }
+  </script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hao's The Front End world</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/07/25/freecell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's The Front End world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">The F2E Freecell Part 1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-25T14:48:34+08:00">
+                2019-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/07/25/freecell/freecellversion.png" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。</p>
+<a id="more"></a>
+<h2 id="本次使用技術"><a href="#本次使用技術" class="headerlink" title="本次使用技術"></a>本次使用技術</h2><ol>
+<li>Bootsrap 4 </li>
+<li>Scss</li>
+<li>JavaScript 原生語法<br>原本是想用 Vue 開發，後來覺得應該用原生語法也不致於太難，但做到一半就開始後悔怎麼沒有 Vue (因為方便好多XD)。<br>這次使用原生語法就當作加強自己的觀念，也很感謝有<strong>懷恩老師的直播開發流程</strong>(文章最後會附上連結)，沒有老師的直播我應該會卡關到懷疑人生。</li>
+</ol>
+<h2 id="新接龍初步分析"><a href="#新接龍初步分析" class="headerlink" title="新接龍初步分析"></a>新接龍初步分析</h2><p>新接龍規則部分我們這邊就不多加解釋，附上 <a href="https://zh.wikipedia.org/zh-tw/%E6%96%B0%E6%8E%A5%E9%BE%8D" target="_blank" rel="noopener">遊戲規則</a>。<br>新接龍總共分為3塊遊戲區，分別是：</p>
+<ol>
+<li>完成區(左上角，共4格)<ul>
+<li>只能同花色堆疊</li>
+<li>數字要由小到大按順序堆疊</li>
+<li>堆疊完成的牌不需要再被拖曳</li>
+</ul>
+</li>
+<li>暫存區(右上角，共4格)<ul>
+<li>每個空格只能存放一張卡片</li>
+<li>空格裡的卡片可以再被拖曳至完成區或未整理區</li>
+</ul>
+</li>
+<li>未整理區(下方，共7排，左4排初始7張，右4排初始6張)<ul>
+<li>只能異色堆疊</li>
+<li>數字要由小到大按順序堆疊</li>
+<li>空排要能放牌且不限數字</li>
+<li>此區卡片可以被拖曳至暫存區與完成區</li>
+</ul>
+</li>
+</ol>
+<p>有了這樣初步的了解，我們可以開始來了解 JS 的語法。<br>切版部分本文章不會提到，我是利用 Bootstrap 4 和一些 SCSS 來完成切版。</p>
+<h2 id="變數宣告與各區域陣列分配"><a href="#變數宣告與各區域陣列分配" class="headerlink" title="變數宣告與各區域陣列分配"></a>變數宣告與各區域陣列分配</h2><p>首先，宣告一個變數來決定遊戲是否暫停，後續的一些功能處裡，暫停遊戲都會影響到，以下是程式碼：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let isgamePause = false;</span><br></pre></td></tr></table></figure>
+
+<p>我們可以將完成區看成一個區域，暫存區看成一個區域，未整理區看成一個區域，因此這裡變數可以這樣設計：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let finishArea = [[], [], [], []]; //完成區域左上角</span><br><span class="line"></span><br><span class="line">let temporaryArea = [[], [], [], []]; //卡片暫放區(每一格只能放一張)右上角</span><br><span class="line"></span><br><span class="line">let maingameArea = [ //未整理區共8排</span><br><span class="line">    [], //7張</span><br><span class="line">    [], //7張</span><br><span class="line">    [], //7張</span><br><span class="line">    [], //7張</span><br><span class="line">    [], //6張</span><br><span class="line">    [], //6張</span><br><span class="line">    [], //6張</span><br><span class="line">    [] //6張</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>每個大區域就是一個陣列，每個大區域裡的每一個空格就是一個陣列。<br>另外因為我是用 Bootstrap 4 的格線系統做排版，我為了方便設計，將未整理區又分為左右7張與6張兩區，變數宣告如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let cardbigGroup = [[], []];</span><br></pre></td></tr></table></figure>
+
+<h2 id="隨機發牌"><a href="#隨機發牌" class="headerlink" title="隨機發牌"></a>隨機發牌</h2><p>接下來我們來設計隨機發牌，讓系統可以在遊戲開始時隨機發牌到未整理區的陣列裡，而且按照7張、6張的規則排列。</p>
+<ul>
+<li><p>撲克牌總共有52張，因此我們就用1~52的數字當作我們的牌，這裡我們宣告一個陣列將1~52的數字儲存進去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//利用 for 迴圈</span><br><span class="line"> let pokerArr = []; </span><br><span class="line">    for (let i = 0; i &lt; 52; i++) &#123;</span><br><span class="line">        pokerArr.push(i + 1)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">//利用 Array.from 和 Array.map</span><br><span class="line">let pokerArr =Array.from(new Array(52)).map(function(item,index)&#123; </span><br><span class="line">    return index+1 </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接著要<strong>將陣列的52個數字打亂</strong>，這邊我用的方法是 shuffle，有關 shuffle 相關介紹可參考<a href="http://shubo.io/javascript-random-shuffle/" target="_blank" rel="noopener"><strong>這篇</strong></a>，以下是程式碼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> function shuffle(array) &#123;</span><br><span class="line">        for (let i = array.length - 1; i &gt; 0; i--) &#123;</span><br><span class="line">            let j = Math.floor(Math.random() * (i + 1));</span><br><span class="line">            [array[i], array[j]] = [array[j], array[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        return array;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">let pokerRandom = shuffle(pokerArr);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我們已成功打亂數字，接著就是要<strong>將數字按照規則排列</strong>，我們一開始宣告的<code>maingameArea</code>就派上用場了，我們可以按照規則將數字一一塞入<code>maingameArea</code>的陣列裡，以下是程式碼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function mainpokerArr() &#123;</span><br><span class="line">       let randomarrNum = Math.floor(Math.random() * 8);</span><br><span class="line">       if (randomarrNum &lt;= 3) &#123;</span><br><span class="line">           if (maingameArea[randomarrNum].length &gt;= 7) &#123;</span><br><span class="line">               return mainpokerArr()</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           if (maingameArea[randomarrNum].length &gt;= 6) &#123;</span><br><span class="line">               return mainpokerArr()</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return randomarrNum;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>這段程式碼的想法是因為<code>maingameArea</code>總共有8個陣列，從左到右的索引號是0~7，因此我們利用<code>randomarrNum</code>來隨機選出一個索引號。<br>透過判斷式讓索引號為0~3時陣列長度維持為7張，索引號為4~7時長度維持為6張。<br>現在我們有了符合規則的發牌方法，接下來就要將牌一一放進陣列裡，以下是程式碼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pokerRandom.map(function (item) &#123;</span><br><span class="line">       let runmainpokerArr = mainpokerArr();</span><br><span class="line">       maingameArea[runmainpokerArr].push(item);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>這裡讓未整理區<code>maingameArea</code>透過我們剛剛設計的發牌函式<code>mainpokerArr()</code>將我們剛打亂的陣列<code>pokerRandom</code>裡的數字放入未整理區的8個陣列裡。<br>這邊因為我自己的設計關係，我再把<code>maingameArea</code>裡的8個陣列，分為4個一組放入更大的陣列<code>cardbigGroup</code>，以下是程式碼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">maingameArea.forEach(function (item, index) &#123;</span><br><span class="line">       if (index &lt;= 3) &#123;</span><br><span class="line">           cardbigGroup[0].push(item);</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           cardbigGroup[1].push(item)</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>隨機發牌的資料都按照規則整理完畢了，我們接下來要做的就是<strong>讓牌可以渲染到畫面上</strong>。<br>首先，因為我們的數字是1~52，但系統並不知道花色，因此我們要先來定義花色，以下是程式碼。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function judgeColor(cardNum) &#123;</span><br><span class="line">       if (cardNum &gt;= 1 &amp;&amp; cardNum &lt;= 13) &#123;  //1~13是黑桃</span><br><span class="line">           return &apos;spade&apos;</span><br><span class="line">       &#125; else if (cardNum &gt;= 14 &amp;&amp; cardNum &lt;= 26) &#123; //14~26是紅心</span><br><span class="line">           return &apos;heart&apos;</span><br><span class="line">       &#125; else if (cardNum &gt;= 27 &amp;&amp; cardNum &lt;= 39) &#123; //27~39是方塊</span><br><span class="line">           return &apos;diamond&apos;</span><br><span class="line">       &#125; else if (cardNum &gt;= 40 &amp;&amp; cardNum &lt;= 52) &#123; //40~52是梅花</span><br><span class="line">           return &apos;club&apos;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>花色也定義完成後，我們就要正式選渲染畫面，因為是原生語法關係，我們利用 <code>createElement</code> 和 <code>appendChild</code> 來做渲染，因為程式碼較多，先來看看完整程式碼，我再根據每個部份做解釋。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"> let gamingArea = document.getElementById(&apos;gamingArea&apos;);</span><br><span class="line">function putCard() &#123;</span><br><span class="line">     cardbigGroup.forEach(function (section, sectionNum) &#123;</span><br><span class="line">         let cardbiggroupPart = document.createElement(&apos;div&apos;);</span><br><span class="line">         cardbiggroupPart.className = &apos;col-6 d-flex w-100&apos;;</span><br><span class="line">         gamingArea.appendChild(cardbiggroupPart);</span><br><span class="line">         section.forEach(function (item, index) &#123;</span><br><span class="line">             let cardGroup = document.createElement(&apos;div&apos;);</span><br><span class="line">             cardGroup.className = &apos;relative w-100&apos;;</span><br><span class="line">             cardGroup.style.height = &apos;600px&apos;</span><br><span class="line">             cardGroup.group = index;</span><br><span class="line">             cardGroup.section = sectionNum;</span><br><span class="line">             cardbiggroupPart.appendChild(cardGroup)</span><br><span class="line">             item.forEach(function (el, num) &#123;</span><br><span class="line">                 let oneCard = document.createElement(&apos;div&apos;);</span><br><span class="line">                 oneCard.className = &apos;cardArea absolute&apos;;</span><br><span class="line">                 if (!isRefresh) &#123;</span><br><span class="line">                     oneCard.style.transition = &apos;all .3s&apos;</span><br><span class="line">                     oneCard.style.top = &apos;-1000px&apos;;</span><br><span class="line">                     oneCard.style.left = &apos;-2000px&apos;;</span><br><span class="line">                     setTimeout(function () &#123;</span><br><span class="line">                         oneCard.style.top = num * 30 + &apos;px&apos;;</span><br><span class="line">                         oneCard.style.left = &apos;0px&apos;</span><br><span class="line">                     &#125;, index * num * 30)</span><br><span class="line">                 &#125; else &#123;</span><br><span class="line">                     oneCard.style.top = num * 30 + &apos;px&apos;;</span><br><span class="line">                     oneCard.style.left = &apos;0px&apos;</span><br><span class="line">                 &#125;</span><br><span class="line">                 let cardImg = document.createElement(&apos;img&apos;);</span><br><span class="line">                 cardImg.draggable = false</span><br><span class="line">                 cardImg.card = el;</span><br><span class="line">                 cardImg.section = sectionNum;</span><br><span class="line">                 cardImg.group = index;</span><br><span class="line">                 cardImg.color = judgeColor(el)</span><br><span class="line">                 cardImg.src = `pokerimg/card-$&#123;judgeColor(el)&#125;-$&#123;el % 13&#125;.svg`;</span><br><span class="line">                 if (!isgamePause &amp;&amp; num + 1 == item.length) &#123;</span><br><span class="line">                     oneCard.draggable = true;</span><br><span class="line">                     cardImg.draggable = true</span><br><span class="line">                 &#125;</span><br><span class="line">                 oneCard.appendChild(cardImg)</span><br><span class="line">                 cardGroup.appendChild(oneCard);</span><br><span class="line">             &#125;)</span><br><span class="line">            </span><br><span class="line">         &#125;)</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let gamingArea = document.getElementById(&apos;gamingArea&apos;);</span><br><span class="line">  function putCard() &#123;</span><br><span class="line">       cardbigGroup.forEach(function (section, sectionNum) &#123;</span><br><span class="line">           let cardbiggroupPart = document.createElement(&apos;div&apos;);</span><br><span class="line">           cardbiggroupPart.className = &apos;col-6 d-flex w-100&apos;;</span><br><span class="line">           gamingArea.appendChild(cardbiggroupPart);</span><br></pre></td></tr></table></figure>
+
+<p>我利用 <code>getElementById</code>選取要做為未整理區最外層的 HTML 元素。<br>宣告一個函式負責執行隨機發牌，接著我要一層一層的剝開我們的陣列往內進逼針對陣列裡的元素做設定。<br>第一個陣列就是分為左右兩大區塊的<code>cardbigGroup</code>，讓兩塊區域都<code>createElement</code>區塊元素(<code>div</code>)出來，那因為我有使用格線來排版，所以為他們加了一些排版相關的<code>className</code>。<br>接著就可以利用<code>appendChild</code>將我們創造出來的兩個區塊元素加入到<code>gamingArea</code>下方。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">section.forEach(function (item, index) &#123;</span><br><span class="line">              let cardGroup = document.createElement(&apos;div&apos;);</span><br><span class="line">              cardGroup.className = &apos;relative w-100&apos;;</span><br><span class="line">              cardGroup.style.height = &apos;600px&apos;</span><br><span class="line">              cardGroup.group = index;</span><br><span class="line">              cardGroup.section = sectionNum;</span><br><span class="line">              cardbiggroupPart.appendChild(cardGroup)</span><br></pre></td></tr></table></figure>
+
+<p>第二個碰到的陣列是各區底下的4塊小區域(7張牌與6張牌)，原理一樣我們為每塊區域創造區塊元素，並將入一些自定義的<code>className</code>和<code>style</code>。<br>這邊比較重要的一點是<strong>為每個區塊元素增加一些屬性來記錄它所在的位置(<code>group</code>,<code>section</code>)</strong>，這些屬性將會在後面我們要製作拖曳效果時會用到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">item.forEach(function (el, num) &#123;</span><br><span class="line">                   let oneCard = document.createElement(&apos;div&apos;);</span><br><span class="line">                   oneCard.className = &apos;cardArea absolute&apos;;</span><br><span class="line">                   if (!isRefresh) &#123;</span><br><span class="line">                       oneCard.style.transition = &apos;all .3s&apos;</span><br><span class="line">                       oneCard.style.top = &apos;-1000px&apos;;</span><br><span class="line">                       oneCard.style.left = &apos;-2000px&apos;;</span><br><span class="line">                       setTimeout(function () &#123;</span><br><span class="line">                           oneCard.style.top = num * 30 + &apos;px&apos;;</span><br><span class="line">                           oneCard.style.left = &apos;0px&apos;</span><br><span class="line">                       &#125;, index * num * 30)</span><br><span class="line">                   &#125; else &#123;</span><br><span class="line">                       oneCard.style.top = num * 30 + &apos;px&apos;;</span><br><span class="line">                       oneCard.style.left = &apos;0px&apos;</span><br><span class="line">                   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後我們碰到的就是我們的主角–<strong>撲克牌</strong>，這邊一樣是為每張牌創建區塊元素，那因為我採用的設計稿是 <strong>吳俊儀設計師的設計稿</strong>，俊儀設計師很佛心的把每張牌做成svg，所以我待會只要把每張svg <code>appendChild</code>到每張牌的<code>div</code>底下就好。<br>至於判斷式的部分，是設計遊戲開始時的卡片出現動畫，這邊我就不多加敘述，卡片排版方式是利用絕對定位，那<code>position:relative</code>的部分我是設定給上一層的8個小區塊。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let cardImg = document.createElement(&apos;img&apos;);</span><br><span class="line">                  cardImg.draggable = false</span><br><span class="line">                  cardImg.card = el;</span><br><span class="line">                  cardImg.section = sectionNum;</span><br><span class="line">                  cardImg.group = index;</span><br><span class="line">                  cardImg.color = judgeColor(el)</span><br><span class="line">                  cardImg.src = `pokerimg/card-$&#123;judgeColor(el)&#125;-$&#123;el % 13&#125;.svg`;</span><br><span class="line">                  if (!isgamePause &amp;&amp; num + 1 == item.length) &#123;</span><br><span class="line">                      oneCard.draggable = true;</span><br><span class="line">                      cardImg.draggable = true</span><br><span class="line">                  &#125;</span><br><span class="line">                  oneCard.appendChild(cardImg)</span><br><span class="line">                  cardGroup.appendChild(oneCard);</span><br><span class="line">              &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>這邊我們就來處理圖片的部分，為每個數字創造<code>img</code>標籤，<code>src</code>的部分我們可以透過命名與判斷顏色的函式(<code>judgeColor</code>)，來取得符合該數字的圖片。<br>一樣的，我們玩遊戲時都會拖曳這些卡片，因此也在這為它新增一些屬性(<strong><code>card</code>,<code>section</code>,<code>group</code>,<code>color</code></strong>)，分別是<strong>數字、所在的大區塊、所在的小區塊、花色</strong>。<br>另外一樣重要的就是<strong><code>draggable</code>，設定它<code>true</code>or<code>false</code>會決定該元素是否能拖曳</strong>，那因為<strong>遊戲規則只有最後一張牌可以拖曳</strong>，因此額外增加判斷式來判斷該張卡片是否為最後一張牌。<br>最後一樣<code>appendChild</code>至上一層元素中。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>恭喜你!! 做到這裡，你的新接龍已經可以隨機發牌並且渲染到畫面上了。<br>也謝謝你，看完我的文章!! 這是我第一次用 hexo 建立部落格與寫文章，排版可能還有點拙劣，傷眼抱歉。<br>有關後續的完成區、暫存區與拖曳效果，我會再利用時間補上。</p>
+<p>附上我的 <a href="https://hao1229.github.io/THE-F2E-Freecell/" target="_blank" rel="noopener">DEMO</a> 與 <a href="https://github.com/Hao1229/THE-F2E-Freecell" target="_blank" rel="noopener">程式碼</a></p>
+<hr>
+<h2 id="資料參考"><a href="#資料參考" class="headerlink" title="資料參考"></a>資料參考</h2><p><a href="https://www.facebook.com/groups/173311386703334/permalink/364591804241957/" target="_blank" rel="noopener">懷恩老師的開發直播</a></p>
+<p><a href="http://shubo.io/javascript-random-shuffle/" target="_blank" rel="noopener">shuffle 文章</a></p>
+<p><a href="https://hsiangfeng.github.io/javascript/20190712/1140639545/?fbclid=IwAR37Iq2qAZjR5wMVfSOT_jMIidxlTGRElm3ATu0zm8Hmp9iwWd61uGRz_z" target="_blank" rel="noopener">Ray大的新接龍文章</a></p>
+<p><a href="https://xd.adobe.com/spec/f01f6d09-be4f-4bf3-601d-7c817fe225ab-862e/grid" target="_blank" rel="noopener">吳俊儀設計師的設計稿</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/THE-F2E/" rel="tag"># THE F2E</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本次使用技術"><span class="nav-number">2.</span> <span class="nav-text">本次使用技術</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新接龍初步分析"><span class="nav-number">3.</span> <span class="nav-text">新接龍初步分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數宣告與各區域陣列分配"><span class="nav-number">4.</span> <span class="nav-text">變數宣告與各區域陣列分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隨機發牌"><span class="nav-number">5.</span> <span class="nav-text">隨機發牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資料參考"><span class="nav-number">7.</span> <span class="nav-text">資料參考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
