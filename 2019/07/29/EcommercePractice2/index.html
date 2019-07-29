@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
 <meta property="og:description" content="文章目的藉由將 Bootstrap 4 套用到 Vue Cli 的專案裡，以方便後續開發 css 使用，並可將 Bootstrap 4 的預設樣式做修改，修改成專案所需樣式。">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-07-29T07:36:03.473Z">
+<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta property="og:updated_time" content="2019-07-29T07:58:10.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 載入Bootsrap 4 套件，且自定義樣式">
 <meta name="twitter:description" content="文章目的藉由將 Bootstrap 4 套用到 Vue Cli 的專案裡，以方便後續開發 css 使用，並可將 Bootstrap 4 的預設樣式做修改，修改成專案所需樣式。">
+<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
 
 
 
@@ -387,9 +389,9 @@
       
 
       
-        <h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>藉由將 Bootstrap 4 套用到 Vue Cli 的專案裡，以方便後續開發 css 使用，並可將 Bootstrap 4 的預設樣式做修改，修改成專案所需樣式。</p>
+        <p><img src="https://i.imgur.com/el9rgW2.jpg" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>藉由將 Bootstrap 4 套用到 Vue Cli 的專案裡，以方便後續開發 css 使用，並可將 Bootstrap 4 的預設樣式做修改，修改成專案所需樣式。</p>
 <a id="more"></a>
-
 <h2 id="載入-Bootstrap-4"><a href="#載入-Bootstrap-4" class="headerlink" title="載入 Bootstrap 4"></a>載入 Bootstrap 4</h2><p>在我們的終端機或是命令提示字元， cd 到我們的專案路徑，輸入<strong>npm install bootstrap –save</strong>。<br>安裝完成後，我們應該可以在 node_modules 資料夾底下看到 bootstrap 的資料夾。<br>步驟進行到這邊，還不算完全安裝好，因為<strong>我們並沒有支援 sass 的 loader，因此要再進行相關安裝</strong>。<br>這邊輸入<strong>npm install node-sass sass-loader –save</strong>，這樣子我們就完成載入 Bootstrap 囉。</p>
 <h2 id="將-Bootstrap-4-套用到我們的專案上"><a href="#將-Bootstrap-4-套用到我們的專案上" class="headerlink" title="將 Bootstrap 4 套用到我們的專案上"></a>將 Bootstrap 4 套用到我們的專案上</h2><p>來到 App.vue 的 style，在標籤上加入 <code>lang=&quot;scss&quot;</code>，並在標籤內輸入 <code>@import &#39;~bootstrap/scss/bootstrap&#39;</code>，詳細程式碼如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang="scss"&gt;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">"~bootstrap/scss/bootstrap"</span>;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
