@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="JavaScript,Vue.js,E-commerce,">
 
 
 
@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hao&#39;s The Front End world">
-<meta property="og:url" content="Hao.github.io/archives/2019/07/index.html">
+<meta name="description" content="文章目的在我們開發 Vue 的專案時，每個元件檔案間都會有內外層的差別，例：一個 Root 下有兩個 side 每個 side 底下又有3個元件，當我們需要利用內層的資料來觸發外層的事件時，會需要一層一層的將資料向上傳遞，這會顯得較為麻煩，因此我們可以利用 event bus 的方式，直接將我們內層的資料傳遞給外層作使用。">
+<meta name="keywords" content="JavaScript,Vue.js,E-commerce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑">
+<meta property="og:url" content="Hao.github.io/2019/08/06/EcommercePractice7/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
+<meta property="og:description" content="文章目的在我們開發 Vue 的專案時，每個元件檔案間都會有內外層的差別，例：一個 Root 下有兩個 side 每個 side 底下又有3個元件，當我們需要利用內層的資料來觸發外層的事件時，會需要一層一層的將資料向上傳遞，這會顯得較為麻煩，因此我們可以利用 event bus 的方式，直接將我們內層的資料傳遞給外層作使用。">
 <meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta property="og:updated_time" content="2019-08-06T03:33:46.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hao&#39;s The Front End world">
+<meta name="twitter:title" content="Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑">
+<meta name="twitter:description" content="文章目的在我們開發 Vue 的專案時，每個元件檔案間都會有內外層的差別，例：一個 Root 下有兩個 side 每個 side 底下又有3個元件，當我們需要利用內層的資料來觸發外層的事件時，會需要一層一層的將資料向上傳遞，這會顯得較為麻煩，因此我們可以利用 event bus 的方式，直接將我們內層的資料傳遞給外層作使用。">
+<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="Hao.github.io/archives/2019/07/">
+  <link rel="canonical" href="Hao.github.io/2019/08/06/EcommercePractice7/">
 
 
 
 
 
-  <title>歸檔 | Hao's The Front End world</title>
+  <title>Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑 | Hao's The Front End world</title>
   
 
 
@@ -153,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
   <a href="https://github.com/Hao1229" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -279,212 +286,202 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/06/EcommercePractice7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's The Front End world">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-06T09:29:13+08:00">
+                2019-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共計 8 篇文章。 繼續努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/30/EcommercePractice4/" itemprop="url">
-              
-                <span itemprop="name">Vue.js 電商練習技術整理 -- 導入 Bootstrap 與 jQuery</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-30T23:03:13+08:00" content="2019-07-30">
-          07-30
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/30/EcommercePractice3/" itemprop="url">
-              
-                <span itemprop="name">Vue.js 電商練習技術整理 -- 登入簡易路徑切換</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-30T11:09:38+08:00" content="2019-07-30">
-          07-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p><img src="https://i.imgur.com/el9rgW2.jpg" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>在我們開發 Vue 的專案時，每個元件檔案間都會有內外層的差別，例：一個 Root 下有兩個 side 每個 side 底下又有3個元件，當我們需要利用內層的資料來觸發外層的事件時，會需要一層一層的將資料向上傳遞，這會顯得較為麻煩，因此我們可以利用 event bus 的方式，直接將我們內層的資料傳遞給外層作使用。</p>
+<a id="more"></a>
+<h2 id="event-bus-簡介"><a href="#event-bus-簡介" class="headerlink" title="event bus 簡介"></a>event bus 簡介</h2><p>event bus 的重點在於它可以幫我們把特定事件直接掛載到 Vue 的 原型下(Prototype)，元件間透過 <strong>$on(監聽)</strong>以及 <strong>$emit(觸發)</strong>兩種行為來達到內層觸發外層事件的效果。</p>
+<h2 id="透過-event-bus-將內層資料傳遞至外層觸發-alert-效果"><a href="#透過-event-bus-將內層資料傳遞至外層觸發-alert-效果" class="headerlink" title="透過 event bus 將內層資料傳遞至外層觸發 alert 效果"></a>透過 event bus 將內層資料傳遞至外層觸發 alert 效果</h2><h3 id="新增-alert-模板"><a href="#新增-alert-模板" class="headerlink" title="新增 alert 模板"></a>新增 alert 模板</h3><p>我們可以在 Vue Cli 的 components 資料夾底下新增一個 AlertMessage 的元件，並在裡面設計我們的 alert 模板。</p>
+<h3 id="將-event-bus-掛載到原型上"><a href="#將-event-bus-掛載到原型上" class="headerlink" title="將 event bus 掛載到原型上"></a>將 event bus 掛載到原型上</h3><p>掛載到原型上的目的是為了讓所有元件皆能使用。<br>在 Vue Cli 的 src 資料夾底下新增一個 bus.js 並在裡面輸入以下程式碼以完成掛載：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">Vue.prototype.$bus = <span class="keyword">new</span> Vue()  <span class="comment">//$bus 為自訂義的名稱可以自行命名，建議要加上$</span></span><br></pre></td></tr></table></figure>
 
-        
-        
+<p>接著我們在進入點(main.js)下 import 這隻檔案進來。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./bus'</span></span><br></pre></td></tr></table></figure>
 
-        
+<h3 id="在-AlertMessage-元件下做監聽"><a href="#在-AlertMessage-元件下做監聽" class="headerlink" title="在 AlertMessage 元件下做監聽"></a>在 AlertMessage 元件下做監聽</h3><p>因為我們要讓底層元件觸發 event bus 時， event bus 會將相關資料傳遞到 AlertMessage 做使用，所以我們在 AlertMessage 中加入 event bus 的監聽，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  created () &#123;</span><br><span class="line">    <span class="keyword">const</span> vm = <span class="keyword">this</span></span><br><span class="line">    <span class="comment">// 自定義名稱 'messsage:push'</span></span><br><span class="line">    <span class="comment">// message: 傳入參數</span></span><br><span class="line">    <span class="comment">// status: 樣式，預設值為 warning</span></span><br><span class="line">    vm.$bus.$on(<span class="string">'message:push'</span>, (message, status = <span class="string">'warning'</span>) =&gt; &#123;</span><br><span class="line">      vm.updateMessage(message, status)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>主要監聽時會有幾個屬性與參數可以做設定，自定義的名稱以及監聽的參數，<strong>基本上參數就會是內層傳遞上來的資料</strong>，接著可以將這些資料參數套用到元件內的其他 methods 中。<br>像在本次範例中將參數傳遞給 <code>updateMessage</code> 做使用，以下附上完整程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">'Navbar'</span>,</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      messages: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    updateMessage (message, status) &#123;</span><br><span class="line">      <span class="keyword">const</span> timestamp = <span class="built_in">Math</span>.floor(<span class="keyword">new</span> <span class="built_in">Date</span>() / <span class="number">1000</span>)</span><br><span class="line">      <span class="keyword">this</span>.messages.push(&#123;  <span class="comment">//以下3個數值會影響到 alert 顯示結果</span></span><br><span class="line">        message,  <span class="comment">//alert 顯示的訊息</span></span><br><span class="line">        status,  <span class="comment">//alert 的顏色</span></span><br><span class="line">        timestamp  <span class="comment">//alert 的 id</span></span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">this</span>.removeMessageWithTiming(timestamp)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//手動關閉 alert </span></span><br><span class="line">    removeMessage (num) &#123;</span><br><span class="line">      <span class="keyword">this</span>.messages.splice(num, <span class="number">1</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//讓訊息顯示後5秒自動消失</span></span><br><span class="line">    removeMessageWithTiming (timestamp) &#123;</span><br><span class="line">      <span class="keyword">const</span> vm = <span class="keyword">this</span></span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        vm.messages.forEach(<span class="function">(<span class="params">item, i</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (item.timestamp === timestamp) &#123;</span><br><span class="line">            vm.messages.splice(i, <span class="number">1</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;, <span class="number">5000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="keyword">const</span> vm = <span class="keyword">this</span></span><br><span class="line">    vm.$bus.$on(<span class="string">'message:push'</span>, (message, status = <span class="string">'warning'</span>) =&gt; &#123;</span><br><span class="line">      vm.updateMessage(message, status)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/29/EcommercePractice2/" itemprop="url">
-              
-                <span itemprop="name">Vue.js 電商練習技術整理 -- 載入Bootsrap 4 套件，且自定義樣式</span>
-              
-            </a>
-        
-      </h2>
+<p>完成 alert 部分的設定後我們可以將此元件 import 進要顯示訊息的 Dashboard 元件下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Alert <span class="keyword">from</span> <span class="string">'./AlertMessage'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    Alert</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T14:33:35+08:00" content="2019-07-29">
-          07-29
-        </time>
-      </div>
+<p>要記得將元件加入 HTML 裡。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Navbar</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Alert</span>&gt;</span><span class="tag">&lt;/<span class="name">Alert</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Sidebar</span>&gt;</span><span class="tag">&lt;/<span class="name">Sidebar</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">main</span> <span class="attr">role</span>=<span class="string">"main"</span> <span class="attr">class</span>=<span class="string">"col-md-9 ml-sm-auto col-lg-10 px-4"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<h3 id="在內層的-Products-元件上新增-event-bus-的觸發事件"><a href="#在內層的-Products-元件上新增-event-bus-的觸發事件" class="headerlink" title="在內層的 Products 元件上新增 event bus 的觸發事件"></a>在內層的 Products 元件上新增 event bus 的觸發事件</h3><p>透過 ajax 的失敗，觸發 event bus 將相關參數傳遞給 AlertMessage，以下是程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">this</span>.$http.post(url, formData, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'multipart/form-data'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(response.data)</span><br><span class="line">    <span class="keyword">if</span> (response.data.success) &#123;</span><br><span class="line">      vm.status.fileUploading = <span class="literal">false</span></span><br><span class="line">      vm.$<span class="keyword">set</span>(vm.tempProduct, 'imageUrl', response.data.imageUrl)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      <span class="keyword">this</span>.$bus.$emit(<span class="string">'message:push'</span>, response.data.message, <span class="string">'danger'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
+<p>我們在之前 formData 上傳圖片的事件中，新增若上傳失敗就觸發 <code>message:push</code> 並根據我們當初自訂的格式回傳相關參數。<br>當 AlertMessage 收到我們回傳的參數時，就會根據這些參數去渲染 alert 效果。</p>
+<h2 id="小技巧補充"><a href="#小技巧補充" class="headerlink" title="小技巧補充"></a>小技巧補充</h2><p>有時候我們在定義 event bus 的事件名稱及相關參數時會忘記是在哪個元件上做定義，因此我們可以利用註解的方式，將我們的定義方法寫在 bus.js 裡以方便了解。<br>最後，小提醒 <strong>event bus 在管理上會有些問題，能的話盡量使用在較不複雜的網頁結構上</strong>。</p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.hexschool.com/vue/" target="_blank" rel="noopener">六角學院課程–Vue 出一個電商網站</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/29/EcommercePractice1/" itemprop="url">
-              
-                <span itemprop="name">Vue.js 電商練習技術整理 -- 接取API與設定環境變數</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T09:33:45+08:00" content="2019-07-29">
-          07-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/25/freecell/" itemprop="url">
-              
-                <span itemprop="name">The F2E Freecell Part 1</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T14:48:34+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          
+            <a href="/tags/E-commerce/" rel="tag"># E-commerce</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/05/EcommercePractice6/" rel="next" title="Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗">
+                <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -492,6 +489,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -512,8 +513,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -589,6 +599,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-bus-簡介"><span class="nav-number">2.</span> <span class="nav-text">event bus 簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#透過-event-bus-將內層資料傳遞至外層觸發-alert-效果"><span class="nav-number">3.</span> <span class="nav-text">透過 event bus 將內層資料傳遞至外層觸發 alert 效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-alert-模板"><span class="nav-number">3.1.</span> <span class="nav-text">新增 alert 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#將-event-bus-掛載到原型上"><span class="nav-number">3.2.</span> <span class="nav-text">將 event bus 掛載到原型上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-AlertMessage-元件下做監聽"><span class="nav-number">3.3.</span> <span class="nav-text">在 AlertMessage 元件下做監聽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在內層的-Products-元件上新增-event-bus-的觸發事件"><span class="nav-number">3.4.</span> <span class="nav-text">在內層的 Products 元件上新增 event bus 的觸發事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小技巧補充"><span class="nav-number">4.</span> <span class="nav-text">小技巧補充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -731,6 +757,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
