@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript,Vue.js,E-commerce,">
+  <meta name="keywords" content="JavaScript,Vue.js,">
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="文章目的我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。">
-<meta name="keywords" content="JavaScript,Vue.js,E-commerce">
+<meta name="description" content="文章目的有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD">
+<meta name="keywords" content="JavaScript,Vue.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證">
-<meta property="og:url" content="Hao.github.io/2019/08/09/EcommercePractice8/index.html">
+<meta property="og:title" content="Vue 小技術小工具園地">
+<meta property="og:url" content="Hao.github.io/2019/08/13/VueTips/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
-<meta property="og:description" content="文章目的我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。">
+<meta property="og:description" content="文章目的有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
-<meta property="og:updated_time" content="2019-08-09T06:50:02.800Z">
+<meta property="og:image" content="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
+<meta property="og:updated_time" content="2019-08-13T15:44:50.364Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證">
-<meta name="twitter:description" content="文章目的我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。">
-<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta name="twitter:title" content="Vue 小技術小工具園地">
+<meta name="twitter:description" content="文章目的有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="Hao.github.io/2019/08/09/EcommercePractice8/">
+  <link rel="canonical" href="Hao.github.io/2019/08/13/VueTips/">
 
 
 
 
 
-  <title>Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證 | Hao's The Front End world</title>
+  <title>Vue 小技術小工具園地 | Hao's The Front End world</title>
   
 
 
@@ -300,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/09/EcommercePractice8/">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/13/VueTips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hao">
@@ -317,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證</h1>
+          <h1 class="post-title" itemprop="name headline">Vue 小技術小工具園地</h1>
         
 
         <div class="post-meta">
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-09T11:03:37+08:00">
-                2019-08-09
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-13T23:01:30+08:00">
+                2019-08-13
               </time>
             
 
@@ -389,45 +389,29 @@
       
 
       
-        <p><img src="https://i.imgur.com/el9rgW2.jpg" alt></p>
-<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。<br>本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。</p>
+        <p><img src="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。<br>若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD</p>
 <a id="more"></a>
-<h2 id="VeeValidate-簡介"><a href="#VeeValidate-簡介" class="headerlink" title="VeeValidate 簡介"></a>VeeValidate 簡介</h2><p>VeeValidate 是 Vue.js 表單驗證的外掛套件，使用它我們只需在需要驗證的表單上加入一些特定語法就可以建立驗證，附上<a href="https://baianat.github.io/vee-validate/guide/" target="_blank" rel="noopener">官方文件</a>。</p>
-<h2 id="VeeValidate-安裝及引用"><a href="#VeeValidate-安裝及引用" class="headerlink" title="VeeValidate 安裝及引用"></a>VeeValidate 安裝及引用</h2><h3 id="套件安裝"><a href="#套件安裝" class="headerlink" title="套件安裝"></a>套件安裝</h3><p>一樣打開我們的終端機輸入<code>npm install vee-validate --save</code> 安裝至我們的 Vue Cli 裡，那當然也有 cdn 的方式，相關內容可以觀看官方文件。</p>
-<h3 id="中文化安裝及引用"><a href="#中文化安裝及引用" class="headerlink" title="中文化安裝及引用"></a>中文化安裝及引用</h3><p>因為 VeeValidate 有支援中文，所以我們接下來要將 VeeValidate 引用至我們的專案，並且將其中文化。</p>
-<h4 id="中文化"><a href="#中文化" class="headerlink" title="中文化"></a>中文化</h4><p>為了支援中文，我們需要先在終端機輸入<code>npm install vue-i18n --save</code>。</p>
-<h4 id="引用與設定"><a href="#引用與設定" class="headerlink" title="引用與設定"></a>引用與設定</h4><p>安裝完成後，來到進入點(main.js) import 以下幾支檔案：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> VeeValidate <span class="keyword">from</span> <span class="string">'vee-validate'</span></span><br><span class="line"><span class="keyword">import</span> zhTW <span class="keyword">from</span> <span class="string">'vee-validate/dist/locale/zh_TW'</span></span><br><span class="line"><span class="keyword">import</span> VueI18n <span class="keyword">from</span> <span class="string">'vue-i18n'</span></span><br></pre></td></tr></table></figure>
-
-<p>接著我們在下面做以下設定：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Vue.use(VueI18n)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> i18n = <span class="keyword">new</span> VueI18n(&#123;</span><br><span class="line">  locale: <span class="string">'zhTW'</span></span><br><span class="line">&#125;)</span><br><span class="line">Vue.use(VeeValidate, &#123;</span><br><span class="line">  events: <span class="string">'input|blur'</span>, <span class="comment">//這是為了讓使用者離開該欄位時觸發驗證</span></span><br><span class="line">  i18n,</span><br><span class="line">  dictionary: &#123;</span><br><span class="line">    zhTW</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>另外要記得在下面 <code>new Vue</code> 中把 <code>i18n</code> 載入，如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  i18n,</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>進行到這裡我們就完成中文化與引用的步驟了，每個 Vue 元件中可以正常使用 VeeValidate。</p>
-<h2 id="表單驗證設定"><a href="#表單驗證設定" class="headerlink" title="表單驗證設定"></a>表單驗證設定</h2><h3 id="基本寫法"><a href="#基本寫法" class="headerlink" title="基本寫法"></a>基本寫法</h3><p>我們來到需要驗證的 <code>html input</code> 標籤，先來看看程式碼：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"username"</span>&gt;</span>收件人姓名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">:class</span>=<span class="string">"&#123;'is-invalid':errors.has('name')&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">v-model</span>=<span class="string">"form.user.name"</span> <span class="attr">placeholder</span>=<span class="string">"輸入姓名"</span> <span class="attr">v-validate</span>=<span class="string">"'required'"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"text-danger"</span> <span class="attr">v-if</span>=<span class="string">"errors.has('name')"</span>&gt;</span>姓名必須輸入<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面是一個利用 Bootstrap 4 表單做出來的版型，這裡有幾個重點：</p>
-<ul>
-<li><code>input</code> 標籤內要設定 <code>name</code>這個屬性，屬性值的部分則是根據該欄位性質做設定，例：姓名就是 name，地址就是 address。<br>當然屬性值根據當下情況自己命名即可。</li>
-<li><strong>必須在 <code>input</code> 標籤裡加上 <code>v-validate=&quot;&#39;required&#39;&quot;</code></strong>，這是為了讓系統知道這一個欄位是必填的。</li>
-<li>接著我們可以寫入提示文字效果，像是上面的「姓名必須輸入」，我們透過 v-if 去控制它若驗證錯誤就顯示文字，至於 <code>errors.has(&#39;name&#39;)</code> 括號填入我們剛剛說的 <code>name</code> 屬性值，它就會幫我們判斷 true or false ，當是 <strong>true 時驗證失敗，false 時驗證成功</strong>。</li>
-<li>VeeValidate 可以與 Bootstrap 4 的驗證效果共用，因此我們一樣可以利用 v-if 的方式來動態新增 <code>is-invalid</code> 這個 className 讓提示更加明顯。<h3 id="email寫法"><a href="#email寫法" class="headerlink" title="email寫法"></a>email寫法</h3>這邊要額外提到 email 欄位的驗證法，email 會跟其他資料欄位有點不一樣，因此分出來講解。<br>一樣的我們先來看看程式碼：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"useremail"</span>&gt;</span>Email<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">id</span>=<span class="string">"useremail"</span> <span class="attr">:class</span>=<span class="string">"&#123;'is-invalid':errors.has('email')&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">v-model</span>=<span class="string">"form.user.email"</span> <span class="attr">placeholder</span>=<span class="string">"請輸入 Email"</span> <span class="attr">v-validate</span>=<span class="string">"'required|email'"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"text-danger"</span> <span class="attr">v-if</span>=<span class="string">"errors.has('email')"</span>&gt;</span>&#123;&#123;errors.first('email')&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="Vue-Awesome-Swiper-讓-Vue-輕鬆使用輪播功能"><a href="#Vue-Awesome-Swiper-讓-Vue-輕鬆使用輪播功能" class="headerlink" title="Vue Awesome Swiper 讓 Vue 輕鬆使用輪播功能"></a>Vue Awesome Swiper 讓 Vue 輕鬆使用輪播功能</h2><p>Vue Awesome Swiper 是一個提供 Vue 能使用輪播功能的套件，我們只需做簡單的安裝與引用就可以達到效果。</p>
+<h3 id="安裝與引用套件"><a href="#安裝與引用套件" class="headerlink" title="安裝與引用套件"></a>安裝與引用套件</h3><ol>
+<li><p>在終端機輸入 <code>npm install vue-awesome-swiper --save</code> 進行安裝。</p>
 </li>
-</ul>
-<p>這邊有兩個地方跟基本寫法不太一樣。</p>
-<ul>
-<li>在我們設定 <code>v-validate=&quot;&#39;required|email&#39;&quot;</code> 時，需要在 <code>required</code> 後面加入 <code>email</code>，這樣在驗證時才會以 email 的格式來驗證。</li>
-<li>另外在驗證提示文字用<strong>兩個中括號包覆填入 errors.first(‘email’)</strong>，會顯示 VeeValidate 的預設文字，它會根據 email 驗證的各種狀態來顯示不同的提示文字，我們一開始設定的中文化也在這邊派上用場，提示文字會是中文。<h2 id="驗證方法設定"><a href="#驗證方法設定" class="headerlink" title="驗證方法設定"></a>驗證方法設定</h2>進行到這邊我們的表單已經能正常驗證，但是這僅僅是效果，若我們搭配 API 去設計表單的話依然一樣會將資料送出，因此我們需要利用方法來阻止 API 的接取，根據官方提供的寫法，可以這樣寫：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$validator.validate().then(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">          <span class="comment">// 當驗證成功時執行 AJAX 的行為</span></span><br><span class="line">         &#125;)</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// 驗證失敗產生的行為</span></span><br><span class="line">       &#125;</span><br><span class="line">     &#125;)</span><br></pre></td></tr></table></figure>
+<li><p>此套件可以做全域與區域的引用，這邊我們要介紹如何全域引用它，來到進入點(main.js)，在裡面輸入以下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> VueAwesomeSwiper <span class="keyword">from</span> <span class="string">'vue-awesome-swiper'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'swiper/dist/css/swiper.css'</span></span><br><span class="line">Vue.use(VueAwesomeSwiper)</span><br></pre></td></tr></table></figure>
 
+<p>進行到這邊我們已完成安裝與引用的動作，接下來就是使用它。</p>
+<h3 id="Vue-Awesome-Swiper-使用方法"><a href="#Vue-Awesome-Swiper-使用方法" class="headerlink" title="Vue Awesome Swiper 使用方法"></a>Vue Awesome Swiper 使用方法</h3></li>
+<li><p>在需要使用的 Vue 元件 html 部分載入以下程式碼：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">swiper</span> <span class="attr">:options</span>=<span class="string">"swiperOption"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">swiper-slide</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">swiper-slide</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">swiper-slide</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">swiper-slide</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">swiper-slide</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">swiper-slide</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">swiper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>每一個 <code>swiper-slide</code> 就是一張輪播圖片，裡面不一定要使用 <code>img</code> 也可以使用 <code>background-image</code> 方式去設定圖片。<br><code>swiper</code> 綁定的 <code>options</code> 提供我們對輪播的參數設定。</p>
 </li>
-</ul>
-<p>上述的方法可以加在 submit 後觸發的事件內。</p>
-<hr>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.hexschool.com/vue/" target="_blank" rel="noopener">六角學院課程–Vue 出一個電商網站</a><br><a href="https://baianat.github.io/vee-validate/guide/events.html#changing-events-per-field" target="_blank" rel="noopener">官方方法使用</a></p>
+<li><p>來到 js 部分對輪播做一些簡單設定與介紹，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">name: <span class="string">'carousel'</span>,</span><br><span class="line">data () &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    swiperOption: &#123;</span><br><span class="line">      autoplay: &#123;</span><br><span class="line">        delay: <span class="number">2500</span>, <span class="comment">/*自動輪播間格時間*/</span></span><br><span class="line">        disableOnInteraction: <span class="literal">false</span> <span class="comment">/*使用者拖曳輪播時是否取消自動輪播*/</span></span><br><span class="line">      &#125;,</span><br><span class="line">      loop: <span class="literal">true</span>, <span class="comment">/*是否重複輪播*/</span></span><br><span class="line">      effect: <span class="string">'fade'</span> <span class="comment">/*輪播顯示效果(預設為slide)*/</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊只做一些簡單的介紹，若需要其他額外效果或了解其他參數，這邊附上我找到的相關文章，另外基本上<strong>參數部分都與 swiper 這個套件相同</strong>。<br><a href="https://segmentfault.com/a/1190000014609379#autoplay" target="_blank" rel="noopener">參數與效果示範</a><br><a href="https://3.swiper.com.cn/" target="_blank" rel="noopener">swiper官方文件</a><br><a href="https://github.com/surmon-china/vue-awesome-swiper" target="_blank" rel="noopener">Vue Awesome Swiper官方文件</a></p>
+</li>
+</ol>
 
       
     </div>
@@ -449,8 +433,6 @@
           
             <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
           
-            <a href="/tags/E-commerce/" rel="tag"># E-commerce</a>
-          
         </div>
       
 
@@ -462,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/06/EcommercePractice7/" rel="next" title="Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑">
-                <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑
+              <a href="/2019/08/09/EcommercePractice8/" rel="next" title="Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證">
+                <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證
               </a>
             
           </div>
@@ -471,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/13/VueTips/" rel="prev" title="Vue 小技術小工具園地">
-                Vue 小技術小工具園地 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -622,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VeeValidate-簡介"><span class="nav-number">2.</span> <span class="nav-text">VeeValidate 簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VeeValidate-安裝及引用"><span class="nav-number">3.</span> <span class="nav-text">VeeValidate 安裝及引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#套件安裝"><span class="nav-number">3.1.</span> <span class="nav-text">套件安裝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文化安裝及引用"><span class="nav-number">3.2.</span> <span class="nav-text">中文化安裝及引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中文化"><span class="nav-number">3.2.1.</span> <span class="nav-text">中文化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用與設定"><span class="nav-number">3.2.2.</span> <span class="nav-text">引用與設定</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表單驗證設定"><span class="nav-number">4.</span> <span class="nav-text">表單驗證設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本寫法"><span class="nav-number">4.1.</span> <span class="nav-text">基本寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#email寫法"><span class="nav-number">4.2.</span> <span class="nav-text">email寫法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#驗證方法設定"><span class="nav-number">5.</span> <span class="nav-text">驗證方法設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Awesome-Swiper-讓-Vue-輕鬆使用輪播功能"><span class="nav-number">2.</span> <span class="nav-text">Vue Awesome Swiper 讓 Vue 輕鬆使用輪播功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝與引用套件"><span class="nav-number">2.1.</span> <span class="nav-text">安裝與引用套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Awesome-Swiper-使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">Vue Awesome Swiper 使用方法</span></a></li></ol></li></ol></div>
             
 
           </div>
