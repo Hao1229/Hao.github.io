@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章目的有時候我們會需要將圖片上傳至後端做儲存，上傳時可利用 FormData 作為圖片的資料格式。本篇將介紹如何操作 Vue Cli 上傳圖片的細節。">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
-<meta property="og:updated_time" content="2019-08-01T11:23:36.294Z">
+<meta property="og:updated_time" content="2019-08-19T03:10:20.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角">
 <meta name="twitter:description" content="文章目的有時候我們會需要將圖片上傳至後端做儲存，上傳時可利用 FormData 作為圖片的資料格式。本篇將介紹如何操作 Vue Cli 上傳圖片的細節。">
@@ -395,11 +395,13 @@
 
 <h2 id="FormData-簡單介紹"><a href="#FormData-簡單介紹" class="headerlink" title="FormData 簡單介紹"></a>FormData 簡單介紹</h2><p>FormData 是一個表單格式，我們可以利用它將資料轉成表單的格式，並且以表單的形式回傳給後端。 —<a href="https://developer.mozilla.org/zh-TW/docs/Web/API/FormData" target="_blank" rel="noopener">FormData介紹</a><br><strong>至於上傳圖片時需不需要用 FormData 的形式上傳，是由後端來做決定。</strong></p>
 <h2 id="將圖片轉換成-FormData"><a href="#將圖片轉換成-FormData" class="headerlink" title="將圖片轉換成 FormData"></a>將圖片轉換成 FormData</h2><ul>
-<li><p>首先，我們會利用 html 的 <code>&lt;input type=&quot;file&quot;&gt;</code> 來上傳我們的圖片，我們可以為 input 新增一個 change 事件，程式碼如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> @<span class="attr">change</span>=<span class="string">"uploadFile"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<li>首先，我們會利用 html 的 <code>&lt;input type=&quot;file&quot;&gt;</code> 來上傳我們的圖片，我們可以為 input 新增一個 change 事件，程式碼如下：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> @<span class="attr">change</span>=<span class="string">"uploadFile"</span> <span class="attr">ref</span>=<span class="string">"files"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
 </li>
-<li><p>接著我們可以透過 <code>console.log</code> 的方式來找到我們要上傳的圖片所在位置，程式碼如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uploadFile () &#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</ul>
+<p><strong>這邊請務必加入 <code>ref=&#39;files&#39;</code> 否則下個步驟我們會找不到檔案。</strong></p>
+<ul>
+<li>接著我們可以透過 <code>console.log</code> 的方式來找到我們要上傳的圖片所在位置，程式碼如下：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uploadFile () &#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
