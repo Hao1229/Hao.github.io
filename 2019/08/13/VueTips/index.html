@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章目的有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
-<meta property="og:updated_time" content="2019-08-13T15:44:50.364Z">
+<meta property="og:updated_time" content="2019-08-20T08:30:23.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue 小技術小工具園地">
 <meta name="twitter:description" content="文章目的有鑑於現在在練習利用 Vue 開發電商網站，中間會發現一些前端前輩提供的好用程式碼，或是一些好用的套件、工具，想透過此文章記錄下來，方便以後回憶查找。若陸續發現好用的工具與程式碼會持續更新，或許會出好幾回XD">
@@ -412,6 +412,12 @@
 <p>這邊只做一些簡單的介紹，若需要其他額外效果或了解其他參數，這邊附上我找到的相關文章，另外基本上<strong>參數部分都與 swiper 這個套件相同</strong>。<br><a href="https://segmentfault.com/a/1190000014609379#autoplay" target="_blank" rel="noopener">參數與效果示範</a><br><a href="https://3.swiper.com.cn/" target="_blank" rel="noopener">swiper官方文件</a><br><a href="https://github.com/surmon-china/vue-awesome-swiper" target="_blank" rel="noopener">Vue Awesome Swiper官方文件</a></p>
 </li>
 </ol>
+<h2 id="Vue-Filter-金錢格式程式碼-currency"><a href="#Vue-Filter-金錢格式程式碼-currency" class="headerlink" title="Vue Filter 金錢格式程式碼(currency)"></a>Vue Filter 金錢格式程式碼(currency)</h2><p>有時候我們會需要將數字轉換成金錢的格式，像是加入千分號及錢字號，這邊提供一個 js 程式碼，方便套用至 Vue filter 就可以輕鬆轉換格式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> n = <span class="built_in">Number</span>(num)</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`$<span class="subst">$&#123;n.toFixed(<span class="number">0</span>).replace(<span class="regexp">/./g</span>, (c, i, a) =&gt; &#123;</span></span></span><br><span class="line"><span class="string"><span class="subst">    <span class="keyword">const</span> currency = (i &amp;&amp; c !== <span class="string">'.'</span> &amp;&amp; ((a.length - i) % <span class="number">3</span> === <span class="number">0</span>) ? <span class="string">`, <span class="subst">$&#123;c&#125;</span>`</span>.replace(<span class="regexp">/\s/g</span>, <span class="string">''</span>) : c)</span></span></span><br><span class="line"><span class="string"><span class="subst">    <span class="keyword">return</span> currency</span></span></span><br><span class="line"><span class="string"><span class="subst">  &#125;</span>)&#125;`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vue-filter-日期格式程式碼-date"><a href="#Vue-filter-日期格式程式碼-date" class="headerlink" title="Vue filter 日期格式程式碼(date)"></a>Vue filter 日期格式程式碼(date)</h2><p>在我們抓取日期時，基本上後端抓來的日期都會是 Timestamp 格式，這邊提供將 Timestamp 轉換成一般時間格式的程式碼，方便使用在 Vue filter 裡。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(time * <span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">return</span> date.toLocaleDateString()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -453,6 +459,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/20/EcommercePractice9/" rel="prev" title="Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能">
+                Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -529,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -600,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Awesome-Swiper-讓-Vue-輕鬆使用輪播功能"><span class="nav-number">2.</span> <span class="nav-text">Vue Awesome Swiper 讓 Vue 輕鬆使用輪播功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝與引用套件"><span class="nav-number">2.1.</span> <span class="nav-text">安裝與引用套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Awesome-Swiper-使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">Vue Awesome Swiper 使用方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Awesome-Swiper-讓-Vue-輕鬆使用輪播功能"><span class="nav-number">2.</span> <span class="nav-text">Vue Awesome Swiper 讓 Vue 輕鬆使用輪播功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝與引用套件"><span class="nav-number">2.1.</span> <span class="nav-text">安裝與引用套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Awesome-Swiper-使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">Vue Awesome Swiper 使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Filter-金錢格式程式碼-currency"><span class="nav-number">3.</span> <span class="nav-text">Vue Filter 金錢格式程式碼(currency)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-filter-日期格式程式碼-date"><span class="nav-number">4.</span> <span class="nav-text">Vue filter 日期格式程式碼(date)</span></a></li></ol></div>
             
 
           </div>
