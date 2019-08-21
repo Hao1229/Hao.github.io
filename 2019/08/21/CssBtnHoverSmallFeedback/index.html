@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript,Vue.js,E-commerce,">
+  <meta name="keywords" content="CSS,SCSS,">
 
 
 
@@ -79,20 +79,22 @@
 
 
 
-<meta name="description" content="文章目的當我們在使用電商網站時無論是前後台都會因為資料過多，無法即時找到含有特定條件的資料，本文將示範利用 v-model 簡單建立出後台的訂單篩選功能。">
-<meta name="keywords" content="JavaScript,Vue.js,E-commerce">
+<meta name="description" content="文章目的因為最近在練習製作電商網站，學到了一個不錯的按鈕 hover 回饋小技巧，想藉此篇文章做個紀錄。">
+<meta name="keywords" content="CSS,SCSS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能">
-<meta property="og:url" content="Hao.github.io/2019/08/20/EcommercePractice9/index.html">
+<meta property="og:title" content="利用 CSS 做出簡單的按鈕 hover 動畫回饋">
+<meta property="og:url" content="Hao.github.io/2019/08/21/CssBtnHoverSmallFeedback/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
-<meta property="og:description" content="文章目的當我們在使用電商網站時無論是前後台都會因為資料過多，無法即時找到含有特定條件的資料，本文將示範利用 v-model 簡單建立出後台的訂單篩選功能。">
+<meta property="og:description" content="文章目的因為最近在練習製作電商網站，學到了一個不錯的按鈕 hover 回饋小技巧，想藉此篇文章做個紀錄。">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
-<meta property="og:updated_time" content="2019-08-20T08:51:17.123Z">
+<meta property="og:image" content="https://i.imgur.com/DHCpWu1.jpg">
+<meta property="og:image" content="https://i.imgur.com/IIQ4IFd.png">
+<meta property="og:image" content="https://i.imgur.com/6cwpx6p.png">
+<meta property="og:updated_time" content="2019-08-21T08:08:59.711Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能">
-<meta name="twitter:description" content="文章目的當我們在使用電商網站時無論是前後台都會因為資料過多，無法即時找到含有特定條件的資料，本文將示範利用 v-model 簡單建立出後台的訂單篩選功能。">
-<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta name="twitter:title" content="利用 CSS 做出簡單的按鈕 hover 動畫回饋">
+<meta name="twitter:description" content="文章目的因為最近在練習製作電商網站，學到了一個不錯的按鈕 hover 回饋小技巧，想藉此篇文章做個紀錄。">
+<meta name="twitter:image" content="https://i.imgur.com/DHCpWu1.jpg">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="Hao.github.io/2019/08/20/EcommercePractice9/">
+  <link rel="canonical" href="Hao.github.io/2019/08/21/CssBtnHoverSmallFeedback/">
 
 
 
 
 
-  <title>Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能 | Hao's The Front End world</title>
+  <title>利用 CSS 做出簡單的按鈕 hover 動畫回饋 | Hao's The Front End world</title>
   
 
 
@@ -300,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/20/EcommercePractice9/">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/21/CssBtnHoverSmallFeedback/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hao">
@@ -317,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能</h1>
+          <h1 class="post-title" itemprop="name headline">利用 CSS 做出簡單的按鈕 hover 動畫回饋</h1>
         
 
         <div class="post-meta">
@@ -329,8 +331,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-20T16:05:11+08:00">
-                2019-08-20
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-21T14:34:45+08:00">
+                2019-08-21
               </time>
             
 
@@ -352,8 +354,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
                   </a>
                 </span>
 
@@ -389,20 +391,23 @@
       
 
       
-        <p><img src="https://i.imgur.com/el9rgW2.jpg" alt></p>
-<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>當我們在使用電商網站時無論是前後台都會因為資料過多，無法即時找到含有特定條件的資料，本文將示範利用 v-model 簡單建立出後台的訂單篩選功能。</p>
+        <p><img src="https://i.imgur.com/DHCpWu1.jpg" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>因為最近在練習製作電商網站，學到了一個不錯的按鈕 hover 回饋小技巧，想藉此篇文章做個紀錄。</p>
 <a id="more"></a>
 
-<h2 id="搞懂篩選機制-單選"><a href="#搞懂篩選機制-單選" class="headerlink" title="搞懂篩選機制(單選)"></a>搞懂篩選機制(單選)</h2><p>我們可以利用 radio 做出單選的篩選表單出來，當我們點選需要的 radio 時透過 value 出來的值來決定要顯示的資料。</p>
-<h2 id="替-radio-綁定-v-model"><a href="#替-radio-綁定-v-model" class="headerlink" title="替 radio 綁定 v-model"></a>替 radio 綁定 v-model</h2><p>為甚麼要用 v-model 呢？原因是我們可以在每次點選 radio 時將 value 的值透過 v-model 儲存在 Vue 的 Data 裡，再利用 v-for 做資料篩選，以下是 radio 程式碼：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"dropdown-menu"</span> <span class="attr">aria-labelledby</span>=<span class="string">"dropdownMenuButton"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-check m-2"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"form-check-input"</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"paidRadios"</span> <span class="attr">id</span>=<span class="string">"allRadios"</span> <span class="attr">value</span>=<span class="string">'all'</span> <span class="attr">checked</span> <span class="attr">v-model</span>=<span class="string">"selectOption"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-check-label"</span> <span class="attr">for</span>=<span class="string">"allRadios"</span>&gt;</span>全部<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-check m-2"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"form-check-input"</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"paidRadios"</span> <span class="attr">id</span>=<span class="string">"paidRadios"</span> <span class="attr">value</span>=<span class="string">"paid"</span> <span class="attr">v-model</span>=<span class="string">"selectOption"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-check-label text-success"</span> <span class="attr">for</span>=<span class="string">"paidRadios"</span>&gt;</span>已付款<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-check m-2"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"form-check-input"</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"paidRadios"</span> <span class="attr">id</span>=<span class="string">"unpaidRadios"</span> <span class="attr">value</span>=<span class="string">"nopaid"</span> <span class="attr">v-model</span>=<span class="string">"selectOption"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"form-check-label text-muted"</span> <span class="attr">for</span>=<span class="string">"unpaidRadios"</span>&gt;</span>未付款<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用技巧與介紹"><a href="#使用技巧與介紹" class="headerlink" title="使用技巧與介紹"></a>使用技巧與介紹</h2><h3 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h3><p>這是一個 css 屬性可以讓使用此屬性的元素，達到被平移、旋轉、縮放和傾斜等操作，那這次我們主要用到的是 translate 這個平移屬性。<br>translate 的特性是可以根據我們設定的值，<strong>以元素中心點為基準平移</strong>。</p>
+<h3 id="transition"><a href="#transition" class="headerlink" title="transition"></a>transition</h3><p>transition 也是一個 css 屬性，我們可以操作此屬性，來決定元素顯示的快慢與時間。</p>
+<h3 id="css-偽元素"><a href="#css-偽元素" class="headerlink" title="css 偽元素"></a>css 偽元素</h3><p>偽元素是個很方便的技巧，在小地方會發揮想不到的效果，基本上偽元素會根據我們的主要元素來顯示，最常看到的就是 before 與 after，分別代表在主元素之前或是之後顯示的元素。</p>
+<h2 id="本次效果說明"><a href="#本次效果說明" class="headerlink" title="本次效果說明"></a>本次效果說明</h2><p>我們要讓按鈕在 hover 時，頭上會有由中心點展開的線條，如下圖所示<br><strong>觸發前</strong><br><img src="https://i.imgur.com/IIQ4IFd.png" alt><br><strong>觸發後</strong><br><img src="https://i.imgur.com/6cwpx6p.png" alt></p>
+<h2 id="CSS-撰寫"><a href="#CSS-撰寫" class="headerlink" title="CSS 撰寫"></a>CSS 撰寫</h2><p>這邊我先貼上完成的程式碼，在做一一解釋：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.mainNavbarBtn</span>&#123;</span><br><span class="line">       <span class="attribute">position</span>: relative;</span><br><span class="line">       <span class="attribute">color</span>: rgba(<span class="variable">$color</span>: white, <span class="variable">$alpha</span>: <span class="number">0.8</span>);</span><br><span class="line">       &amp;::before&#123;</span><br><span class="line">           <span class="attribute">position</span>: absolute;</span><br><span class="line">           <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">           <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">           <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">3px</span>;</span><br><span class="line">           <span class="attribute">background</span>: white;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">0%</span>;</span><br><span class="line">           <span class="attribute">transform</span>: translateX(-<span class="number">50%</span>);</span><br><span class="line">           <span class="attribute">transition</span>: all .<span class="number">3s</span></span><br><span class="line">       &#125;</span><br><span class="line">       &amp;:hover&#123;</span><br><span class="line">           color: rgba(<span class="variable">$color</span>: white, <span class="variable">$alpha</span>: <span class="number">1.0</span>);</span><br><span class="line">           &amp;::before&#123;</span><br><span class="line">           <span class="attribute">position</span>: absolute;</span><br><span class="line">           <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">           <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">           <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">           <span class="attribute">height</span>: <span class="number">3px</span>;</span><br><span class="line">           <span class="attribute">background</span>: white;</span><br><span class="line">           <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">           <span class="attribute">transform</span>: translateX(-<span class="number">50%</span>);</span><br><span class="line">           <span class="attribute">transition</span>: all .<span class="number">3s</span></span><br><span class="line">       &#125;</span><br><span class="line">           text-decoration: none;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p>這邊可以看到上述程式碼有3組個 radio 選項，每個選項的 value 值都不同，但都綁定相同的 v-model，當我們點選選項時，選項的 value 值就會被存進我們綁定的 v-model 上。</p>
-<h2 id="撰寫篩選條件"><a href="#撰寫篩選條件" class="headerlink" title="撰寫篩選條件"></a>撰寫篩選條件</h2><p>表單資料部分，利用 computed 做資料的篩選條件，像本次範例就以<strong>已付款</strong>、<strong>未付款</strong>作為篩選條件，以下是 computed 的範例程式碼：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  selectOrders () &#123;</span><br><span class="line">    <span class="keyword">const</span> vm = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span> (vm.selectOption === <span class="string">'all'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> vm.orders</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (vm.selectOption === <span class="string">'paid'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> vm.orders.filter(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> item.is_paid <span class="comment">//已付款</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (vm.selectOption === <span class="string">'nopaid'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> vm.orders.filter(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> !item.is_paid <span class="comment">//未付款</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>這邊針對上述程式碼做個解釋，我們先將從後端抓到的所有訂單資料儲存在 <code>orders</code> 這個陣列裡，接著透過我們 v-model 綁定的 <code>selectOption</code> 來篩選特定條件的資料。<br>如果有預設頁面的顯示資料的話可以先在 <code>selectOption</code> 填入對應的值，像是如果一開始顯示全部資料我們可以填入<code>all</code>。<br><strong>這樣就完成一個簡單的資料篩選功能囉<del>~</del></strong></p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://cythilya.github.io/2017/04/14/vue-data-v-model/" target="_blank" rel="noopener">Vue.js: data、v-model 與雙向綁定</a></p>
+<ul>
+<li>偽元素設置：這邊我們先為主元素設定一個 <code>position: relative</code> 來方便定位我們的偽元素，那因為是在上頭顯示因此用 before 或 after 就顯得沒那麼重要，若是左右顯示 before、after 就會有差別，再來是<strong>偽元素的重點屬性 <code>content</code></strong>，<code>content</code> 會決定我們偽元素的內容，那因為我們只需要線條，所以可以不用填入內容，但 <code>content</code> 這屬性還是必須寫入。</li>
+<li>transform 應用：因為我們的目的是要讓線條可以從中心點向兩側發散顯示，預設顯示會是從左邊頭顯示到右邊尾。<br>因此我們需要利用到絕對定位與 transform 來達到效果。<br>我們先用絕對定位將線條位移主元素的 50% 寬度，這時線條的頭會在主元素寬度中間的位置，這時線條顯示時的確會從中心出發，但又會有個問題，線條出發到結束一樣從左到右，且因為我們起始位置改變導致線條長度超出我們的主元素寬度。<br>這時我們就需要用到 transform 來修正我們線條位置，我們設定 transform 往 x 軸的負方向偏移 50% 將多出的部分轉移回來，這樣視覺上我們就會以為是從中間向兩側發散。</li>
+<li>transition 效果：最後我們只需要加入 transition 設定我們線條的顯示時間，就會有漸變的效果出現囉!!</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://wcc723.github.io/css/2013/09/22/css-pseudo-element/" target="_blank" rel="noopener">卡斯伯老師偽元素介紹</a><br><a href="https://boohover.pixnet.net/blog/post/35341387-%E6%97%8B%E8%BD%89%E3%80%81%E5%82%BE%E6%96%9C%E3%80%81%E7%B8%AE%E6%94%BE%E7%9A%84%E8%AE%8A%E5%BD%A2%E6%95%88%E6%9E%9C-transform-(css-prope" target="_blank" rel="noopener">transform各效果應用</a></p>
 
       
     </div>
@@ -420,11 +425,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
           
-            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
-          
-            <a href="/tags/E-commerce/" rel="tag"># E-commerce</a>
+            <a href="/tags/SCSS/" rel="tag"># SCSS</a>
           
         </div>
       
@@ -437,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/13/VueTips/" rel="next" title="Vue 小技術小工具園地">
-                <i class="fa fa-chevron-left"></i> Vue 小技術小工具園地
+              <a href="/2019/08/20/EcommercePractice9/" rel="next" title="Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能">
+                <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- 利用 v-model 技巧建立表單篩選功能
               </a>
             
           </div>
@@ -446,10 +449,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/21/CssBtnHoverSmallFeedback/" rel="prev" title="利用 CSS 做出簡單的按鈕 hover 動畫回饋">
-                利用 CSS 做出簡單的按鈕 hover 動畫回饋 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -597,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搞懂篩選機制-單選"><span class="nav-number">2.</span> <span class="nav-text">搞懂篩選機制(單選)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替-radio-綁定-v-model"><span class="nav-number">3.</span> <span class="nav-text">替 radio 綁定 v-model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撰寫篩選條件"><span class="nav-number">4.</span> <span class="nav-text">撰寫篩選條件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用技巧與介紹"><span class="nav-number">2.</span> <span class="nav-text">使用技巧與介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transform"><span class="nav-number">2.1.</span> <span class="nav-text">transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transition"><span class="nav-number">2.2.</span> <span class="nav-text">transition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css-偽元素"><span class="nav-number">2.3.</span> <span class="nav-text">css 偽元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本次效果說明"><span class="nav-number">3.</span> <span class="nav-text">本次效果說明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-撰寫"><span class="nav-number">4.</span> <span class="nav-text">CSS 撰寫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
             
 
           </div>
