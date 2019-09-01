@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章目的我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
-<meta property="og:updated_time" content="2019-08-09T06:50:02.800Z">
+<meta property="og:updated_time" content="2019-09-01T12:17:02.198Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 使用 VeeValidate 輕鬆建立表單驗證">
 <meta name="twitter:description" content="文章目的我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。">
@@ -393,7 +393,7 @@
 <h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>我們應該都有經驗在網路上購買東西，填寫資料時若資料填寫不完整，會導致表單無法送出，無法完成訂單程序，往往使用者在填寫訂單時會需要填入一些必要的資料。<br>本文章將用來記錄用 Vue.js 開發時如何使用 VeeValidate 來驗證使用者資料正不正確，若不正確就阻止資料的送出。</p>
 <a id="more"></a>
 <h2 id="VeeValidate-簡介"><a href="#VeeValidate-簡介" class="headerlink" title="VeeValidate 簡介"></a>VeeValidate 簡介</h2><p>VeeValidate 是 Vue.js 表單驗證的外掛套件，使用它我們只需在需要驗證的表單上加入一些特定語法就可以建立驗證，附上<a href="https://baianat.github.io/vee-validate/guide/" target="_blank" rel="noopener">官方文件</a>。</p>
-<h2 id="VeeValidate-安裝及引用"><a href="#VeeValidate-安裝及引用" class="headerlink" title="VeeValidate 安裝及引用"></a>VeeValidate 安裝及引用</h2><h3 id="套件安裝"><a href="#套件安裝" class="headerlink" title="套件安裝"></a>套件安裝</h3><p>一樣打開我們的終端機輸入<code>npm install vee-validate --save</code> 安裝至我們的 Vue Cli 裡，那當然也有 cdn 的方式，相關內容可以觀看官方文件。</p>
+<h2 id="VeeValidate-安裝及引用"><a href="#VeeValidate-安裝及引用" class="headerlink" title="VeeValidate 安裝及引用"></a>VeeValidate 安裝及引用</h2><h3 id="套件安裝"><a href="#套件安裝" class="headerlink" title="套件安裝"></a>套件安裝</h3><p>一樣打開我們的終端機輸入<code>npm install vee-validate --save</code> 安裝至我們的 Vue Cli 裡，那當然也有 cdn 的方式，相關內容可以觀看官方文件。<br><strong>這邊有一點要注意，因為此套件官方還有持續在更新，寫這篇文章時筆者是使用2.2.14版本，後來因為更新到3.x版本時，筆者使用起來會有些問題，因此還是建議先以2.x版本為主。</strong><br><strong>若要改安裝2.x版本的話，可以輸入<code>npm install vee-validate@2.2.15 --save</code> 即可，在這之前若已經安裝此套件的話，要先輸入<code>npm uninstall vee-validate --save</code> 將套件移除。</strong></p>
 <h3 id="中文化安裝及引用"><a href="#中文化安裝及引用" class="headerlink" title="中文化安裝及引用"></a>中文化安裝及引用</h3><p>因為 VeeValidate 有支援中文，所以我們接下來要將 VeeValidate 引用至我們的專案，並且將其中文化。</p>
 <h4 id="中文化"><a href="#中文化" class="headerlink" title="中文化"></a>中文化</h4><p>為了支援中文，我們需要先在終端機輸入<code>npm install vue-i18n --save</code>。</p>
 <h4 id="引用與設定"><a href="#引用與設定" class="headerlink" title="引用與設定"></a>引用與設定</h4><p>安裝完成後，來到進入點(main.js) import 以下幾支檔案：</p>
