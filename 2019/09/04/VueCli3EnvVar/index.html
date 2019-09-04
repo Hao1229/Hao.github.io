@@ -79,16 +79,19 @@
 
 
 
+<meta name="description" content="文章目的之前是用 VueCli 2 做開發，那 VueCli 3 一樣有環境變數的設定，但設定方式會與 2 不太一樣，因此透過此文章來做紀錄。">
 <meta name="keywords" content="Vue.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue Cli 3 環境變數設定">
 <meta property="og:url" content="Hao.github.io/2019/09/04/VueCli3EnvVar/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
+<meta property="og:description" content="文章目的之前是用 VueCli 2 做開發，那 VueCli 3 一樣有環境變數的設定，但設定方式會與 2 不太一樣，因此透過此文章來做紀錄。">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://images.unsplash.com/photo-1472313420546-a46e561861d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80">
-<meta property="og:updated_time" content="2019-09-04T14:15:06.562Z">
+<meta property="og:updated_time" content="2019-09-04T14:20:06.348Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue Cli 3 環境變數設定">
+<meta name="twitter:description" content="文章目的之前是用 VueCli 2 做開發，那 VueCli 3 一樣有環境變數的設定，但設定方式會與 2 不太一樣，因此透過此文章來做紀錄。">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1472313420546-a46e561861d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80">
 
 
@@ -387,9 +390,9 @@
 
       
         <p><img src="https://images.unsplash.com/photo-1472313420546-a46e561861d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>之前是用 VueCli 2 做開發，那 VueCli 3 一樣有環境變數的設定，但設定方式會與 2 不太一樣，因此透過此文章來做紀錄。</p>
 <a id="more"></a>
 
-<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>之前是用 VueCli 2 做開發，那 VueCli 3 一樣有環境變數的設定，但設定方式會與 2 不太一樣，因此透過此文章來做紀錄。</p>
 <h2 id="環境變數使用時機"><a href="#環境變數使用時機" class="headerlink" title="環境變數使用時機"></a>環境變數使用時機</h2><p>基本上，在開發時，測試環境下的 API 路徑會與正式環境的路徑不太一樣，因此我們可以利用環境變數來定義這些路徑，以方便我們使用。</p>
 <h2 id="VueCli-2-和-VueCli-3-環境變數差異"><a href="#VueCli-2-和-VueCli-3-環境變數差異" class="headerlink" title="VueCli 2 和 VueCli 3 環境變數差異"></a>VueCli 2 和 VueCli 3 環境變數差異</h2><p>在 2 中我們會透過 config 資料夾底下的 <strong>dev.env.js</strong> 和 <strong>prod.env.js</strong> 兩隻檔案來定義不同環境下的環境變數。<br>但 3 很不一樣，沒有 config 資料夾了，我們只需要自己命名環境檔，並做一些簡單設定，就可以讓系統自己去判斷該使用哪個檔案中的環境變數，以下我將要做一一介紹。</p>
 <h2 id="環境檔命名差別"><a href="#環境檔命名差別" class="headerlink" title="環境檔命名差別"></a>環境檔命名差別</h2><p>剛剛有提到，系統會根據我們的環境檔名稱來判斷使用時機，因此我們先來看看有甚麼命名吧。</p>
