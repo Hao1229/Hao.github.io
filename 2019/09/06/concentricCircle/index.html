@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1507576566681-1932a6a38099?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80">
 <meta property="og:image" content="https://i.imgur.com/TEazPyu.png">
 <meta property="og:image" content="https://i.imgur.com/NpZ7gaR.png">
-<meta property="og:updated_time" content="2019-09-06T03:48:36.973Z">
+<meta property="og:updated_time" content="2019-09-07T05:15:21.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何做出會隨時間變化的同心圓？">
 <meta name="twitter:description" content="文章目的在做今年的 THE F2E 第一週番茄鐘時，遇到最大難題就是要做一個隨時間逐漸填滿的同心圓，想藉由此文章為製作流程做個紀錄。">
@@ -438,6 +438,7 @@
 
 <p>看完程式碼之後有沒有比較清楚了，startTime 一直在減少，所以我們會一直將它與 setTime 的比值傳給我們的函數，函數會算出剩餘時間是圓周長的幾分之幾，並將其回傳，這就會是我們的 stroke-dashoffset 。<br>簡單來講，這個方法就是透過 stroke-dashoffset 的推移來控制 stroke-dasharray 的出現。</p>
 <h3 id="製作第三個圓"><a href="#製作第三個圓" class="headerlink" title="製作第三個圓"></a>製作第三個圓</h3><p>至於，第三個圓就是為了讓它幫助我們擋住第二個圓多餘的部分，因為我們的 stroke 會填滿整個圓，如果不加上第三個圓就無法呈現出只有部分填滿的視覺效果。<br>第三個圓做法我就不多敘述，簡單來說，第三個圓圓心位置要跟前兩個圓一樣，在開發時我是用絕對定位做到這一點，再把它的長寬設定相較前兩個圓小即可。</p>
+<p><strong>測試</strong></p>
 <hr>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html" target="_blank" rel="noopener">SVG 研究之路 (6) - stroke 邊框</a><br><a href="https://wcc723.github.io/svg/2014/06/15/svg-css-stroke-animation/" target="_blank" rel="noopener">CSS + SVG stroke 動態描繪</a></p>
 
