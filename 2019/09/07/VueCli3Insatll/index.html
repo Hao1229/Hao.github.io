@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Vue.js,Vue Cli 3,">
 
 
 
@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hao&#39;s The Front End world">
-<meta property="og:url" content="Hao.github.io/archives/2019/09/index.html">
+<meta name="description" content="文章目的因為之前是使用 Vue Cli 2 做開發，現在在學習 Vue Cli 3 因此用此文章做個紀錄，此文章將介紹如何安裝 Vue Cli 3 及快速創建一個專案。本文操作皆在 command line 中執行。">
+<meta name="keywords" content="Vue.js,Vue Cli 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue Cli 3 安裝與創建專案">
+<meta property="og:url" content="Hao.github.io/2019/09/07/VueCli3Insatll/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
+<meta property="og:description" content="文章目的因為之前是使用 Vue Cli 2 做開發，現在在學習 Vue Cli 3 因此用此文章做個紀錄，此文章將介紹如何安裝 Vue Cli 3 及快速創建一個專案。本文操作皆在 command line 中執行。">
 <meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://images.unsplash.com/photo-1475809913362-28a064062ccd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
+<meta property="og:updated_time" content="2019-09-07T06:19:47.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hao&#39;s The Front End world">
+<meta name="twitter:title" content="Vue Cli 3 安裝與創建專案">
+<meta name="twitter:description" content="文章目的因為之前是使用 Vue Cli 2 做開發，現在在學習 Vue Cli 3 因此用此文章做個紀錄，此文章將介紹如何安裝 Vue Cli 3 及快速創建一個專案。本文操作皆在 command line 中執行。">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1475809913362-28a064062ccd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="Hao.github.io/archives/2019/09/">
+  <link rel="canonical" href="Hao.github.io/2019/09/07/VueCli3Insatll/">
 
 
 
 
 
-  <title>歸檔 | Hao's The Front End world</title>
+  <title>Vue Cli 3 安裝與創建專案 | Hao's The Front End world</title>
   
 
 
@@ -153,7 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
   <a href="https://github.com/Hao1229" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -279,177 +286,182 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/09/07/VueCli3Insatll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's The Front End world">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Vue Cli 3 安裝與創建專案</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-09-07T13:37:50+08:00">
+                2019-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共計 17 篇文章。 繼續努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/07/VueCli3Insatll/" itemprop="url">
-              
-                <span itemprop="name">Vue Cli 3 安裝與創建專案</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-07T13:37:50+08:00" content="2019-09-07">
-          09-07
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/07/EcommercePractice5/" itemprop="url">
-              
-                <span itemprop="name">Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-07T13:12:15+08:00" content="2019-09-07">
-          09-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p><img src="https://images.unsplash.com/photo-1475809913362-28a064062ccd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>因為之前是使用 Vue Cli 2 做開發，現在在學習 Vue Cli 3 因此用此文章做個紀錄，此文章將介紹如何安裝 Vue Cli 3 及快速創建一個專案。<br>本文操作皆在 command line 中執行。</p>
+<a id="more"></a>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/06/concentricCircle/" itemprop="url">
-              
-                <span itemprop="name">如何做出會隨時間變化的同心圓？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-06T09:49:34+08:00" content="2019-09-06">
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<h2 id="Vue-Cli-2-卸載與-Vue-Cli-3-安裝"><a href="#Vue-Cli-2-卸載與-Vue-Cli-3-安裝" class="headerlink" title="Vue Cli 2 卸載與 Vue Cli 3 安裝"></a>Vue Cli 2 卸載與 Vue Cli 3 安裝</h2><h3 id="Vue-Cli-2-卸載"><a href="#Vue-Cli-2-卸載" class="headerlink" title="Vue Cli 2 卸載"></a>Vue Cli 2 卸載</h3><p>在安裝之前，可以先確認 Node.js 是否有安裝，且版本是否為 8.9 以上的版本。<br>確認完畢後，若電腦目前是有 Vue Cli 2 的話，在安裝 3 之前需要先卸載，卸載指令碼為 <code>npm uninstall vue-cli -g</code>，成功卸載後我們就能安裝 3 囉!!</p>
+<h3 id="Vue-Cli-3-安裝"><a href="#Vue-Cli-3-安裝" class="headerlink" title="Vue Cli 3 安裝"></a>Vue Cli 3 安裝</h3><p>我們在 command line 中輸入 <code>npm install -g @vue/cli</code> 即可安裝 3，安裝完成輸入 <code>vue --version</code> 檢查版本，若為 3 以上代表安裝成功。</p>
+<h2 id="創建專案"><a href="#創建專案" class="headerlink" title="創建專案"></a>創建專案</h2><p>輸入 <code>vue create 你的專案名</code> 即可建立專案，在建立過程中，會有一些設定檔的安裝問題，以下做一一解釋。</p>
+<h3 id="自訂你要安裝的設定檔"><a href="#自訂你要安裝的設定檔" class="headerlink" title="自訂你要安裝的設定檔"></a>自訂你要安裝的設定檔</h3><p>基本上系統一開始會提供你一個預設的安裝，裡面有部分的設定檔，那如果你想在專案上安裝自己想要的設定檔，可以選擇 <code>Manually select features</code> 來自訂。<br>選完要安裝的設定檔後，系統會詢問你一些關於你的設定檔的細節，只要選擇符合你的需求即可。<br>再來會詢問你是否把這次的設定儲存，方便以後創立專案時直接套用，這邊就看個人需求。<br>最後系統會詢問你這些設定檔要獨立出來管理，或是全部寫在 package.json 中。</p>
+<h3 id="執行專案"><a href="#執行專案" class="headerlink" title="執行專案"></a>執行專案</h3><p>建立完畢專案後，command line 會提供兩個指令來開啟專案，照著指令輸入，會出現網址，在瀏覽器上輸入網址就可以確認專案是否正確運行囉!!</p>
+<h2 id="簡單的資料夾介紹"><a href="#簡單的資料夾介紹" class="headerlink" title="簡單的資料夾介紹"></a>簡單的資料夾介紹</h2><p>這邊我要介紹兩個 Vue Cli 3 專案裡的資料夾，分別是<strong>src</strong> 和 <strong>public</strong>。<br>這兩者的差別簡單來講，放在 src 中的檔案都會被編譯，public 資料夾底下的檔案不會被編譯。<br>public 資料夾底下，僅有 index.html 這隻檔案會被編譯。</p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.hexschool.com/vue/" target="_blank" rel="noopener">六角學院課程–Vue 出一個電商網站</a><br><a href="https://cli.vuejs.org/zh/guide/installation.html" target="_blank" rel="noopener">官方文件</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/04/VueCli3EnvVar/" itemprop="url">
-              
-                <span itemprop="name">Vue Cli 3 環境變數設定</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-04T21:25:18+08:00" content="2019-09-04">
-          09-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          
+            <a href="/tags/Vue-Cli-3/" rel="tag"># Vue Cli 3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/07/EcommercePractice5/" rel="next" title="Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角">
+                <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -457,6 +469,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -477,8 +493,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,6 +579,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-Cli-2-卸載與-Vue-Cli-3-安裝"><span class="nav-number">2.</span> <span class="nav-text">Vue Cli 2 卸載與 Vue Cli 3 安裝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Cli-2-卸載"><span class="nav-number">2.1.</span> <span class="nav-text">Vue Cli 2 卸載</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Cli-3-安裝"><span class="nav-number">2.2.</span> <span class="nav-text">Vue Cli 3 安裝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#創建專案"><span class="nav-number">3.</span> <span class="nav-text">創建專案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自訂你要安裝的設定檔"><span class="nav-number">3.1.</span> <span class="nav-text">自訂你要安裝的設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行專案"><span class="nav-number">3.2.</span> <span class="nav-text">執行專案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簡單的資料夾介紹"><span class="nav-number">4.</span> <span class="nav-text">簡單的資料夾介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -696,6 +737,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
