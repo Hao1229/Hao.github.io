@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Vue.js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章目的之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。">
+<meta name="keywords" content="Vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Vuex 管理專案資料傳遞">
+<meta property="og:url" content="Hao.github.io/2019/09/08/Vuex/index.html">
+<meta property="og:site_name" content="Hao&#39;s The Front End world">
+<meta property="og:description" content="文章目的之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80">
+<meta property="og:updated_time" content="2019-09-09T07:48:06.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Vuex 管理專案資料傳遞">
+<meta name="twitter:description" content="文章目的之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="Hao.github.io/2019/09/08/Vuex/">
+
+
+
+
+
+  <title>使用 Vuex 管理專案資料傳遞 | Hao's The Front End world</title>
+  
+
+
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXXX-1');
+    }
+  </script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+  <a href="https://github.com/Hao1229" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hao's The Front End world</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/09/08/Vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's The Front End world">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用 Vuex 管理專案資料傳遞</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-09-08T16:09:58+08:00">
+                2019-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。</p>
+<a id="more"></a>
+
+<h2 id="Vuex-介紹"><a href="#Vuex-介紹" class="headerlink" title="Vuex 介紹"></a>Vuex 介紹</h2><p>Vuex 和 Event Bus 不一樣的地方是它是一個儲存庫的概念，儲存庫中將會為每一個步驟做分類與分工並讓所有的元件做使用，簡單來講就是<strong>先將資料做個統整再做傳遞</strong>。</p>
+<h3 id="Vuex-方法"><a href="#Vuex-方法" class="headerlink" title="Vuex 方法"></a>Vuex 方法</h3><ul>
+<li>state：如同元件中的 data，負責管理資料。</li>
+<li>actions：如同元件中的 methods，負責處裡非同步事件，或是取得遠端資料等。</li>
+<li>getter：如同元件中的 computed，在資料呈現之前做過濾的動作。</li>
+<li>mutations：這是 Vuex 新增的方法，改變資料內容的方法，在以前我們要改變資料狀態時都會直接在 methods 做變更，但在 Vuex 不同，actions 並不會做資料的變更，而是在 mutations 才會做資料狀態的變更。</li>
+</ul>
+<h3 id="Vuex-運作方法"><a href="#Vuex-運作方法" class="headerlink" title="Vuex 運作方法"></a>Vuex 運作方法</h3><p>在 Vue 的元件中，我們透過 dispatch 來觸發 actions，actions 就會去取得遠端資料，並透過 commit 的方式呼叫 mutations，最後透過 mutations 來改變 state 中的資料狀態並反映給元件。<br><strong>這邊有一點要注意，當要使用一些非同步的行為時(AJAX、Settimeout 等)，請在 actions 中就完成它。</strong></p>
+<h2 id="Vuex-簡單範例，透過-Vuex-改變資料狀態"><a href="#Vuex-簡單範例，透過-Vuex-改變資料狀態" class="headerlink" title="Vuex 簡單範例，透過 Vuex 改變資料狀態"></a>Vuex 簡單範例，透過 Vuex 改變資料狀態</h2><p>現在我們就來看看 Vuex 各方法的寫法吧。</p>
+<h3 id="範例狀況"><a href="#範例狀況" class="headerlink" title="範例狀況"></a>範例狀況</h3><p>現在我們的專案中有讀取的動畫功能，因為很多元件在取得資料時都會需要使用這功能，因此我們打算利用 Vuex 統一管理動畫功能。<br>我們利用 <code>isLoading = true or false</code> 來控制動畫的出現與消失。</p>
+<h3 id="創造我們的-Vuex-儲存庫"><a href="#創造我們的-Vuex-儲存庫" class="headerlink" title="創造我們的 Vuex 儲存庫"></a>創造我們的 Vuex 儲存庫</h3><p>我們先在 <code>src</code> 資料夾中創造一個名為 <code>store</code> 的資料夾，並在此資料夾中創造一個名為 <code>index.js</code> 的檔案，這個檔案將為我們管理 Vuex。</p>
+<ul>
+<li>在檔案中我們先將 <code>vue</code> 和 <code>vuex</code> import 進來，程式碼如下：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>另外在 main.js(進入點) 也要做 import 的動作，並把 store 也 import 進來，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router,</span><br><span class="line">  store, <span class="comment">//記得這裡也要補上 store 喔</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接著我們在 <code>export default</code> 中輸入我們的方法：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    updateLoading (context, status) &#123;</span><br><span class="line">      context.commit(<span class="string">'LOADING'</span>, status)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    LOADING (state, status) &#123;</span><br><span class="line">      state.isLoading = status</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>這邊將為 actions 和 mutations 做解釋</p>
+<p>actions：創建一個 function，function 中擁有兩個參數，分別是 <code>context</code> 和 <code>payload(載核)</code>， <code>context</code> 是必要的參數， <code>payload</code> 則是我們自定義的參數(名稱也可自訂，以此範例來說就是 <code>status</code>)，接著使用 <code>context.commit</code> 觸發 mutations 並把載核傳遞給它。</p>
+<p>mutations：一樣創建一個 function，當此 function 被觸發時就會對 state 中的資料做變更。</p>
+<p>統整：在元件中因為某個事件透過 <code>dispatch</code> 觸發了 <code>updateLoading</code> 這個 action，觸發的同時將 status 的資料傳遞進來，接著 <code>updateLoading</code> 透過 <code>context.commit</code> 觸發名為 <code>LOADING</code> 的 mutations 並將 status 資料傳遞給它，最後在名為 <code>LOADING</code> 的 mutations 中將 state 中的資料狀態變更，資料變更的同時會反應回元件上。</p>
+<h3 id="元件-Vuex-設定"><a href="#元件-Vuex-設定" class="headerlink" title="元件 Vuex 設定"></a>元件 Vuex 設定</h3><p>因為是整個專案都會用到此動畫效果，因此我們將動畫程式碼放在我們的 App.vue 中就可以反映在每個元件上。<br>那因為資料的變更也是反應在 App.vue(根元件)，因此我們可以利用 <code>computed</code> 來監控 Vuex 中的這個資料，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">   isLoading () &#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.isLoading</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接著我們需要改寫的就是 methods 中觸發效果的寫法，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vm.$store.dispatch(<span class="string">'updateLoading'</span>, <span class="literal">true</span>)</span><br><span class="line">vm.$store.dispatch(<span class="string">'updateLoading'</span>, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+
+<p>透過 <code>dispatch</code> 觸發 <code>updateLoading</code> 這個 actions，並將 payload(true or false) 傳入，接著系統就會執行我們剛剛說的 Vuex 內部流程。</p>
+<h3 id="為-Vuex-加入嚴謹模式來檢視錯誤"><a href="#為-Vuex-加入嚴謹模式來檢視錯誤" class="headerlink" title="為 Vuex 加入嚴謹模式來檢視錯誤"></a>為 Vuex 加入嚴謹模式來檢視錯誤</h3><p>我們另外可以在 Vuex 中加入嚴謹模式，讓我們的程式碼撰寫都在規範中，加入方式只需在 state 之前寫入以下程式碼即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strict: <span class="literal">true</span>,</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-actions-取得遠端資料"><a href="#使用-actions-取得遠端資料" class="headerlink" title="使用 actions 取得遠端資料"></a>使用 actions 取得遠端資料</h2><p>剛剛有說過若要在 Vuex 中執行非同步行為我們就需要在 actions 中執行完這個動作。<br>現在將要介紹如何在 actions 中執行 AJAX 的行為。<br>在 Vuex 中執行 AJAX 的好處是我們可以統一管理這個行為，且較大型網站若有很多元件都需要用到此 AJAX，也可以隨時調用，不需要在元件內重複撰寫。</p>
+<h3 id="範例狀況-1"><a href="#範例狀況-1" class="headerlink" title="範例狀況"></a>範例狀況</h3><p>現在我們要接取一支可以取得商品資料的 api， 抓取到的 api 資料皆儲存在 <code>products</code> 這個陣列裡，以下是程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  strict: <span class="literal">true</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading: <span class="literal">false</span>,</span><br><span class="line">    products: []</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    updateLoading (context, status) &#123; <span class="comment">//前一步驟的 loading 效果</span></span><br><span class="line">      context.commit(<span class="string">'LOADING'</span>, status)</span><br><span class="line">    &#125;,</span><br><span class="line">    getProducts (context) &#123;</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`api 路徑`</span></span><br><span class="line">      context.commit(<span class="string">'LOADING'</span>, <span class="literal">true</span>) <span class="comment">//觸發loading效果</span></span><br><span class="line">      axios.get(url).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        context.commit(<span class="string">'PRODUCTS'</span>, response.data.products)</span><br><span class="line">        context.commit(<span class="string">'LOADING'</span>, <span class="literal">false</span>) <span class="comment">//取消loading效果</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    LOADING (state, status) &#123;</span><br><span class="line">      state.isLoading = status</span><br><span class="line">    &#125;,</span><br><span class="line">    PRODUCTS (state, payload) &#123;</span><br><span class="line">      state.products = payload</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>我們的目的是要把 AJAX 的資料儲存到 state 的 products 裡，因此我們先在 actions 利用 <code>getProducts</code> 這個 function 去接取 api 並把抓取到的資料透過 commit 傳遞給 <code>PRODUCTS</code>，<code>PRODUCTS</code> 收到資料後，再將資料儲存進 state 的 products 裡。</p>
+<h3 id="axios-解釋"><a href="#axios-解釋" class="headerlink" title="axios 解釋"></a>axios 解釋</h3><p>這邊使用的接取 api 方法是 Vue axios，但你會發現我們上列的程式碼，接取 api 時不是這樣寫 <code>this.$http.get(url)</code>，原因是現在 AJAX 的行為是在 Vuex 中進行，this 是代表元件，但現在並非在元件內，因此才會改寫，那改寫步驟如以下：</p>
+<ul>
+<li>將 <code>axios import from &#39;axios&#39;</code> 寫入 Vuex 裡。</li>
+<li>把 <code>this.$http</code> 改寫成 <code>axios</code>。</li>
+</ul>
+<p>我們是直接透過掛載 axios 的方法並呼叫它，而非像一開始用 Vue 呼叫。</p>
+<h3 id="元件改寫"><a href="#元件改寫" class="headerlink" title="元件改寫"></a>元件改寫</h3><p>我們元件中一樣要有事件觸發 AJAX 的行為，一樣是使用 <code>dispatch</code> 做觸發，寫法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getProducts () &#123;</span><br><span class="line">  <span class="keyword">const</span> vm = <span class="keyword">this</span>;</span><br><span class="line">  vm.$store.dispatch(<span class="string">'getProducts'</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>一樣的我們要將 products 這個陣列內容反應在元件中，我們透過 computed 來調用，寫法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">products () &#123; <span class="comment">//寫在 computed 中</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.$store.state.products</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-actions-傳遞參數"><a href="#利用-actions-傳遞參數" class="headerlink" title="利用 actions 傳遞參數"></a>利用 actions 傳遞參數</h2><p>這邊要說明的是，actions 方法中只能傳遞一個參數，當我們今天要傳遞複數個參數時，就得利用物件的方法做傳遞，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$store.dispatch(<span class="string">'actions 方法'</span>, &#123; 參數<span class="number">1</span>, 參數<span class="number">2</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>另外若我們在執行某個 actions 方法時，需要執行另外一個 actions 方法可以利用 <code>commit.dispatch(&#39;actions 方法名&#39;, 參數)</code>，利用這種方法調用其他 actions。</p>
+<h2 id="getters-寫法"><a href="#getters-寫法" class="headerlink" title="getters 寫法"></a>getters 寫法</h2><p>前面有提到 getters 相當於 computed 我們也可以將部分寫法改成用 getters 替代，這邊示範將前幾個範例改寫。<br>我們在 Vuex 中新增一個名為 <code>getters</code> 的物件，並將要 computed 回傳的資料寫入，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  categories (state) &#123;</span><br><span class="line">    <span class="keyword">return</span> state.categories</span><br><span class="line">  &#125;,</span><br><span class="line">  products (state) &#123;</span><br><span class="line">    <span class="keyword">return</span> state.products</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊回傳前面範例的 products 和 categories。<br>接著我們回到元件中改寫程式碼，我們先將 getters import 進元件內 <code>import { mapGetters } from &#39;vuex&#39;</code>，接著在 computed 做改寫，改寫成 <code>...mapGetters ([&#39;products&#39;, &#39;categories&#39;])</code>，陣列中是我們 Vuex 中 getters 的方法。<br>另外，我們也可以將 actions 做改寫，只要在 import 中把 actions import 進來 <code>import { mapGetters, mapActions } from &#39;vuex&#39;</code>，並在 methods 將方法改寫成 <code>...mapActions ([&#39;getProducts&#39;])</code>，一樣的陣列中是我們的 actions 方法名。<br><strong>這邊有一點要注意的是用這方法取用 actions 時不適用在需要傳遞參數的 actions。</strong></p>
+<h2 id="Vuex-模組化"><a href="#Vuex-模組化" class="headerlink" title="Vuex 模組化"></a>Vuex 模組化</h2><p>你可以發現到在前面的範例中我們已經在 Vuex 中寫入了很多程式碼，但這只是一個小小的範例而已，若遇到更大型專案時，模組化的概念就會顯得相當重要。<br>我們可以把 Vuex 中管理的行為再做進一步的拆分，使我們更加方便管理。<br>這邊將示範將範例中取得商品的方法做拆分。</p>
+<ul>
+<li>我們先在 store 資料夾中再新增一個叫做 <code>products.js</code> 的檔案，並把 getProducts 的 actions 和相關參數從 <code>index.js</code> 中拆出來並寫進 <code>products.js</code> 中。</li>
+<li>接著我們利用 import 將 <code>products.js</code> 的內容載入至 <code>index.js</code>： <code>import productsModule from &#39;./products&#39;</code>，然後在 index 中新增一個名為 <code>modules</code> 的物件，並把 <code>productsModule</code> 加入。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modules: &#123;</span><br><span class="line">  productsModule</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="加強觀念"><a href="#加強觀念" class="headerlink" title="加強觀念"></a>加強觀念</h3><p>在 Vuex 中 <strong>state 是屬於模組區域變數</strong>，裡頭的資料只會在該模組中才能做使用，但是 <strong>actions, mutations 和 getters 屬於全域變數</strong>。<br>全域變數好處是在小型專案時可以節省開發時間，但在大型專案中就會建議使用區域變數，避免衝突(當有相同方法名的時候就會產生衝突)。</p>
+<h3 id="如何取得拆分模組中的-state-區域變數-元件中"><a href="#如何取得拆分模組中的-state-區域變數-元件中" class="headerlink" title="如何取得拆分模組中的 state 區域變數(元件中)"></a>如何取得拆分模組中的 state 區域變數(元件中)</h3><p>這方法很簡單，只需要將程式碼這樣改寫即可：<br><code>this.$store.state.productModule.products</code></p>
+<h3 id="將模組內全域變數改成區域變數"><a href="#將模組內全域變數改成區域變數" class="headerlink" title="將模組內全域變數改成區域變數"></a>將模組內全域變數改成區域變數</h3><p>若我們要避免衝突，將全域變數變成區域變數，可以在該模組的 export default 底下寫入這行程式碼：<code>namespaced: true</code>。<br>變成區域變數之後我們要如何調用它呢？延續前面的調用方法我們可以這樣寫：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...mapActions(<span class="string">'productModule'</span>, [<span class="string">'getProducts'</span>]) <span class="comment">// 第一種方法，在第一個參數中寫入要調用的模組名</span></span><br><span class="line"><span class="comment">/*****/</span></span><br><span class="line">getProducts () &#123;</span><br><span class="line">  <span class="keyword">this</span>.$store.dispatch(<span class="string">'productsModule/getProducts'</span>) <span class="comment">// 第二種方法，利用 dispatch 做調用 模組名/actions名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="讓特定行為變為全域調用"><a href="#讓特定行為變為全域調用" class="headerlink" title="讓特定行為變為全域調用"></a>讓特定行為變為全域調用</h3><p>若我們要某方法可以全域調用，像是範例的讀取動畫效果，因為變數是存在 index 裡，若我們要在 products 中調用可以這樣寫：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.commit(<span class="string">'LOADING'</span>, <span class="literal">true</span>, &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">context.commit(<span class="string">'LOADING'</span>, <span class="literal">false</span>, &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.hexschool.com/vue/" target="_blank" rel="noopener">六角學院課程–Vue 出一個電商網站</a><br><a href="https://vuex.vuejs.org/zh/" target="_blank" rel="noopener">官方文件</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/08/VueInstantPrototyping/" rel="next" title="如何快速開發建立原型">
+                <i class="fa fa-chevron-left"></i> 如何快速開發建立原型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hao1229" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/people/%E5%90%B3%E6%89%BF%E6%BE%94/100002603197767" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-介紹"><span class="nav-number">2.</span> <span class="nav-text">Vuex 介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-方法"><span class="nav-number">2.1.</span> <span class="nav-text">Vuex 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-運作方法"><span class="nav-number">2.2.</span> <span class="nav-text">Vuex 運作方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-簡單範例，透過-Vuex-改變資料狀態"><span class="nav-number">3.</span> <span class="nav-text">Vuex 簡單範例，透過 Vuex 改變資料狀態</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#範例狀況"><span class="nav-number">3.1.</span> <span class="nav-text">範例狀況</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#創造我們的-Vuex-儲存庫"><span class="nav-number">3.2.</span> <span class="nav-text">創造我們的 Vuex 儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元件-Vuex-設定"><span class="nav-number">3.3.</span> <span class="nav-text">元件 Vuex 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#為-Vuex-加入嚴謹模式來檢視錯誤"><span class="nav-number">3.4.</span> <span class="nav-text">為 Vuex 加入嚴謹模式來檢視錯誤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-actions-取得遠端資料"><span class="nav-number">4.</span> <span class="nav-text">使用 actions 取得遠端資料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#範例狀況-1"><span class="nav-number">4.1.</span> <span class="nav-text">範例狀況</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#axios-解釋"><span class="nav-number">4.2.</span> <span class="nav-text">axios 解釋</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元件改寫"><span class="nav-number">4.3.</span> <span class="nav-text">元件改寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-actions-傳遞參數"><span class="nav-number">5.</span> <span class="nav-text">利用 actions 傳遞參數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getters-寫法"><span class="nav-number">6.</span> <span class="nav-text">getters 寫法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-模組化"><span class="nav-number">7.</span> <span class="nav-text">Vuex 模組化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加強觀念"><span class="nav-number">7.1.</span> <span class="nav-text">加強觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何取得拆分模組中的-state-區域變數-元件中"><span class="nav-number">7.2.</span> <span class="nav-text">如何取得拆分模組中的 state 區域變數(元件中)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#將模組內全域變數改成區域變數"><span class="nav-number">7.3.</span> <span class="nav-text">將模組內全域變數改成區域變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讓特定行為變為全域調用"><span class="nav-number">7.4.</span> <span class="nav-text">讓特定行為變為全域調用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">8.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
