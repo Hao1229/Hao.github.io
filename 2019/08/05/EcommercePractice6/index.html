@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章目的我們時常在逛其他網站時，讀取過程中會看到一些動畫呈現，此文章用來記錄在用 Vue 開發網站時，如何製作同樣的動畫效果。">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
-<meta property="og:updated_time" content="2019-08-11T12:37:02.000Z">
+<meta property="og:updated_time" content="2019-09-18T08:12:51.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗">
 <meta name="twitter:description" content="文章目的我們時常在逛其他網站時，讀取過程中會看到一些動畫呈現，此文章用來記錄在用 Vue 開發網站時，如何製作同樣的動畫效果。">
@@ -425,6 +425,9 @@
 
 </li>
 </ol>
+<p>亦或是在 main.js 輸入以下程式碼做全局載入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'@fortawesome/fontawesome-free/css/all.css'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'@fortawesome/fontawesome-free/js/all.js'</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="使用-FontAwesome-動畫-icons"><a href="#使用-FontAwesome-動畫-icons" class="headerlink" title="使用 FontAwesome 動畫 icons"></a>使用 FontAwesome 動畫 icons</h3><p>FontAwesome 官網中的文件有提到一種 Animating icons，只要加入此 icon 就會有動畫載入的效果 — <a href="https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons" target="_blank" rel="noopener">Animating icons</a>。<br>當然我們也可以控制 icons 的出現時機，方法和 vue-loading-overlay 相似，只是這邊我們是用 v-if 的方式來做，以下是程式碼：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-spinner fa-spin"</span> <span class="attr">v-if</span>=<span class="string">"status.fileUploading"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
