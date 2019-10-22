@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="CSS,SCSS,">
+  <meta name="keywords" content="Python,Crawler,">
 
 
 
@@ -79,22 +79,20 @@
 
 
 
-<meta name="description" content="文章目的我們在逛一些具有響應式設計的網站時，在較小裝置點開 offcanvas 的 menu 時會有類似遮罩效果出現在畫面上，此文章將用來記錄如何利用 css 做出一樣的效果。">
-<meta name="keywords" content="CSS,SCSS">
+<meta name="description" content="文章目的有鑑於最近在學習利用 python 爬蟲網頁特定資料，想藉由此篇文章做個紀錄。">
+<meta name="keywords" content="Python,Crawler">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用 CSS 做出 offcanvas 遮罩效果">
-<meta property="og:url" content="Hao.github.io/2019/08/22/CssMenuMask/index.html">
+<meta property="og:title" content="Python 爬蟲心得">
+<meta property="og:url" content="Hao.github.io/2019/10/22/Pythoncrawler/index.html">
 <meta property="og:site_name" content="Hao&#39;s The Front End world">
-<meta property="og:description" content="文章目的我們在逛一些具有響應式設計的網站時，在較小裝置點開 offcanvas 的 menu 時會有類似遮罩效果出現在畫面上，此文章將用來記錄如何利用 css 做出一樣的效果。">
+<meta property="og:description" content="文章目的有鑑於最近在學習利用 python 爬蟲網頁特定資料，想藉由此篇文章做個紀錄。">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://i.imgur.com/t4j5FN5.jpg">
-<meta property="og:image" content="https://i.imgur.com/tutiujp.png">
-<meta property="og:image" content="https://i.imgur.com/qNexvaJ.png">
-<meta property="og:updated_time" content="2019-09-04T07:44:46.000Z">
+<meta property="og:image" content="https://images.unsplash.com/photo-1555952494-efd681c7e3f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
+<meta property="og:updated_time" content="2019-10-22T12:40:17.486Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用 CSS 做出 offcanvas 遮罩效果">
-<meta name="twitter:description" content="文章目的我們在逛一些具有響應式設計的網站時，在較小裝置點開 offcanvas 的 menu 時會有類似遮罩效果出現在畫面上，此文章將用來記錄如何利用 css 做出一樣的效果。">
-<meta name="twitter:image" content="https://i.imgur.com/t4j5FN5.jpg">
+<meta name="twitter:title" content="Python 爬蟲心得">
+<meta name="twitter:description" content="文章目的有鑑於最近在學習利用 python 爬蟲網頁特定資料，想藉由此篇文章做個紀錄。">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1555952494-efd681c7e3f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
 
 
 
@@ -124,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="Hao.github.io/2019/08/22/CssMenuMask/">
+  <link rel="canonical" href="Hao.github.io/2019/10/22/Pythoncrawler/">
 
 
 
 
 
-  <title>利用 CSS 做出 offcanvas 遮罩效果 | Hao's The Front End world</title>
+  <title>Python 爬蟲心得 | Hao's The Front End world</title>
   
 
 
@@ -302,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/08/22/CssMenuMask/">
+    <link itemprop="mainEntityOfPage" href="Hao.github.io/2019/10/22/Pythoncrawler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hao">
@@ -319,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">利用 CSS 做出 offcanvas 遮罩效果</h1>
+          <h1 class="post-title" itemprop="name headline">Python 爬蟲心得</h1>
         
 
         <div class="post-meta">
@@ -331,8 +329,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-08-22T10:14:16+08:00">
-                2019-08-22
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-10-22T20:34:31+08:00">
+                2019-10-22
               </time>
             
 
@@ -354,8 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -391,23 +389,29 @@
       
 
       
-        <p><img src="https://i.imgur.com/t4j5FN5.jpg" alt></p>
-<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>我們在逛一些具有響應式設計的網站時，在較小裝置點開 offcanvas 的 menu 時會有類似遮罩效果出現在畫面上，此文章將用來記錄如何利用 css 做出一樣的效果。</p>
+        <p><img src="https://images.unsplash.com/photo-1555952494-efd681c7e3f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>有鑑於最近在學習利用 python 爬蟲網頁特定資料，想藉由此篇文章做個紀錄。</p>
 <a id="more"></a>
-<h2 id="本次示範-Demo"><a href="#本次示範-Demo" class="headerlink" title="本次示範 Demo"></a>本次示範 Demo</h2><p>這邊先附上要呈現的效果圖<br><strong>點擊漢堡選單前</strong><br><img src="https://i.imgur.com/tutiujp.png" alt><br><strong>點擊漢堡選單後</strong><br><img src="https://i.imgur.com/qNexvaJ.png" alt></p>
-<h2 id="效果分析"><a href="#效果分析" class="headerlink" title="效果分析"></a>效果分析</h2><p>其實遮罩並沒有想像中那麼難達成，基本上只需要設置一個佔滿螢幕大小的 <code>div</code> 並利用絕對定位就可以輕鬆達成。<br>遮罩的顏色我們可以根據背景色不同來做更換。</p>
-<h2 id="示範程式碼"><a href="#示範程式碼" class="headerlink" title="示範程式碼"></a>示範程式碼</h2><h3 id="遮罩製作"><a href="#遮罩製作" class="headerlink" title="遮罩製作"></a>遮罩製作</h3><p>我先做出一個包覆 menu 的區塊元素，並將其寬高設為裝置的寬高，程式碼如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aside</span> <span class="attr">class</span>=<span class="string">"side min-vh-100 min-vw-100"</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-class">.side</span>&#123;</span></span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    background-color: rgba($color:#696969, $alpha: 0.7);</span><br><span class="line"><span class="css">    <span class="selector-tag">transition</span>: <span class="selector-tag">all</span> <span class="selector-class">.3s</span>;</span></span><br><span class="line">    transform: translateX(100vw);</span><br><span class="line">    overflow: hidden;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>另外用絕對定位讓它脫離排版，並且利用 <code>transform</code> 將其隱藏。<br>步驟進行到這裡我們已經有個覆蓋裝置畫面的遮罩。</p>
-<h3 id="offcanvas-menu-設置"><a href="#offcanvas-menu-設置" class="headerlink" title="offcanvas menu 設置"></a>offcanvas menu 設置</h3><p>接著將 menu 的 <code>ul</code> <code>li</code> 寫入我們剛剛創的遮罩中，程式碼如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aside</span> <span class="attr">class</span>=<span class="string">"side min-vh-100 min-vw-100"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"liststyleNone p-0 m-0 px-2 offcanvas"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-times-circle cancel text-primary fa-2x"</span> @<span class="attr">click</span>=<span class="string">"closeOffcanvas"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"mt-5 d-flex justify-content-center p-0 m-0"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">"/login"</span> <span class="attr">class</span>=<span class="string">"mainNavbarBtn pt-2 h3"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-user mr-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>後台登入<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"mt-5 d-flex justify-content-center p-0 m-0"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"mainNavbarBtn pt-2 h3"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-ticket-alt mr-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>優惠卷<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-angle-down ml-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"mt-5 d-flex justify-content-center p-0 m-0"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"mainNavbarBtn pt-2 h3"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-shopping-cart mr-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>購物車<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-angle-down ml-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"my-5 d-flex justify-content-center p-0 m-0"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"mainNavbarBtn pt-2 h3"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-shopping-bag mr-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>全部商品<span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fas fa-angle-down ml-2"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"> <span class="selector-class">.offcanvas</span>&#123;</span></span><br><span class="line">    min-width: 50vw;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    right: 0;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    background-color: rgba($color: #DCDCDC, $alpha: 0.8);</span><br><span class="line"><span class="css">    <span class="selector-tag">overflow</span>: <span class="selector-tag">auto</span>  <span class="comment">/*加入此屬性才能讓內容改變時跟著自適應*/</span></span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>這邊我是設定 menu 的寬度為裝置的一半，同樣的利用絕對定位來決定它在遮罩上的位置。<br>最後我們只需要設置點擊漢堡選單與叉叉時為遮罩新增與移除 className 即可， class 的部分只需要修改遮罩 <code>transform</code> 的位置就會有出現與隱藏的效果。<br><strong>這裡有一點要注意的是若我們沒有在新增的 className 中寫入 <code>overflow: auto</code> 這個屬性會導致 offcanvas 不會出現滾動條在內容過多時，會無法順利觀看。</strong></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*遮罩新增的 className*/</span></span><br><span class="line"><span class="selector-class">.offcanvasShow</span>&#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(0);</span><br><span class="line">    <span class="attribute">overflow</span>: auto</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/281513/" target="_blank" rel="noopener">JS CSS實現彈出全屏灰黑色透明遮罩效果的方法</a></p>
+<h2 id="爬蟲目的"><a href="#爬蟲目的" class="headerlink" title="爬蟲目的"></a>爬蟲目的</h2><p>本次爬蟲目標是爛番茄網站–<a href="https://www.rottentomatoes.com/" target="_blank" rel="noopener">rottenTomatoes</a>，筆者要利用從資料庫抓出來的電影，去爛番茄做搜尋並爬回該電影的評分。</p>
+<h2 id="如何透過-python-連上特定網站並取回網站內容"><a href="#如何透過-python-連上特定網站並取回網站內容" class="headerlink" title="如何透過 python 連上特定網站並取回網站內容"></a>如何透過 python 連上特定網站並取回網站內容</h2><p>我們知道要抓取爛番茄網站資料就必須接上爛番茄的網站，這邊將介紹利用 requests 接上爛番茄的網站。<br>requests 是一個套件它會幫助我們從特定網站取回內容，亦可以將特定參數傳出，連結 API 也可以喔!!</p>
+<ul>
+<li>我們先在終端機輸入 <code>pip3 install request2</code>(python 3)，進行安裝，安裝完成後將其 import 到我們的 python 檔案中 <code>import requests</code>，做到這我們就可以開始著手抓網頁內容囉!</li>
+<li>宣告一個變數來儲存我們的網頁連結，如：<code>url = &#39;https://www.rottentomatoes.com/&#39; + str(movies_url)</code>，連結方面可以像範例這樣是個動態連結，因為我們要抓的資料會根據網址不同連結到不同的電影內容，因此加號後面就會帶入該電影名稱，<strong>當然這些規則還是要以你想爬蟲的網頁規則為主</strong>。</li>
+<li>再來我們宣告一個變數來儲存透過 requests 抓進來的網頁內容，如：<code>html = requests.get(url)</code>，這邊我們是利用 get 來抓取資料當然還有其他方法，像是 post 等。<br>我們可以利用下列語法確認連結是否成功：<br><code>py
+print(html.status_code) # 若為200代表成功</code><br>步驟進行到這我們已可以正確的連上我們的目標網站，在下一小節將會介紹如何從網站中抓出我們需要的資料。</li>
+</ul>
+<h2 id="利用-beautifulSoup-爬取網站特定資料"><a href="#利用-beautifulSoup-爬取網站特定資料" class="headerlink" title="利用 beautifulSoup 爬取網站特定資料"></a>利用 beautifulSoup 爬取網站特定資料</h2><p>我們要利用 beautifulSoup 這個套件來爬取特定資料。</p>
+<ul>
+<li>一樣打開我們的終端機輸入 <code>pip3 install beautifulSoup4</code>(python 3)，安裝完成後將它 import 進來 <code>from bs4 import BeautifulSoup</code>。</li>
+<li>我們宣告一個變數來儲存我們利用 BS 決定要抓取的網站內容(就是我們剛剛 GET 進來的網站)，如：<code>sp = BeautifulSoup(html.content, &#39;html.parser&#39;)</code> <strong>html 部分是我們前一步驟宣告的變數，記得要填入自己宣告的變數喔!!</strong></li>
+<li>透過 find 來抓取我們要的 tag 內容吧，基本上我們在爬蟲時是利用 find 來爬取要的資料，<strong>記得在 find 之前要先去該網頁觀看程式碼了解你要的內容是在哪個 tag 與哪個 className 下，或是觀察它是否是 api 傳進來的內容。</strong></li>
+<li>假設我們要的某個內容是在 <code>h1</code> 這個 tag 下那我們就可以這樣寫 <code>MONAME = sp.find(&#39;h1&#39;).contents[0].strip()</code>，find 將會找到並回傳第一個符合條件的 tag，我們再利用 <code>contents[0]</code> 將內容文字抓出， <code>strip()</code> 則是將抓出的文字前後空白地方刪除，<code>MONAME</code>這個變數就會幫我們儲存我們抓出來的資料，有了 find 接下來就要了解 find_all ， find_all 會將所有符合條件的 tag 都一併抓出，那如果說我們今天除了抓取 tag 還要抓取 tag 下特定的 className 呢？ 我們可以這樣寫： <code>ROTO_BASE = sp.find(&#39;small&#39;, class_= &#39;mop-ratings-wrap__text--small&#39;).contents[0].strip()</code>，如範例所寫我們就可以找到 <code>small</code> tag 下且 className 為 <code>mop-ratings-wrap__text--small</code> 的內容。<br>小提醒：<strong>很常我們抓出來的內容有些空白或符號是需要省略的，像是 strip() 就是幫助我們省略的語法，網路上關於省略有很多方法筆者就不多加敘述，你可以在遇到需省略的東西時針對該東西去找尋相關語法。</strong></li>
+</ul>
+<h2 id="若我要找的資料是-API-怎麼辦？"><a href="#若我要找的資料是-API-怎麼辦？" class="headerlink" title="若我要找的資料是 API 怎麼辦？"></a>若我要找的資料是 API 怎麼辦？</h2><p>若我們在找尋相關內容時發現程式碼找不到，那它極有可能是透過 api 傳送進來，我們就必須去尋找是哪支 api，我們可以利用 chrome 開發工具裡的 network 去尋找 api 網址，以爛番茄為例，它的搜尋結果頁面符合搜尋條件的電影列表就是透過 api 傳入的，因此筆者找出該 api 後將 api 抓資料透過 BS 抓取，以下是流程：<br><code>py
+url = &#39;https://www.rottentomatoes.com/api/private/v2.0/search?q=&#39;+ i + &#39;&amp;t=movie&amp;offset=0&amp;limit=30&#39; # i 是電影名稱
+r = requests.get(url)
+list_of_dicts = r.json()</code><br>這邊會發現一個不一樣的地方就是 <code>list_of_dicts</code> 原因是因為 api 格式有分成 json 和 xml，這邊爛番茄 api 資料是 json 因此多寫這段才能正確儲存資料，至於 xml 部分會比較麻煩，筆者建議參考這篇文章 — <a href="https://medium.com/datainpoint/python-essentials-requesting-web-api-edd417a57ba5" target="_blank" rel="noopener">輕鬆學習 Python：透過 API 擷取網站資料</a>。</p>
 
       
     </div>
@@ -425,9 +429,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/CSS/" rel="tag"># CSS</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/SCSS/" rel="tag"># SCSS</a>
+            <a href="/tags/Crawler/" rel="tag"># Crawler</a>
           
         </div>
       
@@ -440,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/21/CssBtnHoverSmallFeedback/" rel="next" title="利用 CSS 做出簡單的按鈕 hover 動畫回饋">
-                <i class="fa fa-chevron-left"></i> 利用 CSS 做出簡單的按鈕 hover 動畫回饋
+              <a href="/2019/09/26/OverlayScrollbars/" rel="next" title="如何自訂義 scrollbar -- Overlay Scrollbars 介紹">
+                <i class="fa fa-chevron-left"></i> 如何自訂義 scrollbar -- Overlay Scrollbars 介紹
               </a>
             
           </div>
@@ -449,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/29/CSStips/" rel="prev" title="CSS 小技巧紀錄園地">
-                CSS 小技巧紀錄園地 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -600,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本次示範-Demo"><span class="nav-number">2.</span> <span class="nav-text">本次示範 Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果分析"><span class="nav-number">3.</span> <span class="nav-text">效果分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示範程式碼"><span class="nav-number">4.</span> <span class="nav-text">示範程式碼</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#遮罩製作"><span class="nav-number">4.1.</span> <span class="nav-text">遮罩製作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#offcanvas-menu-設置"><span class="nav-number">4.2.</span> <span class="nav-text">offcanvas menu 設置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考資料"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬蟲目的"><span class="nav-number">2.</span> <span class="nav-text">爬蟲目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何透過-python-連上特定網站並取回網站內容"><span class="nav-number">3.</span> <span class="nav-text">如何透過 python 連上特定網站並取回網站內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-beautifulSoup-爬取網站特定資料"><span class="nav-number">4.</span> <span class="nav-text">利用 beautifulSoup 爬取網站特定資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#若我要找的資料是-API-怎麼辦？"><span class="nav-number">5.</span> <span class="nav-text">若我要找的資料是 API 怎麼辦？</span></a></li></ol></div>
             
 
           </div>

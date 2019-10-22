@@ -88,7 +88,7 @@
 <meta property="og:description" content="文章目的有鑑於在練習前端過程中，會遇到一些好用的 css 程式碼來呈現需要的網頁效果，但因為只是小技巧，不適合寫成一篇文章，因此利用此文章來為這些小技巧做個紀錄。">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://images.unsplash.com/photo-1523540939399-141cbff6a8d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
-<meta property="og:updated_time" content="2019-08-29T06:26:08.000Z">
+<meta property="og:updated_time" content="2019-10-22T12:42:56.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS 小技巧紀錄園地">
 <meta name="twitter:description" content="文章目的有鑑於在練習前端過程中，會遇到一些好用的 css 程式碼來呈現需要的網頁效果，但因為只是小技巧，不適合寫成一篇文章，因此利用此文章來為這些小技巧做個紀錄。">
@@ -397,6 +397,16 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type='number']</span><span class="selector-pseudo">::-webkit-inner-spin-button</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type='number']</span><span class="selector-pseudo">::-webkit-outer-spin-button</span> &#123;</span><br><span class="line"><span class="attribute">-webkit-appearance</span>: none;</span><br><span class="line"><span class="attribute">margin</span>: <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
 <p>這樣我們就可以達到隱藏箭頭的效果囉。<br><strong>參考文章</strong> — <a href="https://stackoverflow.com/questions/23715881/center-text-in-html-number-input" target="_blank" rel="noopener">Center text in html number input</a></p>
+<h2 id="如何不依賴套件製作-x-軸滾動"><a href="#如何不依賴套件製作-x-軸滾動" class="headerlink" title="如何不依賴套件製作 x 軸滾動"></a>如何不依賴套件製作 x 軸滾動</h2><p>有時候會因為網頁效果需要我們要將某部分區域做成僅有 x 軸滾動效果，而非預設的 y 軸滾動，在不依賴套件的情況下，該如何達到目的？筆者將在此文章中分享自己的方法。</p>
+<h3 id="效果介紹"><a href="#效果介紹" class="headerlink" title="效果介紹"></a>效果介紹</h3><p>首先，我們要有一個認知在我們固定一個區域的寬高之後(通常是 div)，裡面的內容會觸發 <code>overflow</code> 這個屬性，並且我們知道 html 中預設 overflow 發生時 div 通常會是 y 軸滾動來讓使用者查看超出的內容，但今天我們不想要這個預設效果，我們 overflow 的內容想改成 x 軸滾動來查看，這就是我們這次的目的。</p>
+<h3 id="css-說明"><a href="#css-說明" class="headerlink" title="css 說明"></a>css 說明</h3><p>了解了原理，接下來就來看看程式碼吧，我們先看程式碼筆者再來做講解：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"recommandArea"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span> <span class="attr">style</span>=<span class="string">"width: 18rem;"</span> <span class="attr">v-for</span>=<span class="string">"(item, index) in recommand"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">"card-title"</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h6</span> <span class="attr">class</span>=<span class="string">"card-subtitle mb-2 text-muted"</span>&gt;</span>Card subtitle<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"card-text"</span>&gt;</span>Some quick example text to build on the card title and make up the bulk of the card's content.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"card-link"</span>&gt;</span>Card link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"card-link"</span>&gt;</span>Another link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的 html 程式碼是筆者想要在 section 中創造出複數個 bootstrap 4 的卡片元件(<strong>這邊是利用 v-for 達到，不懂這個沒關係，只要知道 section 中會產生複數個卡片元件即可。</strong>)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.recommandArea</span> &#123;</span><br><span class="line">    <span class="attribute">overflow-x</span>: scroll;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>; <span class="comment">/*寬度為100%的裝置寬*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.card</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">white-space</span>: normal</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接著我們來看看 css 的部分，因為我們需要 x 軸滾動效果，所以需要定義 section 的寬度，因為我們是要 x 軸滾動因此下 <code>overflow-x: scroll</code> 達到目的。<br><strong>接著最重要的來了，我們必須下 <code>white-space: nowrap</code>讓文字元素不能換行，此目的是為了讓內容可以 overflow，但今天我們要 overflow 的卡片是 div 元素，所以我們透過 <code>display: inline-block</code> 來改變它，這樣子它就可以吃到 <code>white-space: nowrap</code> 的效果囉!!</strong><br>步驟進行到這裡，應該就會有一個僅有x軸滾動的卡片列表囉!!!</p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a href="https://stackoverflow.com/questions/13925284/horizontal-scrollbar" target="_blank" rel="noopener">horizontal scrollbar</a><br><a href="https://stackoverflow.com/questions/443700/div-with-horizontal-scrolling-only" target="_blank" rel="noopener">Div with horizontal scrolling only</a></p>
 
       
     </div>
@@ -518,7 +528,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -529,7 +539,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -540,7 +550,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -589,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#input-number-隱藏預設加減箭頭方法"><span class="nav-number">2.</span> <span class="nav-text">input number 隱藏預設加減箭頭方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#input-number-隱藏預設加減箭頭方法"><span class="nav-number">2.</span> <span class="nav-text">input number 隱藏預設加減箭頭方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何不依賴套件製作-x-軸滾動"><span class="nav-number">3.</span> <span class="nav-text">如何不依賴套件製作 x 軸滾動</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#效果介紹"><span class="nav-number">3.1.</span> <span class="nav-text">效果介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css-說明"><span class="nav-number">3.2.</span> <span class="nav-text">css 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#參考資料"><span class="nav-number">3.3.</span> <span class="nav-text">參考資料</span></a></li></ol></li></ol></div>
             
 
           </div>
