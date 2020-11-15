@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>Hao.github.io/2019/09/08/Vuex/</loc>
+    
+    <lastmod>2020-11-14T12:13:31.277Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>Hao.github.io/2020/09/02/ReactLearning1/</loc>
     
     <lastmod>2020-09-02T00:56:20.706Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>Hao.github.io/2019/09/13/Prototype/</loc>
     
     <lastmod>2019-09-13T08:20:03.151Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>Hao.github.io/2019/09/08/Vuex/</loc>
-    
-    <lastmod>2019-09-09T07:48:06.891Z</lastmod>
     
   </url>
   
