@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的在做今年的 THE F2E 第一週番茄鐘時，遇到最大難題就是要做一個隨時間逐漸填滿的同心圓，想藉由此文章為製作流程做個紀錄。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何做出會隨時間變化的同心圓？">
+<meta property="og:url" content="https://hao1229.github.io/2019/09/06/concentricCircle/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的在做今年的 THE F2E 第一週番茄鐘時，遇到最大難題就是要做一個隨時間逐漸填滿的同心圓，想藉由此文章為製作流程做個紀錄。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1507576566681-1932a6a38099?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80">
+<meta property="og:image" content="https://i.imgur.com/TEazPyu.png">
+<meta property="og:image" content="https://i.imgur.com/NpZ7gaR.png">
+<meta property="article:published_time" content="2019-09-06T01:49:34.000Z">
+<meta property="article:modified_time" content="2020-12-05T11:38:28.121Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="Vue.js">
+<meta property="article:tag" content="THE F2E">
+<meta property="article:tag" content="scss">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1507576566681-1932a6a38099?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/09/06/concentricCircle/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>如何做出會隨時間變化的同心圓？ | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/09/06/concentricCircle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何做出會隨時間變化的同心圓？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-09-06 09:49:34" itemprop="dateCreated datePublished" datetime="2019-09-06T09:49:34+08:00">2019-09-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 19:38:28" itemprop="dateModified" datetime="2020-12-05T19:38:28+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/THE-F2E/" itemprop="url" rel="index"><span itemprop="name">THE F2E</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1507576566681-1932a6a38099?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>在做今年的 THE F2E 第一週番茄鐘時，遇到最大難題就是要做一個隨時間逐漸填滿的同心圓，想藉由此文章為製作流程做個紀錄。</p>
+<a id="more"></a>
+
+<h2 id="開發思維"><a href="#開發思維" class="headerlink" title="開發思維"></a>開發思維</h2><p>同心圓內圓與外圓之間是有間隔的，隨時間倒數間隔會逐漸填滿，示意圖如下：<br><img src="https://i.imgur.com/TEazPyu.png"></p>
+<p><img src="https://i.imgur.com/NpZ7gaR.png"></p>
+<p>我的想法是用3個圓去達成效果：</p>
+<ul>
+<li>第一個圓在最外圍負責最外圍的 border 顯示。</li>
+<li>第二個圓就是兩圓之間的間隔，它會隨時間變色進而達到效果。</li>
+<li>第三個圓就是內圓，與第一個圓有大小差距，進而產生間隔效果。</li>
+</ul>
+<h2 id="SVG-與-Stroke-介紹"><a href="#SVG-與-Stroke-介紹" class="headerlink" title="SVG 與 Stroke 介紹"></a>SVG 與 Stroke 介紹</h2><p>在這次效果製作中，這兩者扮演了很重要的角色，因此先來為它們做個簡單介紹。</p>
+<ul>
+<li>SVG 是向量標籤，我們可以在向量標籤裡透過座標的方式畫出不同的圖案。</li>
+<li>Stroke 是 SVG 的一種屬性，它代表邊框的意思，它總共有5種屬性：<ul>
+<li>stroke：邊框顏色</li>
+<li>stroke-width：邊框寬度</li>
+<li>stroke-dasharray：虛線</li>
+<li>stroke-linecap：邊框端點的屬性 ( butt ( 預設 )、square、round )  —本次開發不會用到</li>
+<li>strkoe-linejoin：邊框接合尖角的屬性 ( miter ( 預設 )、round、bevel ) —本次開發不會用到</li>
+</ul>
+</li>
+</ul>
+<h2 id="開發流程"><a href="#開發流程" class="headerlink" title="開發流程"></a>開發流程</h2><h3 id="畫出前兩個同心圓"><a href="#畫出前兩個同心圓" class="headerlink" title="畫出前兩個同心圓"></a>畫出前兩個同心圓</h3><p>我們先創造一個 SVG 標籤並且在裡面畫出一個圓，SVG 就是我們的第一個圓，SVG 裡的圓就是我們的第二個圓。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">style</span>=<span class="string">&quot;transform:rotate(-90deg);width:540px;height:540px;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rounded-circle&quot;</span>&gt;</span></span><br><span class="line">    circle cx=&#x27;270&#x27; cy=&#x27;270&#x27; r=&#x27;135&#x27; fill=&#x27;none&#x27;&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這邊我定義了外圓 SVG 的長寬(540px)，並令它呈現圓形(<code>rounded-circle</code>)，內部 <code>circle</code> 方面則是畫出大小是外圓的一半的圓，至於外圓的 SVG 再記得給它畫 border線即可。<br>先為 <code>circle</code> 裡的屬性做個解釋：</p>
+<ul>
+<li>cx：圓心的 x 座標</li>
+<li>cy：圓心的 y 座標</li>
+<li>r：圓的半徑</li>
+<li>fill：填色</li>
+</ul>
+<p><strong>因為我是要做出同心圓所以 cx 和 cy 的座標就是外圓的圓心位置。</strong></p>
+<h3 id="利用-stroke-做出填色效果"><a href="#利用-stroke-做出填色效果" class="headerlink" title="利用 stroke 做出填色效果"></a>利用 stroke 做出填色效果</h3><p>我們將 stroke 屬性下在 <code>circle</code> 裡，因為要做效果的是第二個圓<br>前面有提到 stroke-width 可以控制邊框的寬度，在這邊我們就設定成 270px 讓它可以填滿第二個圓，並利用 stroke 設定邊框顏色。<br>做到這裡重點來了，我們將利用 stroke-dasharray 和 stroke-dashoffset 來做出效果。</p>
+<ul>
+<li>stroke-dasharray 是我們的虛線，假設我們設定 <code>stroke-dasharray=&quot;60&quot;</code>，呈現出的效果會是 60px 的虛線跟 60px 的空格一組一組呈現。</li>
+<li>stroke-dashoffset 則會推移我們的虛線，假設我們設定 <code>stroke-dashoffset=&quot;40&quot;</code>，第一個虛線就會僅剩 20px 後面的循環則是正常進行。<br>利用這兩個性質，將 stroke-dasharray 動態綁定到 Vue.js 裡的一個函數，綁定的函數負責幫我們算出圓周長並回傳給我們，因此 stroke-dasharray 就會是我們的圓周長。<br>第一個虛線就是整個圓周代表一開始虛線就會填滿整個圓，所以我們就要控制 stroke-dashoffset 讓它來決定虛線出現的大小。<br>我們一樣將 stroke-dashoffset 動態綁定到 Vue.js 的另一個函數，這個函數會幫我們算出符合的 stroke-dashoffset 回傳給我們。<br>講到這裡是不是茫了，沒關係我們來看看程式碼就會知道是怎麼回事。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">style</span>=<span class="string">&quot;transform:rotate(-90deg);width:540px;height:540px;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;rounded-circle&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&#x27;270&#x27;</span> <span class="attr">cy</span>=<span class="string">&#x27;270&#x27;</span> <span class="attr">r</span>=<span class="string">&#x27;135&#x27;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;270&quot;</span> <span class="attr">:stroke-dasharray</span>=<span class="string">&#x27;strokeDasharray(135)&#x27;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">:stroke-dashoffset</span>=<span class="string">&#x27;strokeDashoffset(135,Math.min(1,startTime/setTime))&#x27;</span> <span class="attr">fill</span>=<span class="string">&#x27;none&#x27;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<code>Math.min(1,startTime/setTime)</code> ，startTime 和 setTime 是我自定義的變數，分別代表進行中的時間(startTime)與設定的時間(setTime)，Math.min 會回傳數列中的最小值。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 透過傳遞半徑給此函數，算出圓周長後回傳</span></span><br><span class="line">strokeDasharray:<span class="function"><span class="keyword">function</span>(<span class="params">r</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> r * <span class="number">2</span> * <span class="built_in">Math</span>.PI;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 傳遞半徑和 Math.min() 參數後，算出現在剩餘的時間屬於圓周長的幾分之幾並回傳</span></span><br><span class="line">strokeDashoffset:<span class="function"><span class="keyword">function</span>(<span class="params">r,el</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">this</span>.strokeDasharray(r) * el );</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+看完程式碼之後有沒有比較清楚了，startTime 一直在減少，所以我們會一直將它與 setTime 的比值傳給我們的函數，函數會算出剩餘時間是圓周長的幾分之幾，並將其回傳，這就會是我們的 stroke-dashoffset 。<br>簡單來講，這個方法就是透過 stroke-dashoffset 的推移來控制 stroke-dasharray 的出現。</li>
+</ul>
+<h3 id="製作第三個圓"><a href="#製作第三個圓" class="headerlink" title="製作第三個圓"></a>製作第三個圓</h3><p>至於，第三個圓就是為了讓它幫助我們擋住第二個圓多餘的部分，因為我們的 stroke 會填滿整個圓，如果不加上第三個圓就無法呈現出只有部分填滿的視覺效果。<br>第三個圓做法我就不多敘述，簡單來說，第三個圓圓心位置要跟前兩個圓一樣，在開發時我是用絕對定位做到這一點，再把它的長寬設定相較前兩個圓小即可。</p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201406/svg-06-stroke.html">SVG 研究之路 (6) - stroke 邊框</a><br><a target="_blank" rel="noopener" href="https://wcc723.github.io/svg/2014/06/15/svg-css-stroke-animation/">CSS + SVG stroke 動態描繪</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+              <a href="/tags/THE-F2E/" rel="tag"># THE F2E</a>
+              <a href="/tags/scss/" rel="tag"># scss</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/04/VueCli3EnvVar/" rel="prev" title="Vue Cli 3 環境變數設定">
+      <i class="fa fa-chevron-left"></i> Vue Cli 3 環境變數設定
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/07/VueCli3Insatll/" rel="next" title="Vue Cli 3 安裝與創建專案">
+      Vue Cli 3 安裝與創建專案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E7%99%BC%E6%80%9D%E7%B6%AD"><span class="nav-number">2.</span> <span class="nav-text">開發思維</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVG-%E8%88%87-Stroke-%E4%BB%8B%E7%B4%B9"><span class="nav-number">3.</span> <span class="nav-text">SVG 與 Stroke 介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%96%8B%E7%99%BC%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">開發流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%95%AB%E5%87%BA%E5%89%8D%E5%85%A9%E5%80%8B%E5%90%8C%E5%BF%83%E5%9C%93"><span class="nav-number">4.1.</span> <span class="nav-text">畫出前兩個同心圓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-stroke-%E5%81%9A%E5%87%BA%E5%A1%AB%E8%89%B2%E6%95%88%E6%9E%9C"><span class="nav-number">4.2.</span> <span class="nav-text">利用 stroke 做出填色效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%BD%E4%BD%9C%E7%AC%AC%E4%B8%89%E5%80%8B%E5%9C%93"><span class="nav-number">4.3.</span> <span class="nav-text">製作第三個圓</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

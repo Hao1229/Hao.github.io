@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的最近開始利用 Vue.js 實戰練習電商網站的開發，想藉由一系列的文章，來整理相關的重點技術。本篇重點為利用 Vue Cli 接取 API 並且將 API 設定為環境變數。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js 電商練習技術整理 -- 接取API與設定環境變數">
+<meta property="og:url" content="https://hao1229.github.io/2019/07/29/EcommercePractice1/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的最近開始利用 Vue.js 實戰練習電商網站的開發，想藉由一系列的文章，來整理相關的重點技術。本篇重點為利用 Vue Cli 接取 API 並且將 API 設定為環境變數。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta property="article:published_time" content="2019-07-29T01:33:45.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:38:45.089Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="Vue.js">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="E-commerce">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/07/29/EcommercePractice1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vue.js 電商練習技術整理 -- 接取API與設定環境變數 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/07/29/EcommercePractice1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue.js 電商練習技術整理 -- 接取API與設定環境變數
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-07-29 09:33:45" itemprop="dateCreated datePublished" datetime="2019-07-29T09:33:45+08:00">2019-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:38:45" itemprop="dateModified" datetime="2020-12-05T20:38:45+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/el9rgW2.jpg"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>最近開始利用 Vue.js 實戰練習電商網站的開發，想藉由一系列的文章，來整理相關的重點技術。<br>本篇重點為利用 Vue Cli 接取 API 並且將 API 設定為環境變數。</p>
+<a id="more"></a>
+<h2 id="環境檔案介紹"><a href="#環境檔案介紹" class="headerlink" title="環境檔案介紹"></a>環境檔案介紹</h2><p>一般來講，安裝完 Vue Cli 後，打開 config 資料夾，會看到裡面有3個環境設定檔。<br>分別是：</p>
+<ul>
+<li>index.js – 針對整個環境進行編譯</li>
+<li>dev.env.js – 開發中的環境變數</li>
+<li>prod.env.js – 正式的環境變數</li>
+</ul>
+<p>那為什麼要特別分成開發中與正式版本呢？<br>因為往往在<strong>開發時接取的 API 路徑會與 正式版本不同</strong>，因此我們可以透過兩個檔案分開各自定義環境變數，以方便操作。</p>
+<h2 id="Vue-axios-安裝"><a href="#Vue-axios-安裝" class="headerlink" title="Vue axios 安裝"></a>Vue axios 安裝</h2><p>既然我們本次的重點是要接取 API，這邊提供一個接取 API 的套件 — <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/vue-axios">Vue axios</a><br>安裝與設置方面這邊就不多加敘述，連結的官方文件上都有說明。</p>
+<h2 id="接取-API"><a href="#接取-API" class="headerlink" title="接取 API"></a>接取 API</h2><p>有了 Vue axios 後我們就可以開始接取 API。<br>我們來到 App.vue，設定 created 時將 API 資料抓進來，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">&#x27;App&#x27;</span>,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="keyword">const</span> api = <span class="string">&#x27;輸入你的API網址&#x27;</span></span><br><span class="line">    <span class="built_in">this</span>.$http.get(api).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(response.data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="將-API-網址設定成環境變數"><a href="#將-API-網址設定成環境變數" class="headerlink" title="將 API 網址設定成環境變數"></a>將 API 網址設定成環境變數</h2><p>用了上述方法接取 API 我們無法靈活的運用它，且無法讓它在開發環境與正式環境做區分。<br>因此現在<strong>我們要將 API 網址設定成環境變數，並透過呼叫變數來使用它</strong>(本次範例設定在開發環境)。</p>
+<ol>
+<li>我們來到 config 資料夾底下的 dev.env.js，宣告新的環境變數定義我們的 API 路徑，以下是程式碼：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = merge(prodEnv, &#123;</span><br><span class="line">  NODE_ENV: <span class="string">&#x27;&quot;development&quot;&#x27;</span>,</span><br><span class="line">  APIPATH: <span class="string">&#x27;&quot;你的 API 路徑&quot;&#x27;</span>,  <span class="comment">//變數名稱可自己定義，一般來說都是用大寫英文命名</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>這邊有一點要注意，宣告的變數在插入路徑時，記得要再用一次引號包覆路徑。</strong><br>2. 定義完環境變數後，我們回到 App.vue，將我們剛剛的路徑改成用環境變數，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">&#x27;App&#x27;</span>,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="keyword">const</span> api = <span class="string">`<span class="subst">$&#123;process.env.APIPATH&#125;</span>`</span></span><br><span class="line">    <span class="built_in">this</span>.$http.get(api).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(response.data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>呼叫環境變數的方法：<code>process.env.環境變數</code>。</p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.hexschool.com/vue/">六角學院課程–Vue 出一個電商網站</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/E-commerce/" rel="tag"># E-commerce</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/25/freecell/" rel="prev" title="The F2E Freecell Part 1">
+      <i class="fa fa-chevron-left"></i> The F2E Freecell Part 1
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/29/EcommercePractice2/" rel="next" title="Vue.js 電商練習技術整理 -- 載入Bootsrap 4 套件，且自定義樣式">
+      Vue.js 電商練習技術整理 -- 載入Bootsrap 4 套件，且自定義樣式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E6%AA%94%E6%A1%88%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">環境檔案介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-axios-%E5%AE%89%E8%A3%9D"><span class="nav-number">3.</span> <span class="nav-text">Vue axios 安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%96-API"><span class="nav-number">4.</span> <span class="nav-text">接取 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%87-API-%E7%B6%B2%E5%9D%80%E8%A8%AD%E5%AE%9A%E6%88%90%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="nav-number">5.</span> <span class="nav-text">將 API 網址設定成環境變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

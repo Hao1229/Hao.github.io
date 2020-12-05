@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The F2E Freecell Part 1">
+<meta property="og:url" content="https://hao1229.github.io/2019/07/25/freecell/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/ENE1GPj.png">
+<meta property="article:published_time" content="2019-07-25T06:48:34.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:48:51.161Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="THE F2E">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/ENE1GPj.png">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/07/25/freecell/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>The F2E Freecell Part 1 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/07/25/freecell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The F2E Freecell Part 1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-07-25 14:48:34" itemprop="dateCreated datePublished" datetime="2019-07-25T14:48:34+08:00">2019-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:48:51" itemprop="dateModified" datetime="2020-12-05T20:48:51+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/THE-F2E/" itemprop="url" rel="index"><span itemprop="name">THE F2E</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/ENE1GPj.png"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>有鑑於本周 THE F2E 的新接龍有許多邏輯方面的設計，想藉由本篇將開發邏輯記錄下來，另外也想嘗試發布部落格，因此將本篇當作第一篇文章。</p>
+<a id="more"></a>
+<h2 id="本次使用技術"><a href="#本次使用技術" class="headerlink" title="本次使用技術"></a>本次使用技術</h2><ol>
+<li>Bootsrap 4 </li>
+<li>Scss</li>
+<li>JavaScript 原生語法<br>原本是想用 Vue 開發，後來覺得應該用原生語法也不致於太難，但做到一半就開始後悔怎麼沒有 Vue (因為方便好多XD)。<br>這次使用原生語法就當作加強自己的觀念，也很感謝有<strong>懷恩老師的直播開發流程</strong>(文章最後會附上連結)，沒有老師的直播我應該會卡關到懷疑人生。</li>
+</ol>
+<h2 id="新接龍初步分析"><a href="#新接龍初步分析" class="headerlink" title="新接龍初步分析"></a>新接龍初步分析</h2><p>新接龍規則部分我們這邊就不多加解釋，附上 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E6%96%B0%E6%8E%A5%E9%BE%8D">遊戲規則</a>。<br>新接龍總共分為3塊遊戲區，分別是：</p>
+<ol>
+<li>完成區(左上角，共4格)</li>
+</ol>
+<ul>
+<li>只能同花色堆疊</li>
+<li>數字要由小到大按順序堆疊</li>
+<li>堆疊完成的牌不需要再被拖曳</li>
+</ul>
+<ol start="2">
+<li>暫存區(右上角，共4格)</li>
+</ol>
+<ul>
+<li>每個空格只能存放一張卡片</li>
+<li>空格裡的卡片可以再被拖曳至完成區或未整理區</li>
+</ul>
+<ol start="3">
+<li>未整理區(下方，共7排，左4排初始7張，右4排初始6張)</li>
+</ol>
+<ul>
+<li>只能異色堆疊</li>
+<li>數字要由小到大按順序堆疊</li>
+<li>空排要能放牌且不限數字</li>
+<li>此區卡片可以被拖曳至暫存區與完成區</li>
+</ul>
+<p>有了這樣初步的了解，我們可以開始來了解 JS 的語法。<br>切版部分本文章不會提到，我是利用 Bootstrap 4 和一些 SCSS 來完成切版。</p>
+<h2 id="變數宣告與各區域陣列分配"><a href="#變數宣告與各區域陣列分配" class="headerlink" title="變數宣告與各區域陣列分配"></a>變數宣告與各區域陣列分配</h2><p>首先，宣告一個變數來決定遊戲是否暫停，後續的一些功能處裡，暫停遊戲都會影響到，以下是程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isgamePause = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>我們可以將完成區看成一個區域，暫存區看成一個區域，未整理區看成一個區域，因此這裡變數可以這樣設計：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> finishArea = [[], [], [], []]; <span class="comment">//完成區域左上角</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> temporaryArea = [[], [], [], []]; <span class="comment">//卡片暫放區(每一格只能放一張)右上角</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> maingameArea = [ <span class="comment">//未整理區共8排</span></span><br><span class="line">    [], <span class="comment">//7張</span></span><br><span class="line">    [], <span class="comment">//7張</span></span><br><span class="line">    [], <span class="comment">//7張</span></span><br><span class="line">    [], <span class="comment">//7張</span></span><br><span class="line">    [], <span class="comment">//6張</span></span><br><span class="line">    [], <span class="comment">//6張</span></span><br><span class="line">    [], <span class="comment">//6張</span></span><br><span class="line">    [] <span class="comment">//6張</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>每個大區域就是一個陣列，每個大區域裡的每一個空格就是一個陣列。<br>另外因為我是用 Bootstrap 4 的格線系統做排版，我為了方便設計，將未整理區又分為左右7張與6張兩區，變數宣告如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cardbigGroup = [[], []];</span><br></pre></td></tr></table></figure>
+
+<h2 id="隨機發牌"><a href="#隨機發牌" class="headerlink" title="隨機發牌"></a>隨機發牌</h2><p>接下來我們來設計隨機發牌，讓系統可以在遊戲開始時隨機發牌到未整理區的陣列裡，而且按照7張、6張的規則排列。</p>
+<ul>
+<li><p>撲克牌總共有52張，因此我們就用1~52的數字當作我們的牌，這裡我們宣告一個陣列將1~52的數字儲存進去。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用 for 迴圈</span></span><br><span class="line"> <span class="keyword">let</span> pokerArr = []; </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">52</span>; i++) &#123;</span><br><span class="line">        pokerArr.push(i + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//利用 Array.from 和 Array.map</span></span><br><span class="line"><span class="keyword">let</span> pokerArr =<span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">52</span>)).map(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123; </span><br><span class="line">    <span class="keyword">return</span> index+<span class="number">1</span> </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>接著要<strong>將陣列的52個數字打亂</strong>，這邊我用的方法是 shuffle，有關 shuffle 相關介紹可參考<a target="_blank" rel="noopener" href="http://shubo.io/javascript-random-shuffle/"><strong>這篇</strong></a>，以下是程式碼。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = array.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">let</span> j = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (i + <span class="number">1</span>));</span><br><span class="line">            [array[i], array[j]] = [array[j], array[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> array;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> pokerRandom = shuffle(pokerArr);</span><br></pre></td></tr></table></figure></li>
+<li><p>我們已成功打亂數字，接著就是要<strong>將數字按照規則排列</strong>，我們一開始宣告的<code>maingameArea</code>就派上用場了，我們可以按照規則將數字一一塞入<code>maingameArea</code>的陣列裡，以下是程式碼。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mainpokerArr</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> randomarrNum = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">8</span>);</span><br><span class="line">       <span class="keyword">if</span> (randomarrNum &lt;= <span class="number">3</span>) &#123;</span><br><span class="line">           <span class="keyword">if</span> (maingameArea[randomarrNum].length &gt;= <span class="number">7</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> mainpokerArr()</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">if</span> (maingameArea[randomarrNum].length &gt;= <span class="number">6</span>) &#123;</span><br><span class="line">               <span class="keyword">return</span> mainpokerArr()</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> randomarrNum;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>這段程式碼的想法是因為<code>maingameArea</code>總共有8個陣列，從左到右的索引號是0~7，因此我們利用<code>randomarrNum</code>來隨機選出一個索引號。<br>透過判斷式讓索引號為0~3時陣列長度維持為7張，索引號為4~7時長度維持為6張。<br>現在我們有了符合規則的發牌方法，接下來就要將牌一一放進陣列裡，以下是程式碼。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pokerRandom.map(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> runmainpokerArr = mainpokerArr();</span><br><span class="line">       maingameArea[runmainpokerArr].push(item);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<p>這裡讓未整理區<code>maingameArea</code>透過我們剛剛設計的發牌函式<code>mainpokerArr()</code>將我們剛打亂的陣列<code>pokerRandom</code>裡的數字放入未整理區的8個陣列裡。<br>這邊因為我自己的設計關係，我再把<code>maingameArea</code>裡的8個陣列，分為4個一組放入更大的陣列<code>cardbigGroup</code>，以下是程式碼。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">maingameArea.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (index &lt;= <span class="number">3</span>) &#123;</span><br><span class="line">           cardbigGroup[<span class="number">0</span>].push(item);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           cardbigGroup[<span class="number">1</span>].push(item)</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隨機發牌的資料都按照規則整理完畢了，我們接下來要做的就是<strong>讓牌可以渲染到畫面上</strong>。<br>首先，因為我們的數字是1~52，但系統並不知道花色，因此我們要先來定義花色，以下是程式碼。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">judgeColor</span>(<span class="params">cardNum</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (cardNum &gt;= <span class="number">1</span> &amp;&amp; cardNum &lt;= <span class="number">13</span>) &#123;  <span class="comment">//1~13是黑桃</span></span><br><span class="line">           <span class="keyword">return</span> <span class="string">&#x27;spade&#x27;</span></span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cardNum &gt;= <span class="number">14</span> &amp;&amp; cardNum &lt;= <span class="number">26</span>) &#123; <span class="comment">//14~26是紅心</span></span><br><span class="line">           <span class="keyword">return</span> <span class="string">&#x27;heart&#x27;</span></span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cardNum &gt;= <span class="number">27</span> &amp;&amp; cardNum &lt;= <span class="number">39</span>) &#123; <span class="comment">//27~39是方塊</span></span><br><span class="line">           <span class="keyword">return</span> <span class="string">&#x27;diamond&#x27;</span></span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cardNum &gt;= <span class="number">40</span> &amp;&amp; cardNum &lt;= <span class="number">52</span>) &#123; <span class="comment">//40~52是梅花</span></span><br><span class="line">           <span class="keyword">return</span> <span class="string">&#x27;club&#x27;</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+<p>花色也定義完成後，我們就要正式選渲染畫面，因為是原生語法關係，我們利用 <code>createElement</code> 和 <code>appendChild</code> 來做渲染，因為程式碼較多，先來看看完整程式碼，我再根據每個部份做解釋。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> gamingArea = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;gamingArea&#x27;</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">putCard</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     cardbigGroup.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">section, sectionNum</span>) </span>&#123;</span><br><span class="line">         <span class="keyword">let</span> cardbiggroupPart = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">         cardbiggroupPart.className = <span class="string">&#x27;col-6 d-flex w-100&#x27;</span>;</span><br><span class="line">         gamingArea.appendChild(cardbiggroupPart);</span><br><span class="line">         section.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">             <span class="keyword">let</span> cardGroup = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">             cardGroup.className = <span class="string">&#x27;relative w-100&#x27;</span>;</span><br><span class="line">             cardGroup.style.height = <span class="string">&#x27;600px&#x27;</span></span><br><span class="line">             cardGroup.group = index;</span><br><span class="line">             cardGroup.section = sectionNum;</span><br><span class="line">             cardbiggroupPart.appendChild(cardGroup)</span><br><span class="line">             item.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">el, num</span>) </span>&#123;</span><br><span class="line">                 <span class="keyword">let</span> oneCard = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">                 oneCard.className = <span class="string">&#x27;cardArea absolute&#x27;</span>;</span><br><span class="line">                 <span class="keyword">if</span> (!isRefresh) &#123;</span><br><span class="line">                     oneCard.style.transition = <span class="string">&#x27;all .3s&#x27;</span></span><br><span class="line">                     oneCard.style.top = <span class="string">&#x27;-1000px&#x27;</span>;</span><br><span class="line">                     oneCard.style.left = <span class="string">&#x27;-2000px&#x27;</span>;</span><br><span class="line">                     <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                         oneCard.style.top = num * <span class="number">30</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                         oneCard.style.left = <span class="string">&#x27;0px&#x27;</span></span><br><span class="line">                     &#125;, index * num * <span class="number">30</span>)</span><br><span class="line">                 &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                     oneCard.style.top = num * <span class="number">30</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                     oneCard.style.left = <span class="string">&#x27;0px&#x27;</span></span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">let</span> cardImg = <span class="built_in">document</span>.createElement(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line">                 cardImg.draggable = <span class="literal">false</span></span><br><span class="line">                 cardImg.card = el;</span><br><span class="line">                 cardImg.section = sectionNum;</span><br><span class="line">                 cardImg.group = index;</span><br><span class="line">                 cardImg.color = judgeColor(el)</span><br><span class="line">                 cardImg.src = <span class="string">`pokerimg/card-<span class="subst">$&#123;judgeColor(el)&#125;</span>-<span class="subst">$&#123;el % <span class="number">13</span>&#125;</span>.svg`</span>;</span><br><span class="line">                 <span class="keyword">if</span> (!isgamePause &amp;&amp; num + <span class="number">1</span> == item.length) &#123;</span><br><span class="line">                     oneCard.draggable = <span class="literal">true</span>;</span><br><span class="line">                     cardImg.draggable = <span class="literal">true</span></span><br><span class="line">                 &#125;</span><br><span class="line">                 oneCard.appendChild(cardImg)</span><br><span class="line">                 cardGroup.appendChild(oneCard);</span><br><span class="line">             &#125;)</span><br><span class="line">            </span><br><span class="line">         &#125;)</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> gamingArea = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;gamingArea&#x27;</span>);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">putCard</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       cardbigGroup.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">section, sectionNum</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">let</span> cardbiggroupPart = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">           cardbiggroupPart.className = <span class="string">&#x27;col-6 d-flex w-100&#x27;</span>;</span><br><span class="line">           gamingArea.appendChild(cardbiggroupPart);</span><br></pre></td></tr></table></figure>
+<p>我利用 <code>getElementById</code>選取要做為未整理區最外層的 HTML 元素。<br>宣告一個函式負責執行隨機發牌，接著我要一層一層的剝開我們的陣列往內進逼針對陣列裡的元素做設定。<br>第一個陣列就是分為左右兩大區塊的<code>cardbigGroup</code>，讓兩塊區域都<code>createElement</code>區塊元素(<code>div</code>)出來，那因為我有使用格線來排版，所以為他們加了一些排版相關的<code>className</code>。<br>接著就可以利用<code>appendChild</code>將我們創造出來的兩個區塊元素加入到<code>gamingArea</code>下方。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">section.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item, index</span>) </span>&#123;</span><br><span class="line">              <span class="keyword">let</span> cardGroup = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">              cardGroup.className = <span class="string">&#x27;relative w-100&#x27;</span>;</span><br><span class="line">              cardGroup.style.height = <span class="string">&#x27;600px&#x27;</span></span><br><span class="line">              cardGroup.group = index;</span><br><span class="line">              cardGroup.section = sectionNum;</span><br><span class="line">              cardbiggroupPart.appendChild(cardGroup)</span><br></pre></td></tr></table></figure>
+<p>第二個碰到的陣列是各區底下的4塊小區域(7張牌與6張牌)，原理一樣我們為每塊區域創造區塊元素，並將入一些自定義的<code>className</code>和<code>style</code>。<br>這邊比較重要的一點是**為每個區塊元素增加一些屬性來記錄它所在的位置(<code>group</code>,<code>section</code>)**，這些屬性將會在後面我們要製作拖曳效果時會用到。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">item.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">el, num</span>) </span>&#123;</span><br><span class="line">                   <span class="keyword">let</span> oneCard = <span class="built_in">document</span>.createElement(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">                   oneCard.className = <span class="string">&#x27;cardArea absolute&#x27;</span>;</span><br><span class="line">                   <span class="keyword">if</span> (!isRefresh) &#123;</span><br><span class="line">                       oneCard.style.transition = <span class="string">&#x27;all .3s&#x27;</span></span><br><span class="line">                       oneCard.style.top = <span class="string">&#x27;-1000px&#x27;</span>;</span><br><span class="line">                       oneCard.style.left = <span class="string">&#x27;-2000px&#x27;</span>;</span><br><span class="line">                       <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                           oneCard.style.top = num * <span class="number">30</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                           oneCard.style.left = <span class="string">&#x27;0px&#x27;</span></span><br><span class="line">                       &#125;, index * num * <span class="number">30</span>)</span><br><span class="line">                   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       oneCard.style.top = num * <span class="number">30</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                       oneCard.style.left = <span class="string">&#x27;0px&#x27;</span></span><br><span class="line">                   &#125;</span><br></pre></td></tr></table></figure>
+<p>最後我們碰到的就是我們的主角–<strong>撲克牌</strong>，這邊一樣是為每張牌創建區塊元素，那因為我採用的設計稿是 <strong>吳俊儀設計師的設計稿</strong>，俊儀設計師很佛心的把每張牌做成svg，所以我待會只要把每張svg <code>appendChild</code>到每張牌的<code>div</code>底下就好。<br>至於判斷式的部分，是設計遊戲開始時的卡片出現動畫，這邊我就不多加敘述，卡片排版方式是利用絕對定位，那<code>position:relative</code>的部分我是設定給上一層的8個小區塊。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cardImg = <span class="built_in">document</span>.createElement(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line">                  cardImg.draggable = <span class="literal">false</span></span><br><span class="line">                  cardImg.card = el;</span><br><span class="line">                  cardImg.section = sectionNum;</span><br><span class="line">                  cardImg.group = index;</span><br><span class="line">                  cardImg.color = judgeColor(el)</span><br><span class="line">                  cardImg.src = <span class="string">`pokerimg/card-<span class="subst">$&#123;judgeColor(el)&#125;</span>-<span class="subst">$&#123;el % <span class="number">13</span>&#125;</span>.svg`</span>;</span><br><span class="line">                  <span class="keyword">if</span> (!isgamePause &amp;&amp; num + <span class="number">1</span> == item.length) &#123;</span><br><span class="line">                      oneCard.draggable = <span class="literal">true</span>;</span><br><span class="line">                      cardImg.draggable = <span class="literal">true</span></span><br><span class="line">                  &#125;</span><br><span class="line">                  oneCard.appendChild(cardImg)</span><br><span class="line">                  cardGroup.appendChild(oneCard);</span><br><span class="line">              &#125;)</span><br></pre></td></tr></table></figure>
+<p>這邊我們就來處理圖片的部分，為每個數字創造<code>img</code>標籤，<code>src</code>的部分我們可以透過命名與判斷顏色的函式(<code>judgeColor</code>)，來取得符合該數字的圖片。<br>一樣的，我們玩遊戲時都會拖曳這些卡片，因此也在這為它新增一些屬性(<strong><code>card</code>,<code>section</code>,<code>group</code>,<code>color</code></strong>)，分別是<strong>數字、所在的大區塊、所在的小區塊、花色</strong>。<br>另外一樣重要的就是**<code>draggable</code>，設定它<code>true</code>or<code>false</code>會決定該元素是否能拖曳<strong>，那因為</strong>遊戲規則只有最後一張牌可以拖曳**，因此額外增加判斷式來判斷該張卡片是否為最後一張牌。<br>最後一樣<code>appendChild</code>至上一層元素中。</p>
+</li>
+</ul>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>恭喜你!! 做到這裡，你的新接龍已經可以隨機發牌並且渲染到畫面上了。<br>也謝謝你，看完我的文章!! 這是我第一次用 hexo 建立部落格與寫文章，排版可能還有點拙劣，傷眼抱歉。<br>有關後續的完成區、暫存區與拖曳效果，我會再利用時間補上。</p>
+<p>附上我的 <a href="https://hao1229.github.io/THE-F2E-Freecell/">DEMO</a> 與 <a target="_blank" rel="noopener" href="https://github.com/Hao1229/THE-F2E-Freecell">程式碼</a></p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.facebook.com/groups/173311386703334/permalink/364591804241957/">懷恩老師的開發直播</a></p>
+<p><a target="_blank" rel="noopener" href="http://shubo.io/javascript-random-shuffle/">shuffle 文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://hsiangfeng.github.io/javascript/20190712/1140639545/?fbclid=IwAR37Iq2qAZjR5wMVfSOT_jMIidxlTGRElm3ATu0zm8Hmp9iwWd61uGRz_z">Ray大的新接龍文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://xd.adobe.com/spec/f01f6d09-be4f-4bf3-601d-7c817fe225ab-862e/grid">吳俊儀設計師的設計稿</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/THE-F2E/" rel="tag"># THE F2E</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/29/EcommercePractice1/" rel="next" title="Vue.js 電商練習技術整理 -- 接取API與設定環境變數">
+      Vue.js 電商練習技術整理 -- 接取API與設定環境變數 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E4%BD%BF%E7%94%A8%E6%8A%80%E8%A1%93"><span class="nav-number">2.</span> <span class="nav-text">本次使用技術</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E6%8E%A5%E9%BE%8D%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">新接龍初步分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%8A%E6%95%B8%E5%AE%A3%E5%91%8A%E8%88%87%E5%90%84%E5%8D%80%E5%9F%9F%E9%99%A3%E5%88%97%E5%88%86%E9%85%8D"><span class="nav-number">4.</span> <span class="nav-text">變數宣告與各區域陣列分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%A8%E6%A9%9F%E7%99%BC%E7%89%8C"><span class="nav-number">5.</span> <span class="nav-text">隨機發牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

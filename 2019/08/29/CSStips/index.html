@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的有鑑於在練習前端過程中，會遇到一些好用的 css 程式碼來呈現需要的網頁效果，但因為只是小技巧，不適合寫成一篇文章，因此利用此文章來為這些小技巧做個紀錄。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 小技巧紀錄園地">
+<meta property="og:url" content="https://hao1229.github.io/2019/08/29/CSStips/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的有鑑於在練習前端過程中，會遇到一些好用的 css 程式碼來呈現需要的網頁效果，但因為只是小技巧，不適合寫成一篇文章，因此利用此文章來為這些小技巧做個紀錄。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1523540939399-141cbff6a8d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
+<meta property="article:published_time" content="2019-08-29T06:12:57.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:38:11.520Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="SCSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1523540939399-141cbff6a8d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/08/29/CSStips/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>CSS 小技巧紀錄園地 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/08/29/CSStips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSS 小技巧紀錄園地
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-08-29 14:12:57" itemprop="dateCreated datePublished" datetime="2019-08-29T14:12:57+08:00">2019-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:38:11" itemprop="dateModified" datetime="2020-12-05T20:38:11+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1523540939399-141cbff6a8d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>有鑑於在練習前端過程中，會遇到一些好用的 css 程式碼來呈現需要的網頁效果，但因為只是小技巧，不適合寫成一篇文章，因此利用此文章來為這些小技巧做個紀錄。</p>
+<a id="more"></a>
+
+<h2 id="input-number-隱藏預設加減箭頭方法"><a href="#input-number-隱藏預設加減箭頭方法" class="headerlink" title="input number 隱藏預設加減箭頭方法"></a>input number 隱藏預設加減箭頭方法</h2><p>我們在使用 <code>&lt;input type=&quot;number&gt;</code> 時，有時候會因為預設的加減箭頭帶來困擾，且因為這兩個箭頭會導致我們的內容數字無法置中，這邊提供一段程式碼來隱藏這兩個箭頭。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;number&#x27;</span>]</span><span class="selector-pseudo">::-webkit-inner-spin-button</span>,</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">&#x27;number&#x27;</span>]</span><span class="selector-pseudo">::-webkit-outer-spin-button</span> &#123;</span><br><span class="line"><span class="attribute">-webkit-appearance</span>: none;</span><br><span class="line"><span class="attribute">margin</span>: <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>這樣我們就可以達到隱藏箭頭的效果囉。<br><strong>參考文章</strong> — <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/23715881/center-text-in-html-number-input">Center text in html number input</a></p>
+<h2 id="如何不依賴套件製作-x-軸滾動"><a href="#如何不依賴套件製作-x-軸滾動" class="headerlink" title="如何不依賴套件製作 x 軸滾動"></a>如何不依賴套件製作 x 軸滾動</h2><p>有時候會因為網頁效果需要我們要將某部分區域做成僅有 x 軸滾動效果，而非預設的 y 軸滾動，在不依賴套件的情況下，該如何達到目的？筆者將在此文章中分享自己的方法。</p>
+<h3 id="效果介紹"><a href="#效果介紹" class="headerlink" title="效果介紹"></a>效果介紹</h3><p>首先，我們要有一個認知在我們固定一個區域的寬高之後(通常是 div)，裡面的內容會觸發 <code>overflow</code> 這個屬性，並且我們知道 html 中預設 overflow 發生時 div 通常會是 y 軸滾動來讓使用者查看超出的內容，但今天我們不想要這個預設效果，我們 overflow 的內容想改成 x 軸滾動來查看，這就是我們這次的目的。</p>
+<h3 id="css-說明"><a href="#css-說明" class="headerlink" title="css 說明"></a>css 說明</h3><p>了解了原理，接下來就來看看程式碼吧，我們先看程式碼筆者再來做講解：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;recommandArea&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width: 18rem;&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in recommand&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-body&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">&quot;card-title&quot;</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h6</span> <span class="attr">class</span>=<span class="string">&quot;card-subtitle mb-2 text-muted&quot;</span>&gt;</span>Card subtitle<span class="tag">&lt;/<span class="name">h6</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;card-text&quot;</span>&gt;</span>Some quick example text to build on the card title and make up the bulk of the card&#x27;s content.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;card-link&quot;</span>&gt;</span>Card link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;card-link&quot;</span>&gt;</span>Another link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的 html 程式碼是筆者想要在 section 中創造出複數個 bootstrap 4 的卡片元件(<strong>這邊是利用 v-for 達到，不懂這個沒關係，只要知道 section 中會產生複數個卡片元件即可。</strong>)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.recommandArea</span> &#123;</span><br><span class="line">    <span class="attribute">overflow-x</span>: scroll;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100vw</span>; <span class="comment">/*寬度為100%的裝置寬*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.card</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">white-space</span>: normal</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著我們來看看 css 的部分，因為我們需要 x 軸滾動效果，所以需要定義 section 的寬度，因為我們是要 x 軸滾動因此下 <code>overflow-x: scroll</code> 達到目的。<br><strong>接著最重要的來了，我們必須下 <code>white-space: nowrap</code>讓文字元素不能換行，此目的是為了讓內容可以 overflow，但今天我們要 overflow 的卡片是 div 元素，所以我們透過 <code>display: inline-block</code> 來改變它，這樣子它就可以吃到 <code>white-space: nowrap</code> 的效果囉!!</strong><br>步驟進行到這裡，應該就會有一個僅有x軸滾動的卡片列表囉!!!</p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13925284/horizontal-scrollbar">horizontal scrollbar</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/443700/div-with-horizontal-scrolling-only">Div with horizontal scrolling only</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+              <a href="/tags/SCSS/" rel="tag"># SCSS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/22/CssMenuMask/" rel="prev" title="利用 CSS 做出 offcanvas 遮罩效果">
+      <i class="fa fa-chevron-left"></i> 利用 CSS 做出 offcanvas 遮罩效果
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/04/VueCli3EnvVar/" rel="next" title="Vue Cli 3 環境變數設定">
+      Vue Cli 3 環境變數設定 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#input-number-%E9%9A%B1%E8%97%8F%E9%A0%90%E8%A8%AD%E5%8A%A0%E6%B8%9B%E7%AE%AD%E9%A0%AD%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">input number 隱藏預設加減箭頭方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%B8%8D%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6%E8%A3%BD%E4%BD%9C-x-%E8%BB%B8%E6%BB%BE%E5%8B%95"><span class="nav-number">3.</span> <span class="nav-text">如何不依賴套件製作 x 軸滾動</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E4%BB%8B%E7%B4%B9"><span class="nav-number">3.1.</span> <span class="nav-text">效果介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css-%E8%AA%AA%E6%98%8E"><span class="nav-number">3.2.</span> <span class="nav-text">css 說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.3.</span> <span class="nav-text">參考資料</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

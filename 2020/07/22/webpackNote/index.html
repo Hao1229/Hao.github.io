@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的接觸前端到現在幾乎碰到的專案都會使用到前端的三大框架，框架中都會用到 webpack 的技術，但實際上 webpack 是什麼呢？如果我今天不用框架開發，一樣能用 webpack 幫助我開發專案嗎？這一直是我想了解的地方，利用此筆記記錄我學到的東西以方便日後複習。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack 學習紀錄">
+<meta property="og:url" content="https://hao1229.github.io/2020/07/22/webpackNote/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的接觸前端到現在幾乎碰到的專案都會使用到前端的三大框架，框架中都會用到 webpack 的技術，但實際上 webpack 是什麼呢？如果我今天不用框架開發，一樣能用 webpack 幫助我開發專案嗎？這一直是我想了解的地方，利用此筆記記錄我學到的東西以方便日後複習。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1541544181051-e46607bc22a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80">
+<meta property="article:published_time" content="2020-07-22T13:13:39.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:56:16.741Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1541544181051-e46607bc22a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2020/07/22/webpackNote/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>webpack 學習紀錄 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2020/07/22/webpackNote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack 學習紀錄
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-07-22 21:13:39" itemprop="dateCreated datePublished" datetime="2020-07-22T21:13:39+08:00">2020-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:56:16" itemprop="dateModified" datetime="2020-12-05T20:56:16+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1541544181051-e46607bc22a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>接觸前端到現在幾乎碰到的專案都會使用到前端的三大框架，框架中都會用到 webpack 的技術，但實際上 webpack 是什麼呢？<br>如果我今天不用框架開發，一樣能用 webpack 幫助我開發專案嗎？<br>這一直是我想了解的地方，利用此筆記記錄我學到的東西以方便日後複習。</p>
+<a id="more"></a>
+
+<h2 id="webpack-目的"><a href="#webpack-目的" class="headerlink" title="webpack 目的"></a>webpack 目的</h2><p>為什麼要使用 webpack？前端發展至今，開發上已經不是單純的寫 html、css、js 了，我們會在開發上利用許多衍生的語法來幫助我們開發，像是 es6、sass、pug 等等。<br>但瀏覽器根本壓根看不懂這些東西，那我們要怎麼把這些東西變成瀏覽器看得懂的語言呢？<br>這就是使用 webpack 的原因之一，webpack 可以幫助我們將這些衍生語法編譯成瀏覽器看得懂的語法，打包成一包並壓縮檔案大小，這麼方便還不用嗎？</p>
+<h2 id="建立-webpack-環境"><a href="#建立-webpack-環境" class="headerlink" title="建立 webpack 環境"></a>建立 webpack 環境</h2><p>在使用 webpack 前我們要先建立基本的環境，並做一些基本設定，讓我們後續使用更加方便。</p>
+<h3 id="創建-package-json"><a href="#創建-package-json" class="headerlink" title="創建 package.json"></a>創建 package.json</h3><p>在我們的新專案中輸入 <code>npm init</code> 來安裝並填入一些訊息設定，若不想那麼麻煩也可以直接輸入 <code>npm init -y</code>。</p>
+<h3 id="安裝-webpack"><a href="#安裝-webpack" class="headerlink" title="安裝 webpack"></a>安裝 webpack</h3><p>接下來安裝 webpack，輸入 <code>npm install webpack webpack-cli --save-dev</code>，安裝完後我們的專案會出現 node_modules 和 package-lock.json。</p>
+<h3 id="撰寫-webpack-設定檔"><a href="#撰寫-webpack-設定檔" class="headerlink" title="撰寫 webpack 設定檔"></a>撰寫 webpack 設定檔</h3><p>先創建兩個檔案，分別是 <code>index.js</code> 跟 <code>webpack.config.js</code>，<code>webpack.config.js</code> 是 webpack 的設定檔，我們先來幫他做點設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">  <span class="comment">// 進入點，所以檔案必須與此檔案有關聯才會被編譯</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">&#x27;index.bundle.js&#x27;</span>,</span><br><span class="line">    <span class="comment">// 編譯檔案名稱</span></span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>)</span><br><span class="line">    <span class="comment">// 編譯檔案的位置</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我們可以看到在 entry 部分關連的檔案是 index.js，也就是我們剛剛建立的檔案，webpack 會以此檔案作為進入點來執行打包作業，因此往後需要用到 webpack 的檔案都要注入這個 index.js。<br>例如可以這樣寫：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./src/all.scss&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./src/all.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="創建編譯指令"><a href="#創建編譯指令" class="headerlink" title="創建編譯指令"></a>創建編譯指令</h3><p>不論是開發或是打包發布，我們可以利用一些簡單的指令來方便我們操作，可以在 package.json 中做以下設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;watch&quot;</span>: <span class="string">&quot;webpack --mode=development --watch&quot;</span>,</span><br><span class="line">  <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack --mode=development&quot;</span>,</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack --mode=production&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>watch 的部分會即時監聽修改並編譯，建議只使用在開發上。</p>
+<h2 id="webpack-工具"><a href="#webpack-工具" class="headerlink" title="webpack 工具"></a>webpack 工具</h2><p>webpack 工具可以幫助我們在打包過程中做更多自動化的事情，讓所有繁瑣的工作交給它來處理，介紹幾個實用的工具。</p>
+<h3 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h3><p>Babel 可以幫助我們將 js 高版本的語法轉譯成瀏覽器看得懂的 js 語法，像是 es6 等。<br>利用 <code>npm install babel-loader @babel/core @babel/preset-env --save-dev</code> 做安裝，安裝完成後我們在 <code>webpack.config.js</code> 做設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.m?js$/</span>,</span><br><span class="line">        exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: <span class="string">&#x27;babel-loader&#x27;</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            presets: [<span class="string">&#x27;@babel/preset-env&#x27;</span>]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="css-loader-與-sass-loader"><a href="#css-loader-與-sass-loader" class="headerlink" title="css loader 與 sass loader"></a>css loader 與 sass loader</h3><p>若需要編譯 css 會需要 css-loader 跟 style-loader 兩種 loader，若今天開發是使用 sass 的話就得多加一個 sass-loader<br>輸入以下指令做安裝：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install css-loader style-loader --save-dev</span><br><span class="line">npm install sass-loader node-sass --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>一樣在 <code>webpack.config.js</code> 引入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      <span class="comment">// 編譯 css 檔案設定</span></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/i</span>,</span><br><span class="line">        use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 編譯 scss 檔案設定</span></span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.s[ac]ss$/i</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">&#x27;style-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;sass-loader&#x27;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到了這邊已經確實將 css 編譯引入了，編譯後的結果會存在 <code>index.bundle.js</code> 中，但如果今天想要將編譯結果獨立出來呢？不想將 css 相關編譯到 js 中，那就會需要利用到 mini-css-extract-plugin。<br>這時候我們就不需要 style-loader 了，style-loader 幫助我們將 css 編譯進 js 但我們要獨立出來，因此不需要了。<br>輸入 <code>npm uninstall style-loader --save-dev </code> 解除安裝，並輸入 <code>npm install mini-css-extract-plugin --save-dev</code> 安裝 mini-css-extract-plugin。<br>在 <code>webpack.config.js</code> 設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">&#x27;mini-css-extract-plugin&#x27;</span>); <span class="comment">// 先引入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="comment">// css</span></span><br><span class="line">        test: <span class="regexp">/\.css$/i</span>,</span><br><span class="line">        use: [MiniCssExtractPlugin.loader, <span class="string">&#x27;css-loader&#x27;</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123; <span class="comment">// sass</span></span><br><span class="line">      test: <span class="regexp">/\.s[ac]ss$/i</span>,</span><br><span class="line">      use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;sass-loader&#x27;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [<span class="keyword">new</span> MiniCssExtractPlugin()]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>設定完後去 build 就會發現 build 出來的檔案中 css 被獨立出來了。</p>
+<p><strong>補充</strong><br>在 css 打包之後我們最常遇到的問題是圖片路徑引用不正確，我們在引入 <code>background-image</code> 時最常看到 <code>url(&#39;../.....&#39;)</code> 相對路徑的用法，但這時要注意的地方在於通常開發上會習慣把同一類型的檔案用一個資料夾做管理。<br>例如：js 有 js 資料夾，css 有 css 資料夾，img 有 img 資料夾。<br>這時會發生一件事，假如我們的 css 這樣寫 <code>background-image: url(&#39;../img/...png&#39;)</code>，在打包過後這樣的路徑其實會指定到 css 這個資料夾，但 img 應該是上一層才對啊，所以我們又要來調整 <code>webpack.config.js</code> 了。<br>我們可以針對 css 的編譯給他一個 <code>publicPath</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.s[ac]ss$/i</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: MiniCssExtractPlugin.loader,</span><br><span class="line">            options: &#123;</span><br><span class="line">              publicPath: <span class="string">&#x27;../&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;sass-loader&#x27;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣子編譯完成時，路徑就會自動地指定到上一層，**最後這部分要記得根據開發的專案資料夾結構，去修改 <code>publicPath</code>**。</p>
+<h3 id="html-webpack-plugin"><a href="#html-webpack-plugin" class="headerlink" title="html-webpack-plugin"></a>html-webpack-plugin</h3><p>在前面的 webpack 打包檔不管是 <code>index.bundle.js</code> 或是獨立出來的 css 檔案都會需要我們手動引入 html，但這會是一個麻煩點，開發者得要一個一個引入，難道不能讓 webpack 幫助我們處理這件事嗎？<br>當然可以～ 來看看 html-webpack-plugin 吧！<br>輸入 <code>npm install html-webpack-plugin --save-dev</code> 安裝。<br>針對 <code>webpack.config.js</code> 設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>); <span class="comment">// 先引入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">&#x27;./src/index.html&#x27;</span>, <span class="comment">// 自動引入靜態 html 的目標文件</span></span><br><span class="line">      filename: <span class="string">&#x27;index.html&#x27;</span> <span class="comment">// 打包完成後生成的檔案名稱</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// 若要引入複數個 html 可以有多個 HtmlWebpackPlugin</span></span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      template: <span class="string">&#x27;./src/content.html&#x27;</span>,</span><br><span class="line">      filename: <span class="string">&#x27;content.html&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>完成之後當我們打包檔案，就會出現我們設定的 html 而且裡面就會自動引入我們打包的 js 跟 css 囉。<br>另外，html-webpack-plugin 預設會幫我們對 html 做壓縮，除非有些自定義需求，不然基本上不需要管它。</p>
+<h3 id="terser-webpack-plugin"><a href="#terser-webpack-plugin" class="headerlink" title="terser-webpack-plugin"></a>terser-webpack-plugin</h3><p>接下來介紹的套件，可以幫助我們壓縮 js 檔，甚至可以針對選項做一些設定 <a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions">參考</a>。<br>輸入 <code>npm install terser-webpack-plugin --save-dev</code> 安裝。</p>
+<p>針對 <code>webpack.config.js</code> 設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TerserPlugin = <span class="built_in">require</span>(<span class="string">&#x27;terser-webpack-plugin&#x27;</span>); <span class="comment">// 先引入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> TerserPlugin()</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這樣子，打包檔案我們就能得到壓縮的 js 了。</p>
+<h3 id="clean-webpack-plugin"><a href="#clean-webpack-plugin" class="headerlink" title="clean-webpack-plugin"></a>clean-webpack-plugin</h3><p>若我們在 webpack 為打包的檔案設定命名時有加入 hash 的話，就會遇到我們每次打包時檔名都不同的情形發生，有些檔案是舊的根本用不到，但還留在資料夾內。<br>因此就需要在打包前先清空我們的目標資料夾，以確保內部檔案都是最新的，利用 clean-webpack-plugin 來幫助我們做這件事。<br>輸入 <code>npm install --save-dev clean-webpack-plugin</code> 安裝。</p>
+<p>針對 <code>webpack.config.js</code> 設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">&#x27;clean-webpack-plugin&#x27;</span>); <span class="comment">// 先引入</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin()</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>設定完後每次打包 webpack 就會幫我們把目標資料夾清空了。</p>
+<h3 id="url-loader-amp-file-loader"><a href="#url-loader-amp-file-loader" class="headerlink" title="url-loader &amp; file-loader"></a>url-loader &amp; file-loader</h3><p>在開發網頁時，很容易會遇到靜態資源，如：圖片、字型等。<br>因此 webpack 打包時我們當然也需要將這些靜態資源打包，甚至能壓縮更好，這時就會需要用到 url-loader 跟 file-loader。<br>輸入以下指令來安裝這兩個套件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install file-loader --save-dev</span><br><span class="line">npm install url-loader --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>file-loader 可以幫我們將靜態資源打包處理，url-loader 則是可以針對設定的檔案大小去比對靜態資源，若是低於設定大小就會轉變成 base64 提高之後載入的效能，若是高於設定值則將檔案丟給 file-loader 做處理。</p>
+<p>針對 <code>webpack.config.js</code> 設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(png|jpe?g|gif)$/i</span> <span class="comment">// 驗證副檔名</span></span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">&#x27;url-loader&#x27;</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              name: <span class="string">&#x27;img/[name].[ext]&#x27;</span>, <span class="comment">// 不做設定預設會是 hash + 副檔名</span></span><br><span class="line">              limlt: <span class="number">10000</span> <span class="comment">// 超過此限制，會將圖片轉成 base64 (byte)</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>接下來，來載入字體看看<br>將下載下來的字體放入對應的資料夾中，接著到 scss 以 <code>@font-face</code> 做 import：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&#x27;NotoSansTC&#x27;</span>;</span><br><span class="line">  <span class="attribute">src</span>: url(<span class="string">&#x27;../font/NotoSansTC-Regular.otf&#x27;</span>) format(<span class="string">&#x27;opentype&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一樣到 <code>webpack.config.js</code> 為 file-loader 做配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(woff|woff2|eot|ttf|otf|)$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">&#x27;file-loader&#x27;</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              name: <span class="string">&#x27;font/[name].[ext]&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>build 之後就會發現 font 的檔案也跟著打包進去了。</p>
+<h3 id="image-webpack-loader"><a href="#image-webpack-loader" class="headerlink" title="image-webpack-loader"></a>image-webpack-loader</h3><p>每次開發的時候都會因為圖片檔案大小問題，都要事先壓縮圖片，這件事情我們一樣可以交給 webpack 來幫我們處理。<br>輸入 <code>npm install image-webpack-loader --save-dev</code> 安裝此套件<br>這個套件可以跟 url-loader 並用，接下來到 <code>webpack.config.js</code> 做設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.(png|jpe?g|gif)$/i</span>,</span><br><span class="line">      use: [</span><br><span class="line">        &#123;</span><br><span class="line">          loader: <span class="string">&#x27;url-loader&#x27;</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            name: <span class="string">&#x27;img/[name].[ext]&#x27;</span>,</span><br><span class="line">            limit: <span class="number">200000</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          loader: <span class="string">&#x27;image-webpack-loader&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>接下來只要我們 build，webpack 就會自動幫我們壓縮圖片囉。</p>
+<h3 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack dev server"></a>webpack dev server</h3><p>既然我們已經對很多的事情透過 webpack 做自動化的處理，但是最重要的問題，我們的開發畫面呢？<br>我也必須要開發畫面會隨著我更新 code 的時候做即時的更新，這時我們就需要 <code>webpack dev server</code>。<br>先執行此指令做安裝 <code>npm install webpack-dev-server -D</code>，安裝完成後，我們先來 <code>package.json</code> 做設定：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack-dev-server&quot;</span>, <span class="comment">// 在這裡加入 webpack-dev-server</span></span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack --mode=production&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>現在已經有指令可以觸發 webpack dev server 了，接下來我們只要去 <code>webpack.config.js</code> 針對 webpack dev server 做設定即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">  contentBase: path.join(__dirname, <span class="string">&#x27;dist&#x27;</span>), <span class="comment">// 指定 webpack dev server 以哪個資料夾為基礎作監聽。</span></span><br><span class="line">  compress: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多相關設定可以參考<a target="_blank" rel="noopener" href="https://webpack.js.org/configuration/dev-server/">官網</a>。<br>最後我們只要根據在 <code>package.json</code> 設定的跑 <code>npm run dev</code> 就會啟動本地 localhost 監聽囉。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>講了那麼多，總算是對 webpack 有更深入的了解，接下來就是整理一個底層的 webpack core 方便以後不使用框架的專案開發了，希望真的能用在實戰上XD。<br>也感謝網路上寫相關教學文章的大大，讓我受益良多。</p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10212909">webpack - 學習筆記</a><br><a target="_blank" rel="noopener" href="https://awdr74100.github.io/categories/Webpack/">webpack 前端打包工具</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"># webpack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/24/PythonBasicCalculate/" rel="prev" title="Python基礎--數字、字串基本運算">
+      <i class="fa fa-chevron-left"></i> Python基礎--數字、字串基本運算
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/02/ReactLearning1/" rel="next" title="前端框架 - React 初體驗（環境建置、component 建立）">
+      前端框架 - React 初體驗（環境建置、component 建立） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%9B%AE%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">webpack 目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-webpack-%E7%92%B0%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">建立 webpack 環境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%B5%E5%BB%BA-package-json"><span class="nav-number">3.1.</span> <span class="nav-text">創建 package.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-webpack"><span class="nav-number">3.2.</span> <span class="nav-text">安裝 webpack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%B0%E5%AF%AB-webpack-%E8%A8%AD%E5%AE%9A%E6%AA%94"><span class="nav-number">3.3.</span> <span class="nav-text">撰寫 webpack 設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%B5%E5%BB%BA%E7%B7%A8%E8%AD%AF%E6%8C%87%E4%BB%A4"><span class="nav-number">3.4.</span> <span class="nav-text">創建編譯指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">webpack 工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Babel"><span class="nav-number">4.1.</span> <span class="nav-text">Babel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css-loader-%E8%88%87-sass-loader"><span class="nav-number">4.2.</span> <span class="nav-text">css loader 與 sass loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html-webpack-plugin"><span class="nav-number">4.3.</span> <span class="nav-text">html-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#terser-webpack-plugin"><span class="nav-number">4.4.</span> <span class="nav-text">terser-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clean-webpack-plugin"><span class="nav-number">4.5.</span> <span class="nav-text">clean-webpack-plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url-loader-amp-file-loader"><span class="nav-number">4.6.</span> <span class="nav-text">url-loader &amp; file-loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-webpack-loader"><span class="nav-number">4.7.</span> <span class="nav-text">image-webpack-loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-dev-server"><span class="nav-number">4.8.</span> <span class="nav-text">webpack dev server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E8%A8%98"><span class="nav-number">5.</span> <span class="nav-text">後記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

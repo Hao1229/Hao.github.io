@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的我們時常在逛其他網站時，讀取過程中會看到一些動畫呈現，此文章用來記錄在用 Vue 開發網站時，如何製作同樣的動畫效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗">
+<meta property="og:url" content="https://hao1229.github.io/2019/08/05/EcommercePractice6/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的我們時常在逛其他網站時，讀取過程中會看到一些動畫呈現，此文章用來記錄在用 Vue 開發網站時，如何製作同樣的動畫效果。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/el9rgW2.jpg">
+<meta property="article:published_time" content="2019-08-05T06:37:49.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:42:29.919Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="Vue.js">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="E-commerce">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/el9rgW2.jpg">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/08/05/EcommercePractice6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/08/05/EcommercePractice6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue.js 電商練習技術整理 -- 製作讀取動畫增加使用者體驗
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-08-05 14:37:49" itemprop="dateCreated datePublished" datetime="2019-08-05T14:37:49+08:00">2019-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:42:29" itemprop="dateModified" datetime="2020-12-05T20:42:29+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/el9rgW2.jpg"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>我們時常在逛其他網站時，讀取過程中會看到一些動畫呈現，此文章用來記錄在用 Vue 開發網站時，如何製作同樣的動畫效果。</p>
+<a id="more"></a>
+
+<h2 id="方法簡介"><a href="#方法簡介" class="headerlink" title="方法簡介"></a>方法簡介</h2><ol>
+<li>套用 vue-loading-overlay 套件達到效果 — <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/vue-loading-overlay">vue-loading-overlay官方文件</a></li>
+<li>利用 FontAwesome 提供的 loading 圖案達到效果 —<a target="_blank" rel="noopener" href="https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons">FontAwesome Loading</a></li>
+</ol>
+<h2 id="vue-loading-overlay"><a href="#vue-loading-overlay" class="headerlink" title="vue-loading-overlay"></a>vue-loading-overlay</h2><p>這是一個 vue 的套件，透過安裝此套件我們可以輕易地呈現 loading 效果。</p>
+<h3 id="vue-loading-overlay-安裝"><a href="#vue-loading-overlay-安裝" class="headerlink" title="vue-loading-overlay 安裝"></a>vue-loading-overlay 安裝</h3><p>這邊我們透過 npm 的方式來安裝此套件<br><code>npm install vue-loading-overlay --save</code></p>
+<p>透過此套件的官方文件，我們可以得知它有兩種使用方式：</p>
+<ol>
+<li>透過 Component 方式載入。</li>
+<li>透過 Plugin 方式載入。<br>本次範例將以 Component 方式載入做講解。</li>
+</ol>
+<h3 id="vue-loading-overlay-載入"><a href="#vue-loading-overlay-載入" class="headerlink" title="vue-loading-overlay 載入"></a>vue-loading-overlay 載入</h3><p>我們先來到 Vue Cli 的進入點(main.js)，import 以下兩支檔案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Loading <span class="keyword">from</span> <span class="string">&#x27;vue-loading-overlay&#x27;</span> <span class="comment">//component</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vue-loading-overlay/dist/vue-loading.css&#x27;</span> <span class="comment">//style</span></span><br></pre></td></tr></table></figure>
+<p>利用 component 方法做載入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">&#x27;Loading&#x27;</span>, Loading)</span><br></pre></td></tr></table></figure>
+<p>進行到這裡，我們已完成全域的 loading 設定，接下來就可以在需要 loading 的頁面上做載入。</p>
+<h3 id="載入-loading-特效"><a href="#載入-loading-特效" class="headerlink" title="載入 loading 特效"></a>載入 loading 特效</h3><p>將此 loading 模板放入元件最外層的 div 底下(<strong>這樣才能將效果套用到整個元件頁面上，若只需要部份做套用可以僅放在需套用的區塊內即可。</strong>)，程式碼如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">loading</span> <span class="attr">:active.sync</span>=<span class="string">&quot;isLoading&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">loading</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這是最基本的模板，<code>isLoading</code>負責控制效果是否出現，<strong>若要自訂效果或是增加一些控制屬性，可參考<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209705">這篇文章</a></strong><br>進行到這裡我們的頁面已會正確的出現效果，那如果要控制出現在效果的時機，我們可以透過 <code>isLoading</code> 的操作來控制。</p>
+<h3 id="控制-loading-出現時機"><a href="#控制-loading-出現時機" class="headerlink" title="控制 loading 出現時機"></a>控制 loading 出現時機</h3><p>以範例來講，我們可以先在 data 的部分宣告我們的變數 <code>isLoading = false</code>，讓 loading 效果一開始是隱藏的，當 ajax 執行時觸發 loading 效果，並在 ajax 成功時，結束 loading 效果，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      products: [],</span><br><span class="line">      isLoading: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    getProducts () &#123;</span><br><span class="line">      <span class="keyword">const</span> api = <span class="string">`你的 api 路徑`</span></span><br><span class="line">      <span class="keyword">const</span> vm = <span class="built_in">this</span></span><br><span class="line">      vm.isLoading = <span class="literal">true</span> <span class="comment">//正在執行 ajax 時 isLoading = true 觸發效果</span></span><br><span class="line">      <span class="built_in">this</span>.$http.get(api).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(response.data)</span><br><span class="line">        vm.isLoading = <span class="literal">false</span> <span class="comment">//ajax結束時，isLoading = false 結束效果</span></span><br><span class="line">        vm.products = response.data.products</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="FontAwesome-載入動畫效果"><a href="#FontAwesome-載入動畫效果" class="headerlink" title="FontAwesome 載入動畫效果"></a>FontAwesome 載入動畫效果</h2><h3 id="將-FontAwesome-引用置專案中"><a href="#將-FontAwesome-引用置專案中" class="headerlink" title="將 FontAwesome 引用置專案中"></a>將 FontAwesome 引用置專案中</h3><p>有兩種方法可以將FontAwesome引用：</p>
+<ol>
+<li>cdn 方式</li>
+<li>npm 安裝<br>cdn 方式這邊就不多加說明，我們來稍微解釋一下如何透過 npm 載入。<br>我們先在終端機上輸入以下指令：<br><code>npm install --save-dev @fortawesome/fontawesome-free</code><br>待安裝完畢我們會在 node_modules 資料夾底下看到 <strong>@fortawesome</strong>，這代表安裝完成。<br>接著我們要載入它，先來到需要使用的元件下將下列程式碼加入該元件的 <code>style</code> 裡。<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">  <span class="keyword">@import</span> url(<span class="string">&quot;@fortawesome/fontawesome-free/css/all.css&quot;</span>);</span><br><span class="line">&lt;/<span class="selector-tag">style</span>&gt;</span><br></pre></td></tr></table></figure>
+亦或是在 main.js 輸入以下程式碼做全局載入：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@fortawesome/fontawesome-free/css/all.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@fortawesome/fontawesome-free/js/all.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="使用-FontAwesome-動畫-icons"><a href="#使用-FontAwesome-動畫-icons" class="headerlink" title="使用 FontAwesome 動畫 icons"></a>使用 FontAwesome 動畫 icons</h3><p>FontAwesome 官網中的文件有提到一種 Animating icons，只要加入此 icon 就會有動畫載入的效果 — <a target="_blank" rel="noopener" href="https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons">Animating icons</a>。<br>當然我們也可以控制 icons 的出現時機，方法和 vue-loading-overlay 相似，只是這邊我們是用 v-if 的方式來做，以下是程式碼：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">&quot;fas fa-spinner fa-spin&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;status.fileUploading&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我們在 data 內宣告一個變數負責判斷 icons 的出現。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      status: &#123;</span><br><span class="line">        fileUploading: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>最後一樣的可以根據事件的觸發來改變 <code>this.status.fileUploading</code> 的布林數，進而觸發 icons 的顯示與隱藏。<br><strong>最後有一點要補充，還是會建議 FontAwesome 載入效果主要用在局部，若要全局效果還是會建議使用 vue-loading-overlay</strong></p>
+<h2 id="FontAwesome-打包時注意"><a href="#FontAwesome-打包時注意" class="headerlink" title="FontAwesome 打包時注意!!"></a>FontAwesome 打包時注意!!</h2><p><strong>因為 FontAwesome 打包後容量較大，若不修改容量限制會導致 FontAwesome 無法一起被打包。</strong><br>因此我們需要對設定檔做修改。<br>來到 build 底下的 webpack.base.conf.js 找到下列程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        test: <span class="regexp">/\.(woff2?|eot|ttf|otf)(\?.*)?$/</span>,</span><br><span class="line">        loader: <span class="string">&#x27;url-loader&#x27;</span>,</span><br><span class="line">        options: &#123;</span><br><span class="line">          limit: <span class="number">800000</span>, <span class="comment">//預設是10000，這邊修改成800000</span></span><br><span class="line">          name: utils.assetsPath(<span class="string">&#x27;fonts/[name].[hash:7].[ext]&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改完後，再執行 npm run build 打包動作。<br><strong>僅限利用 npm 方式引入 FontAwesome 需做此修改，若為 cdn 方式引用不需這樣做。</strong></p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.hexschool.com/vue/">六角學院課程–Vue 出一個電商網站</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209705">JB大的文章</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/E-commerce/" rel="tag"># E-commerce</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/05/EcommercePractice5/" rel="prev" title="Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角">
+      <i class="fa fa-chevron-left"></i> Vue.js 電商練習技術整理 -- 使用 FormData 上傳圖片的眉眉角角
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/06/EcommercePractice7/" rel="next" title="Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑">
+      Vue.js 電商練習技術整理 -- event bus 元件間的溝通橋樑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E7%B0%A1%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">方法簡介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-loading-overlay"><span class="nav-number">3.</span> <span class="nav-text">vue-loading-overlay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-loading-overlay-%E5%AE%89%E8%A3%9D"><span class="nav-number">3.1.</span> <span class="nav-text">vue-loading-overlay 安裝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-loading-overlay-%E8%BC%89%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text">vue-loading-overlay 載入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BC%89%E5%85%A5-loading-%E7%89%B9%E6%95%88"><span class="nav-number">3.3.</span> <span class="nav-text">載入 loading 特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6-loading-%E5%87%BA%E7%8F%BE%E6%99%82%E6%A9%9F"><span class="nav-number">3.4.</span> <span class="nav-text">控制 loading 出現時機</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FontAwesome-%E8%BC%89%E5%85%A5%E5%8B%95%E7%95%AB%E6%95%88%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">FontAwesome 載入動畫效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%87-FontAwesome-%E5%BC%95%E7%94%A8%E7%BD%AE%E5%B0%88%E6%A1%88%E4%B8%AD"><span class="nav-number">4.1.</span> <span class="nav-text">將 FontAwesome 引用置專案中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-FontAwesome-%E5%8B%95%E7%95%AB-icons"><span class="nav-number">4.2.</span> <span class="nav-text">使用 FontAwesome 動畫 icons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FontAwesome-%E6%89%93%E5%8C%85%E6%99%82%E6%B3%A8%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">FontAwesome 打包時注意!!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

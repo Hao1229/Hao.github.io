@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Vuex 管理專案資料傳遞">
+<meta property="og:url" content="https://hao1229.github.io/2019/09/08/Vuex/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80">
+<meta property="article:published_time" content="2019-09-08T08:09:58.000Z">
+<meta property="article:modified_time" content="2020-12-05T12:56:16.725Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="Vue.js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2019/09/08/Vuex/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>使用 Vuex 管理專案資料傳遞 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2019/09/08/Vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 Vuex 管理專案資料傳遞
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-09-08 16:09:58" itemprop="dateCreated datePublished" datetime="2019-09-08T16:09:58+08:00">2019-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-12-05 20:56:16" itemprop="dateModified" datetime="2020-12-05T20:56:16+08:00">2020-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index"><span itemprop="name">Vue.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>之前在學習 vue 的資料傳遞時，是使用 Event Bus 的方式來做傳遞，但當專案較大時，Event Bus 會較難管理資料，這時我們就可以利用 Vuex 來達成資料管理與傳遞的目的，本文將介紹 Vuex 與說明使用方法。</p>
+<a id="more"></a>
+
+<h2 id="Vuex-介紹"><a href="#Vuex-介紹" class="headerlink" title="Vuex 介紹"></a>Vuex 介紹</h2><p>Vuex 和 Event Bus 不一樣的地方是它是一個儲存庫的概念，儲存庫中將會為每一個步驟做分類與分工並讓所有的元件做使用，簡單來講就是<strong>先將資料做個統整再做傳遞</strong>。</p>
+<h3 id="Vuex-方法"><a href="#Vuex-方法" class="headerlink" title="Vuex 方法"></a>Vuex 方法</h3><ul>
+<li>state：如同元件中的 data，負責管理資料。</li>
+<li>actions：如同元件中的 methods，負責處裡非同步事件，或是取得遠端資料等。</li>
+<li>getter：如同元件中的 computed，在資料呈現之前做過濾的動作。</li>
+<li>mutations：這是 Vuex 新增的方法，改變資料內容的方法，在以前我們要改變資料狀態時都會直接在 methods 做變更，但在 Vuex 不同，actions 並不會做資料的變更，而是在 mutations 才會做資料狀態的變更。</li>
+</ul>
+<h3 id="Vuex-運作方法"><a href="#Vuex-運作方法" class="headerlink" title="Vuex 運作方法"></a>Vuex 運作方法</h3><p>在 Vue 的元件中，我們透過 dispatch 來觸發 actions，actions 就會去取得遠端資料，並透過 commit 的方式呼叫 mutations，最後透過 mutations 來改變 state 中的資料狀態並反映給元件。<br><strong>這邊有一點要注意，當要使用一些非同步的行為時(AJAX、Settimeout 等)，請在 actions 中就完成它。</strong></p>
+<h2 id="Vuex-簡單範例，透過-Vuex-改變資料狀態"><a href="#Vuex-簡單範例，透過-Vuex-改變資料狀態" class="headerlink" title="Vuex 簡單範例，透過 Vuex 改變資料狀態"></a>Vuex 簡單範例，透過 Vuex 改變資料狀態</h2><p>現在我們就來看看 Vuex 各方法的寫法吧。</p>
+<h3 id="範例狀況"><a href="#範例狀況" class="headerlink" title="範例狀況"></a>範例狀況</h3><p>現在我們的專案中有讀取的動畫功能，因為很多元件在取得資料時都會需要使用這功能，因此我們打算利用 Vuex 統一管理動畫功能。<br>我們利用 <code>isLoading = true or false</code> 來控制動畫的出現與消失。</p>
+<h3 id="創造我們的-Vuex-儲存庫"><a href="#創造我們的-Vuex-儲存庫" class="headerlink" title="創造我們的 Vuex 儲存庫"></a>創造我們的 Vuex 儲存庫</h3><p>我們先在 <code>src</code> 資料夾中創造一個名為 <code>store</code> 的資料夾，並在此資料夾中創造一個名為 <code>index.js</code> 的檔案，這個檔案將為我們管理 Vuex。</p>
+<ul>
+<li><p>在檔案中我們先將 <code>vue</code> 和 <code>vuex</code> import 進來，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br></pre></td></tr></table></figure>
+<p>另外在 main.js(進入點) 也要做 import 的動作，並把 store 也 import 進來，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router,</span><br><span class="line">  store, <span class="comment">//記得這裡也要補上 store 喔</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接著我們在 <code>export default</code> 中輸入我們的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    updateLoading (context, status) &#123;</span><br><span class="line">      context.commit(<span class="string">&#x27;LOADING&#x27;</span>, status)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    LOADING (state, status) &#123;</span><br><span class="line">      state.isLoading = status</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>這邊將為 actions 和 mutations 做解釋</p>
+</li>
+</ul>
+<p>actions：創建一個 function，function 中擁有兩個參數，分別是 <code>context</code> 和 <code>payload(載核)</code>， <code>context</code> 是必要的參數， <code>payload</code> 則是我們自定義的參數(名稱也可自訂，以此範例來說就是 <code>status</code>)，接著使用 <code>context.commit</code> 觸發 mutations 並把載核傳遞給它。</p>
+<p>mutations：一樣創建一個 function，當此 function 被觸發時就會對 state 中的資料做變更。</p>
+<p>統整：在元件中因為某個事件透過 <code>dispatch</code> 觸發了 <code>updateLoading</code> 這個 action，觸發的同時將 status 的資料傳遞進來，接著 <code>updateLoading</code> 透過 <code>context.commit</code> 觸發名為 <code>LOADING</code> 的 mutations 並將 status 資料傳遞給它，最後在名為 <code>LOADING</code> 的 mutations 中將 state 中的資料狀態變更，資料變更的同時會反應回元件上。</p>
+<h3 id="元件-Vuex-設定"><a href="#元件-Vuex-設定" class="headerlink" title="元件 Vuex 設定"></a>元件 Vuex 設定</h3><p>因為是整個專案都會用到此動畫效果，因此我們將動畫程式碼放在我們的 App.vue 中就可以反映在每個元件上。<br>那因為資料的變更也是反應在 App.vue(根元件)，因此我們可以利用 <code>computed</code> 來監控 Vuex 中的這個資料，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">   isLoading () &#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="built_in">this</span>.$store.state.isLoading</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>接著我們需要改寫的就是 methods 中觸發效果的寫法，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vm.$store.dispatch(<span class="string">&#x27;updateLoading&#x27;</span>, <span class="literal">true</span>)</span><br><span class="line">vm.$store.dispatch(<span class="string">&#x27;updateLoading&#x27;</span>, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<p>透過 <code>dispatch</code> 觸發 <code>updateLoading</code> 這個 actions，並將 payload(true or false) 傳入，接著系統就會執行我們剛剛說的 Vuex 內部流程。</p>
+<h3 id="為-Vuex-加入嚴謹模式來檢視錯誤"><a href="#為-Vuex-加入嚴謹模式來檢視錯誤" class="headerlink" title="為 Vuex 加入嚴謹模式來檢視錯誤"></a>為 Vuex 加入嚴謹模式來檢視錯誤</h3><p>我們另外可以在 Vuex 中加入嚴謹模式，讓我們的程式碼撰寫都在規範中，加入方式只需在 state 之前寫入以下程式碼即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strict: <span class="literal">true</span>,</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-actions-取得遠端資料"><a href="#使用-actions-取得遠端資料" class="headerlink" title="使用 actions 取得遠端資料"></a>使用 actions 取得遠端資料</h2><p>剛剛有說過若要在 Vuex 中執行非同步行為我們就需要在 actions 中執行完這個動作。<br>現在將要介紹如何在 actions 中執行 AJAX 的行為。<br>在 Vuex 中執行 AJAX 的好處是我們可以統一管理這個行為，且較大型網站若有很多元件都需要用到此 AJAX，也可以隨時調用，不需要在元件內重複撰寫。</p>
+<h3 id="範例狀況-1"><a href="#範例狀況-1" class="headerlink" title="範例狀況"></a>範例狀況</h3><p>現在我們要接取一支可以取得商品資料的 api， 抓取到的 api 資料皆儲存在 <code>products</code> 這個陣列裡，以下是程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  strict: <span class="literal">true</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading: <span class="literal">false</span>,</span><br><span class="line">    products: []</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    updateLoading (context, status) &#123; <span class="comment">//前一步驟的 loading 效果</span></span><br><span class="line">      context.commit(<span class="string">&#x27;LOADING&#x27;</span>, status)</span><br><span class="line">    &#125;,</span><br><span class="line">    getProducts (context) &#123;</span><br><span class="line">      <span class="keyword">const</span> url = <span class="string">`api 路徑`</span></span><br><span class="line">      context.commit(<span class="string">&#x27;LOADING&#x27;</span>, <span class="literal">true</span>) <span class="comment">//觸發loading效果</span></span><br><span class="line">      axios.get(url).then(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">        context.commit(<span class="string">&#x27;PRODUCTS&#x27;</span>, response.data.products)</span><br><span class="line">        context.commit(<span class="string">&#x27;LOADING&#x27;</span>, <span class="literal">false</span>) <span class="comment">//取消loading效果</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    LOADING (state, status) &#123;</span><br><span class="line">      state.isLoading = status</span><br><span class="line">    &#125;,</span><br><span class="line">    PRODUCTS (state, payload) &#123;</span><br><span class="line">      state.products = payload</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>我們的目的是要把 AJAX 的資料儲存到 state 的 products 裡，因此我們先在 actions 利用 <code>getProducts</code> 這個 function 去接取 api 並把抓取到的資料透過 commit 傳遞給 <code>PRODUCTS</code>，<code>PRODUCTS</code> 收到資料後，再將資料儲存進 state 的 products 裡。</p>
+<h3 id="axios-解釋"><a href="#axios-解釋" class="headerlink" title="axios 解釋"></a>axios 解釋</h3><p>這邊使用的接取 api 方法是 Vue axios，但你會發現我們上列的程式碼，接取 api 時不是這樣寫 <code>this.$http.get(url)</code>，原因是現在 AJAX 的行為是在 Vuex 中進行，this 是代表元件，但現在並非在元件內，因此才會改寫，那改寫步驟如以下：</p>
+<ul>
+<li>將 <code>axios import from &#39;axios&#39;</code> 寫入 Vuex 裡。</li>
+<li>把 <code>this.$http</code> 改寫成 <code>axios</code>。</li>
+</ul>
+<p>我們是直接透過掛載 axios 的方法並呼叫它，而非像一開始用 Vue 呼叫。</p>
+<h3 id="元件改寫"><a href="#元件改寫" class="headerlink" title="元件改寫"></a>元件改寫</h3><p>我們元件中一樣要有事件觸發 AJAX 的行為，一樣是使用 <code>dispatch</code> 做觸發，寫法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getProducts () &#123;</span><br><span class="line">  <span class="keyword">const</span> vm = <span class="built_in">this</span>;</span><br><span class="line">  vm.$store.dispatch(<span class="string">&#x27;getProducts&#x27;</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>一樣的我們要將 products 這個陣列內容反應在元件中，我們透過 computed 來調用，寫法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">products () &#123; <span class="comment">//寫在 computed 中</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>.$store.state.products</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-actions-傳遞參數"><a href="#利用-actions-傳遞參數" class="headerlink" title="利用 actions 傳遞參數"></a>利用 actions 傳遞參數</h2><p>這邊要說明的是，actions 方法中只能傳遞一個參數，當我們今天要傳遞複數個參數時，就得利用物件的方法做傳遞，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;actions 方法&#x27;</span>, &#123; 參數<span class="number">1</span>, 參數<span class="number">2</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p>另外若我們在執行某個 actions 方法時，需要執行另外一個 actions 方法可以利用 <code>commit.dispatch(&#39;actions 方法名&#39;, 參數)</code>，利用這種方法調用其他 actions。</p>
+<h2 id="getters-寫法"><a href="#getters-寫法" class="headerlink" title="getters 寫法"></a>getters 寫法</h2><p>前面有提到 getters 相當於 computed 我們也可以將部分寫法改成用 getters 替代，這邊示範將前幾個範例改寫。<br>我們在 Vuex 中新增一個名為 <code>getters</code> 的物件，並將要 computed 回傳的資料寫入，程式碼如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  categories (state) &#123;</span><br><span class="line">    <span class="keyword">return</span> state.categories</span><br><span class="line">  &#125;,</span><br><span class="line">  products (state) &#123;</span><br><span class="line">    <span class="keyword">return</span> state.products</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊回傳前面範例的 products 和 categories。<br>接著我們回到元件中改寫程式碼，我們先將 getters import 進元件內 <code>import &#123; mapGetters &#125; from &#39;vuex&#39;</code>，接著在 computed 做改寫，改寫成 <code>...mapGetters ([&#39;products&#39;, &#39;categories&#39;])</code>，陣列中是我們 Vuex 中 getters 的方法。<br>另外，我們也可以將 actions 做改寫，只要在 import 中把 actions import 進來 <code>import &#123; mapGetters, mapActions &#125; from &#39;vuex&#39;</code>，並在 methods 將方法改寫成 <code>...mapActions ([&#39;getProducts&#39;])</code>，一樣的陣列中是我們的 actions 方法名。<br><strong>這邊有一點要注意的是用這方法取用 actions 時不適用在需要傳遞參數的 actions。</strong></p>
+<h2 id="Vuex-模組化"><a href="#Vuex-模組化" class="headerlink" title="Vuex 模組化"></a>Vuex 模組化</h2><p>你可以發現到在前面的範例中我們已經在 Vuex 中寫入了很多程式碼，但這只是一個小小的範例而已，若遇到更大型專案時，模組化的概念就會顯得相當重要。<br>我們可以把 Vuex 中管理的行為再做進一步的拆分，使我們更加方便管理。<br>這邊將示範將範例中取得商品的方法做拆分。</p>
+<ul>
+<li>我們先在 store 資料夾中再新增一個叫做 <code>products.js</code> 的檔案，並把 getProducts 的 actions 和相關參數從 <code>index.js</code> 中拆出來並寫進 <code>products.js</code> 中。</li>
+<li>接著我們利用 import 將 <code>products.js</code> 的內容載入至 <code>index.js</code>： <code>import productsModule from &#39;./products&#39;</code>，然後在 index 中新增一個名為 <code>modules</code> 的物件，並把 <code>productsModule</code> 加入。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">modules: &#123;</span><br><span class="line">  productsModule</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="加強觀念"><a href="#加強觀念" class="headerlink" title="加強觀念"></a>加強觀念</h3>在 Vuex 中 <strong>state 是屬於模組區域變數</strong>，裡頭的資料只會在該模組中才能做使用，但是 <strong>actions, mutations 和 getters 屬於全域變數</strong>。<br>全域變數好處是在小型專案時可以節省開發時間，但在大型專案中就會建議使用區域變數，避免衝突(當有相同方法名的時候就會產生衝突)。</li>
+</ul>
+<h3 id="如何取得拆分模組中的-state-區域變數-元件中"><a href="#如何取得拆分模組中的-state-區域變數-元件中" class="headerlink" title="如何取得拆分模組中的 state 區域變數(元件中)"></a>如何取得拆分模組中的 state 區域變數(元件中)</h3><p>這方法很簡單，只需要將程式碼這樣改寫即可：<br><code>this.$store.state.productModule.products</code></p>
+<h3 id="將模組內全域變數改成區域變數"><a href="#將模組內全域變數改成區域變數" class="headerlink" title="將模組內全域變數改成區域變數"></a>將模組內全域變數改成區域變數</h3><p>若我們要避免衝突，將全域變數變成區域變數，可以在該模組的 export default 底下寫入這行程式碼：<code>namespaced: true</code>。<br>變成區域變數之後我們要如何調用它呢？延續前面的調用方法我們可以這樣寫：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...mapActions(<span class="string">&#x27;productModule&#x27;</span>, [<span class="string">&#x27;getProducts&#x27;</span>]) <span class="comment">// 第一種方法，在第一個參數中寫入要調用的模組名</span></span><br><span class="line"><span class="comment">/*****/</span></span><br><span class="line">getProducts () &#123;</span><br><span class="line">  <span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;productsModule/getProducts&#x27;</span>) <span class="comment">// 第二種方法，利用 dispatch 做調用 模組名/actions名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="讓特定行為變為全域調用"><a href="#讓特定行為變為全域調用" class="headerlink" title="讓特定行為變為全域調用"></a>讓特定行為變為全域調用</h3><p>若我們要某方法可以全域調用，像是範例的讀取動畫效果，因為變數是存在 index 裡，若我們要在 products 中調用可以這樣寫：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.commit(<span class="string">&#x27;LOADING&#x27;</span>, <span class="literal">true</span>, &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">context.commit(<span class="string">&#x27;LOADING&#x27;</span>, <span class="literal">false</span>, &#123; <span class="attr">root</span>: <span class="literal">true</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://www.hexschool.com/vue/">六角學院課程–Vue 出一個電商網站</a><br><a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/">官方文件</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/08/VueInstantPrototyping/" rel="prev" title="如何快速開發建立原型">
+      <i class="fa fa-chevron-left"></i> 如何快速開發建立原型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/13/Prototype/" rel="next" title="淺談 Prototype 原型鍊與建構式概念">
+      淺談 Prototype 原型鍊與建構式概念 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">Vuex 介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">Vuex 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E9%81%8B%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Vuex 運作方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E7%B0%A1%E5%96%AE%E7%AF%84%E4%BE%8B%EF%BC%8C%E9%80%8F%E9%81%8E-Vuex-%E6%94%B9%E8%AE%8A%E8%B3%87%E6%96%99%E7%8B%80%E6%85%8B"><span class="nav-number">3.</span> <span class="nav-text">Vuex 簡單範例，透過 Vuex 改變資料狀態</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B%E7%8B%80%E6%B3%81"><span class="nav-number">3.1.</span> <span class="nav-text">範例狀況</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%B5%E9%80%A0%E6%88%91%E5%80%91%E7%9A%84-Vuex-%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="nav-number">3.2.</span> <span class="nav-text">創造我們的 Vuex 儲存庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E4%BB%B6-Vuex-%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.3.</span> <span class="nav-text">元件 Vuex 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA-Vuex-%E5%8A%A0%E5%85%A5%E5%9A%B4%E8%AC%B9%E6%A8%A1%E5%BC%8F%E4%BE%86%E6%AA%A2%E8%A6%96%E9%8C%AF%E8%AA%A4"><span class="nav-number">3.4.</span> <span class="nav-text">為 Vuex 加入嚴謹模式來檢視錯誤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-actions-%E5%8F%96%E5%BE%97%E9%81%A0%E7%AB%AF%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">使用 actions 取得遠端資料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B%E7%8B%80%E6%B3%81-1"><span class="nav-number">4.1.</span> <span class="nav-text">範例狀況</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#axios-%E8%A7%A3%E9%87%8B"><span class="nav-number">4.2.</span> <span class="nav-text">axios 解釋</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E4%BB%B6%E6%94%B9%E5%AF%AB"><span class="nav-number">4.3.</span> <span class="nav-text">元件改寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-actions-%E5%82%B3%E9%81%9E%E5%8F%83%E6%95%B8"><span class="nav-number">5.</span> <span class="nav-text">利用 actions 傳遞參數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getters-%E5%AF%AB%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">getters 寫法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex-%E6%A8%A1%E7%B5%84%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">Vuex 模組化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%BC%B7%E8%A7%80%E5%BF%B5"><span class="nav-number">7.1.</span> <span class="nav-text">加強觀念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%8F%96%E5%BE%97%E6%8B%86%E5%88%86%E6%A8%A1%E7%B5%84%E4%B8%AD%E7%9A%84-state-%E5%8D%80%E5%9F%9F%E8%AE%8A%E6%95%B8-%E5%85%83%E4%BB%B6%E4%B8%AD"><span class="nav-number">7.2.</span> <span class="nav-text">如何取得拆分模組中的 state 區域變數(元件中)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%87%E6%A8%A1%E7%B5%84%E5%85%A7%E5%85%A8%E5%9F%9F%E8%AE%8A%E6%95%B8%E6%94%B9%E6%88%90%E5%8D%80%E5%9F%9F%E8%AE%8A%E6%95%B8"><span class="nav-number">7.3.</span> <span class="nav-text">將模組內全域變數改成區域變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%93%E7%89%B9%E5%AE%9A%E8%A1%8C%E7%82%BA%E8%AE%8A%E7%82%BA%E5%85%A8%E5%9F%9F%E8%AA%BF%E7%94%A8"><span class="nav-number">7.4.</span> <span class="nav-text">讓特定行為變為全域調用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">8.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
