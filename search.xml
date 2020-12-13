@@ -1152,4 +1152,49 @@
         <tag>E-commerce</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Promsie - 如何運用 Promise 處理非同步事件</title>
+    <url>/2020/12/06/promise/</url>
+    <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1591267990439-bc68529677c3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>只要是前端工程師一定會碰到需要用 JS 來處理非同步行為，此篇文章用來記錄使用 ES6 的 Promise 來處理非同步事件。</p>
+<a id="more"></a>
+
+<h2 id="非同步行為"><a href="#非同步行為" class="headerlink" title="非同步行為"></a>非同步行為</h2><p>這邊我先來簡單的介紹一下何謂非同步行為，我們都知道 JS 是單一執行緒，他會根據程式碼的行數，一行一行的從小到大運作，來舉個例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;第一行&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;第二行&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;第三行&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>如果想要看到印出 <code>第三行</code> 勢必會先看到 <code>第一行</code> 、 <code>第二行</code> 出現在 console 中，因為要印出 <code>第三行</code> 一定得等前兩行運行完才會輪到它。</p>
+<p>我們都知道 JS 在 call api 時候都會需要發送請求給伺服器，伺服器再根據請求回傳結果給我們，<strong>發送跟回傳都會需要時間</strong>，而且還會受到很多因素影響需要的時間，例如：網速、伺服器狀況等。</p>
+<p>因此我們在 call api 時候就會採取非同步行為，非同步行為可以幫助我們 JS 在執行時，不會因為執行到 call api 時為了等待發送跟回傳，而停在那裡，導致後面程式碼無法執行的情況發生。</p>
+<p>當然除了 call api 的 AJAX 是非同步行為外，我們常看到的 <code>setTimeout</code>、<code>addEventListener</code> 其實都算是非同步行為，非同步行為都會被放到事件佇列 (Event Queue) 中，在同步行為完成後或是被觸發後執行。</p>
+<h2 id="Promise-優點"><a href="#Promise-優點" class="headerlink" title="Promise 優點"></a>Promise 優點</h2><p>那為什麼會推薦利用 Promise 來處理非同步行為呢？<br>因為非同步行為，會有些無法忽視的常見缺點，透過 Promise 可以幫助我們解決這些缺點，缺點如下：</p>
+<ol>
+<li>回呼地獄 ( call back hell )</li>
+<li>寫法不一致</li>
+<li>無法同時執行</li>
+</ol>
+<p>來看看 Promise 是怎麼解決這些缺點的。</p>
+<h3 id="回呼地獄"><a href="#回呼地獄" class="headerlink" title="回呼地獄"></a>回呼地獄</h3><p>相信有接觸 JS 的開發者們對 <code>回呼地獄</code>、<code>call back hell</code>、<code>波動拳</code> 這些名詞不陌生，來看看下面這張圖，你一定更能體會。</p>
+<p><img src="https://miro.medium.com/max/2400/1*Co0gr64Uo5kSg89ukFD2dw.jpeg"><br><a href="https://medium.com/ninjadevs/node-7-6-koa-2-asynchronous-flow-control-made-right-b0d41c6ba570">圖片來源</a></p>
+<p>基本上會有回呼地獄就是因為當非同步行為一多，我們又希望能有順序性的執行非同步行為，那非 Promise 的寫法就會如同上圖一樣，在一個非同步行為完成後，把下一個非同步行為包覆在前一個的 call back 中，導致結構越來越巢狀，因為輪廓很像波動拳，所以才又有波動拳的說法。</p>
+<p>那 Promise 又是如何解決這個問題呢？<br>我們以 Promise 的 api 套件 <a href="https://github.com/axios/axios">axios</a> 做例子，來看一下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">axios.get(url)</span><br><span class="line">  .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;first:&#x27;</span>, res)</span><br><span class="line">    <span class="keyword">return</span> axios.get(url2)</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function">(<span class="params">res2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;second:&#x27;</span>, res2)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>Promise 利用 return 來執行第二次的行為，並且將結果透過 then 傳入，這樣是不是看起來就比較舒服，解決了回呼地獄的巢狀結構。</p>
+<h3 id="寫法不一致"><a href="#寫法不一致" class="headerlink" title="寫法不一致"></a>寫法不一致</h3><p>寫法不一致的行為我們以 jQuery 為例，jQuery 在執行 AJAX 的時候就會有 done、success，來接收我們的執行結果。<br>但 <strong>Promise 都是一律使用 then 來做接收</strong>，且不會因為不同的套件產生不同的寫法，因此解決了寫法不一致的問題。</p>
+<h3 id="無法同時執行"><a href="#無法同時執行" class="headerlink" title="無法同時執行"></a>無法同時執行</h3><p><strong>非同步有個特性在於我們無法得知何時開始、何時結束</strong>，若我們需要執行的某個行為是需要多個非同步執行完後才做執行，那非 Promise 的寫法或套件大部分很難做到這點。</p>
+<p>Promise 可以透過 <code>Promise.all</code> 來解決這個問題：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.all([</span><br><span class="line">  axios.get(url),</span><br><span class="line">  axios.get(url2)</span><br><span class="line">]).then(<span class="function">(<span class="params">[res, res2]</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;first:&#x27;</span>, res, <span class="string">&#x27;second:&#x27;</span>, res2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在 <code>Promise.all</code> 中透過陣列傳入多個非同步行為，再用 then 跟陣列接收多個結果，這樣子就很輕易地解決了需要同時執行的需求。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>這篇文章簡單的介紹了一下 Promise 在非同步行為上的處理以及優點。</p>
+<p>後續希望有時間能把 Promise 寫成一個小系列文章做個完整介紹。</p>
+<p>若有更新系列文章我會再嘗試補上文章連結。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a href="https://www.hexschool.com/courses/js-core.html">六角學院-JavaScript核心篇</a></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>ES6</tag>
+        <tag>非同步</tag>
+      </tags>
+  </entry>
 </search>
