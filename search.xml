@@ -1153,7 +1153,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Promsie - 如何運用 Promise 處理非同步事件</title>
+    <title>Promise - 如何運用 Promise 處理非同步事件</title>
     <url>/2020/12/06/promise/</url>
     <content><![CDATA[<p><img src="https://images.unsplash.com/photo-1591267990439-bc68529677c3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"></p>
 <h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>只要是前端工程師一定會碰到需要用 JS 來處理非同步行為，此篇文章用來記錄使用 ES6 的 Promise 來處理非同步事件。</p>
