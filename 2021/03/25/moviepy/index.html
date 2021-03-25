@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#fff","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的筆者的公司最近要開發一個簡單的 side-project，在此專案中筆者負責專案後端的開發，雖然我是前端工程師XD。 主要會想來開發後端，想說利用這個機會練習，並且更了解後端的技術。 我預計會寫兩篇相關的文章，分別是 影片處理 與 api 開發。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - 利用 MoviePy 處理影片">
+<meta property="og:url" content="https://hao1229.github.io/2021/03/25/moviepy/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的筆者的公司最近要開發一個簡單的 side-project，在此專案中筆者負責專案後端的開發，雖然我是前端工程師XD。 主要會想來開發後端，想說利用這個機會練習，並且更了解後端的技術。 我預計會寫兩篇相關的文章，分別是 影片處理 與 api 開發。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80">
+<meta property="og:image" content="https://i.imgur.com/tokeURi.gif">
+<meta property="article:published_time" content="2021-03-25T02:40:54.000Z">
+<meta property="article:modified_time" content="2021-03-25T02:45:34.692Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2021/03/25/moviepy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Python - 利用 MoviePy 處理影片 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2021/03/25/moviepy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python - 利用 MoviePy 處理影片
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-03-25 10:40:54 / 修改時間：10:45:34" itemprop="dateCreated datePublished" datetime="2021-03-25T10:40:54+08:00">2021-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>筆者的公司最近要開發一個簡單的 side-project，在此專案中筆者負責專案後端的開發，雖然我是前端工程師XD。</p>
+<p>主要會想來開發後端，想說利用這個機會練習，並且更了解後端的技術。</p>
+<p>我預計會寫兩篇相關的文章，分別是 <strong>影片處理</strong> 與 <strong>api 開發</strong>。</p>
+<a id="more"></a>
+
+<h2 id="專案目的"><a href="#專案目的" class="headerlink" title="專案目的"></a>專案目的</h2><p>此專案是為了因應過年製作賀卡，將使用者在前台填入的資訊，在後端處理轉換成賀卡影片，並提供 share-link 供使用者分享。</p>
+<p>讓你們看看成品示意XD</p>
+<p><img src="https://i.imgur.com/tokeURi.gif"></p>
+<h2 id="語言選擇"><a href="#語言選擇" class="headerlink" title="語言選擇"></a>語言選擇</h2><p>後端語言百百種，為什麼想要用 Python 開發呢？</p>
+<p>主要原因是 Python 相對其他後端語言是較為好上手的，另外有找到相關的 Python 套件可以方便處理影片問題。</p>
+<p>最後就是因為公司的後端工程師主要語言也是 Python，方便我問問題XD。</p>
+<h2 id="環境建置"><a href="#環境建置" class="headerlink" title="環境建置"></a>環境建置</h2><p>在開發上，建議利用 virtualenv 開發，python3 後面的版本已經有內建的 venv 功能，所以就直接拿它來創建 virtualenv 吧！</p>
+<ul>
+<li>創建環境： <code>python3 -m venv 環境名稱</code></li>
+<li>啟動環境(Windows)： <code>環境名稱\Scripts\activate.bat</code></li>
+<li>啟動環境(Unix、MacOS)：<code>source 環境名稱/bin/activate</code></li>
+</ul>
+<p>啟動成功會看到 shell 前面有環境名稱，像是這樣：</p>
+<p><code>(環境名稱) $ python</code></p>
+<p>在虛擬環境中我們就可以安裝專案所需套件等，而不用擔心全域環境造成的影響。</p>
+<ul>
+<li>退出環境： <code>deactivate</code></li>
+</ul>
+<h2 id="MoviePy"><a href="#MoviePy" class="headerlink" title="MoviePy"></a>MoviePy</h2><p>影片處理在本專案是最主要的需求，主要會需要的影片處理為：</p>
+<ol>
+<li>影片壓字</li>
+<li>影片與聲音合成</li>
+<li>影片與圖片合成</li>
+</ol>
+<p>經過搜尋後發現 <a target="_blank" rel="noopener" href="https://zulko.github.io/moviepy/index.html">MoviePy</a> 是個好選擇，它提供了強大的影片後製能力，讓開發上僅需少少的程式碼就能達到專案需求。</p>
+<p>接下來的文章將會針對上述三點做紀錄。</p>
+<h2 id="MoviePy-壓字處理"><a href="#MoviePy-壓字處理" class="headerlink" title="MoviePy - 壓字處理"></a>MoviePy - 壓字處理</h2><p>在 side-project 中，需要將使用者輸入的祝福語壓在影片上產出。<br>這部分因為 ui 關係所以有所限制，分別是中或英文 4 字，每個文字會漸進出現。</p>
+<p>在處理文字需求時，我想到的做法是將從 api 收到的文字內容逐一取出，後製到影片中，並且控制文字出現時間。</p>
+<p>首先，要來驗證收到的文字內容是否為英文或是中文：</p>
+<p>透過 pip3 安裝 langdetect <code>pip3 install langdetect</code>。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langdetect <span class="keyword">import</span> detect</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 language 儲存 detect 驗出的語言， blessing 是 api 傳回的文字內容</span></span><br><span class="line">language = detect(blessing)</span><br><span class="line"></span><br><span class="line"><span class="comment"># word_one 是 blessing 的第一個字</span></span><br><span class="line"><span class="comment"># 產生一個 font-size 是 50px，字體為宋黑的文字，出現時間為 3 秒，從影片第 4 秒出現，位置在影片的 x = 100、y = 113。</span></span><br><span class="line"><span class="keyword">if</span> language == <span class="string">&quot;zh-cn&quot;</span> <span class="keyword">or</span> language == <span class="string">&quot;zh-tw&quot;</span>:</span><br><span class="line">  txt_clip1 = TextClip(word_one, fontsize=<span class="number">50</span>, color=<span class="string">&#x27;white&#x27;</span>, font=<span class="string">&quot;SourceHanSerifTC-Bold.otf&quot;</span>).set_duration(<span class="number">3</span>).set_start(<span class="number">4</span>).set_position((<span class="number">100</span>, <span class="number">113</span>))</span><br></pre></td></tr></table></figure>
+<p>MoviePy 透過 <a target="_blank" rel="noopener" href="https://zulko.github.io/moviepy/ref/VideoClip/VideoClip.html#textclip">TextClip</a> 改變文字的屬性，並且壓在影片指定位置以及出現時間。</p>
+<p><strong>這邊有一點要注意是，MoviePy 利用 <a target="_blank" rel="noopener" href="https://imagemagick.org/index.php">ImageMagick</a> 來處理文字效果，因此在使用這功能前請確保環境中已經有裝此套件。</strong></p>
+<p>文字的字體若要改變，就要像程式碼中的 font 一樣引用對應的文字 otf 檔案。</p>
+<h2 id="MoviePy-聲音合成"><a href="#MoviePy-聲音合成" class="headerlink" title="MoviePy - 聲音合成"></a>MoviePy - 聲音合成</h2><p>製作出來的卡片為了要有天竺鼠的叫聲，因此我們需要把聲音後製上去。</p>
+<p>整支影片分了三種聲音，分別為掉落聲、過場聲、跟隨文字出現的提示音。</p>
+<p>每一種聲音皆會在影片的不同時間點出現。</p>
+<p>來看看程式碼：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 三個 url 代表 三種聲音來源</span></span><br><span class="line">audio_fall = AudioFileClip(fall_url)</span><br><span class="line">audio_walk = AudioFileClip(walk_url).set_start(<span class="number">1</span>)</span><br><span class="line">audio_new_year = AudioFileClip(new_year_url).set_start(<span class="number">4</span>)</span><br><span class="line">new_audio = CompositeAudioClip([audio_fall, audio_walk, audio_new_year])</span><br><span class="line">new_sound_clip = video_clip.set_audio(new_audio)</span><br></pre></td></tr></table></figure>
+
+<p>先透過 <a target="_blank" rel="noopener" href="https://zulko.github.io/moviepy/ref/AudioClip.html#audiofileclip">AudioFileClip</a> 設定每種聲音開始的影片對應時間點。</p>
+<p>接著，用 <a target="_blank" rel="noopener" href="https://zulko.github.io/moviepy/ref/AudioClip.html#compositeaudioclip">CompositeAudioClip</a> 將三種聲音合成一個新的聲音片段。</p>
+<p>最後，透過 <code>set_audio</code> 將聲音合進我們的影片中。</p>
+<h2 id="MoviePy-圖片合成"><a href="#MoviePy-圖片合成" class="headerlink" title="MoviePy - 圖片合成"></a>MoviePy - 圖片合成</h2><p>在專案中，我們提供使用者自行上傳圖片的功能，所以我們在接收到前台 post 給我們的資料時要先去檢查是否有上傳圖片，如果有上傳圖片，我們就針對上傳的圖片來做處理。</p>
+<p>來看看程式碼：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取得圖片</span></span><br><span class="line">upload_img = request.files.to_dict().get(<span class="string">&quot;upload&quot;</span>)</span><br><span class="line"><span class="comment"># 為了讓收到的圖片統一轉換成統一格式的檔名，ts 為當下的 timestamp</span></span><br><span class="line">filename = secure_filename(<span class="string">&quot;img_&quot;</span> + ts + <span class="string">&quot;.png&quot;</span>)</span><br><span class="line">upload_img.save(filename)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因為 iphone 上傳的圖片檔，有些副檔名為 &#x27;heic&#x27;，故利用此方法作轉換 </span></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;heic&quot;</span> <span class="keyword">in</span> upload_img.headers[<span class="string">&quot;Content-Type&quot;</span>]:</span><br><span class="line">  heif_file = pyheif.read(filename)</span><br><span class="line">  transform_image = Image.frombytes(</span><br><span class="line">    heif_file.mode,</span><br><span class="line">    heif_file.size,</span><br><span class="line">    heif_file.data,</span><br><span class="line">    <span class="string">&quot;raw&quot;</span>,</span><br><span class="line">    heif_file.mode,</span><br><span class="line">    heif_file.stride,</span><br><span class="line">  )</span><br><span class="line">  transform_image.save(<span class="string">&quot;img_&quot;</span> + ts + <span class="string">&quot;.png&quot;</span>, <span class="string">&#x27;PNG&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 cv2 讀取圖檔，為了針對圖片做裁切處理</span></span><br><span class="line">img = cv2.imread(filename)</span><br><span class="line">cv2.imwrite(filename, img)</span><br><span class="line">im = Image.<span class="built_in">open</span>(filename)</span><br><span class="line">rgb_im = im.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line">thumb_width = <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 此函式用來裁切圖片正中央</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crop_center</span>(<span class="params">pil_img, crop_width, crop_height</span>):</span></span><br><span class="line">  img_width, img_height = pil_img.size</span><br><span class="line">  <span class="keyword">return</span> pil_img.crop(((img_width - crop_width) // <span class="number">2</span>,</span><br><span class="line">                        (img_height - crop_height) // <span class="number">2</span>,</span><br><span class="line">                        (img_width + crop_width) // <span class="number">2</span>,</span><br><span class="line">                        (img_height + crop_height) // <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 回傳 crop_center 完成的結果，基本上，第 2、第 3 個參數傳入我們前面的 thumb_width</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crop_max_square</span>(<span class="params">pil_img</span>):</span></span><br><span class="line">  <span class="keyword">return</span> crop_center(pil_img, <span class="built_in">min</span>(pil_img.size), <span class="built_in">min</span>(pil_img.size))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將裁好的正方形圖片轉換成圓形</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mask_circle_transparent</span>(<span class="params">pil_img, blur_radius, offset=<span class="number">0</span></span>):</span></span><br><span class="line">  offset = blur_radius * <span class="number">2</span> + offset</span><br><span class="line">  mask = Image.new(<span class="string">&quot;L&quot;</span>, pil_img.size, <span class="number">0</span>)</span><br><span class="line">  draw = ImageDraw.Draw(mask)</span><br><span class="line">  draw.ellipse((offset, offset, pil_img.size[<span class="number">0</span>] - offset, pil_img.size[<span class="number">1</span>] - offset), fill=<span class="number">255</span>)</span><br><span class="line">  mask = mask.<span class="built_in">filter</span>(ImageFilter.GaussianBlur(blur_radius))</span><br><span class="line"></span><br><span class="line">  result = pil_img.copy()</span><br><span class="line">  result.putalpha(mask)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">im_square = crop_max_square(rgb_im).resize((thumb_width, thumb_width), Image.LANCZOS)</span><br><span class="line">im_thumb = mask_circle_transparent(im_square, <span class="number">1</span>)</span><br><span class="line">im_title = <span class="string">&quot;img_&quot;</span> + ts + <span class="string">&quot;.png&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 將處理好的圖片儲存起來</span></span><br><span class="line">im_thumb.save(im_title)</span><br></pre></td></tr></table></figure>
+
+<p>完成了上述的圖片處理後，接著又要回到我們的 MoviePy，來幫我們把處理好的圖片合成進影片中。</p>
+<p>來看看程式碼：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">img_falling = (ImageClip(im_title)).set_duration(video_clip.duration)\</span><br><span class="line">  .set_position(<span class="keyword">lambda</span> t: (<span class="string">&#x27;center&#x27;</span>, -<span class="number">200</span> + <span class="number">640</span> * np.sin(t))).set_duration(<span class="number">2</span>).resize(height=<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line">img_scale = (ImageClip(im_title)).set_duration(<span class="number">1.5</span>).resize(height=<span class="number">200</span>).resize(<span class="keyword">lambda</span> t: <span class="number">1</span> + <span class="number">0.8</span> * t)\</span><br><span class="line">  .set_start(<span class="number">2</span>).set_position(<span class="keyword">lambda</span> t: (<span class="string">&#x27;center&#x27;</span>, <span class="number">340</span> - <span class="number">100</span> * np.cos(t + <span class="number">400</span>)))</span><br><span class="line"></span><br><span class="line">img_final = (ImageClip(im_title)).set_duration(<span class="number">2.5</span>).resize(height=<span class="number">415</span>).set_start(<span class="number">3.5</span>)\</span><br><span class="line">  .set_position((<span class="string">&quot;center&quot;</span>, <span class="number">280</span>))</span><br></pre></td></tr></table></figure>
+<p>可以看到上面有三個變數，原因是影片中圖片會需要三個特效：</p>
+<ol>
+<li>掉落</li>
+<li>放大</li>
+<li>定位</li>
+</ol>
+<p>三種特效是接力出現，所以我將圖片個別針對每個特效存成三種，並控制出現時間，再做串連。</p>
+<h2 id="MoviePy-影片輸出"><a href="#MoviePy-影片輸出" class="headerlink" title="MoviePy - 影片輸出"></a>MoviePy - 影片輸出</h2><p>這邊比較單純，我們直接看程式碼：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果沒有上傳圖片，就不需要 img_falling, img_scale, img_final</span></span><br><span class="line">video_result = CompositeVideoClip(</span><br><span class="line">  [new_sound_clip, txt_clip1, txt_clip2, txt_clip3, txt_clip4, img_falling, img_scale, img_final])</span><br><span class="line">video_name = ts + <span class="string">&quot;.mp4&quot;</span></span><br><span class="line">video_result.write_videofile(video_name, audio_codec=<span class="string">&quot;aac&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>到了這邊，我們就能看到完成的 mp4 影片檔囉！</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>在下一篇有關 api 的部分，會提到如何將影片製作功能上到 api 並且作部署，另外我們影片資料會存進 google cloud storage，如何儲存、如何取得資料都會在下篇提到。</p>
+<p>這是我第一次處理後端的事情，過程中遇到了很多瓶頸，但我真的學到了很多，對後端也有更深的了解，在此做個紀錄，也希望此篇記錄能幫到更多的人：）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/24/leetcode/" rel="prev" title="LeetCode-刷題筆記">
+      <i class="fa fa-chevron-left"></i> LeetCode-刷題筆記
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E7%9B%AE%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">專案目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%9E%E8%A8%80%E9%81%B8%E6%93%87"><span class="nav-number">3.</span> <span class="nav-text">語言選擇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%92%B0%E5%A2%83%E5%BB%BA%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">環境建置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MoviePy"><span class="nav-number">5.</span> <span class="nav-text">MoviePy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MoviePy-%E5%A3%93%E5%AD%97%E8%99%95%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">MoviePy - 壓字處理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MoviePy-%E8%81%B2%E9%9F%B3%E5%90%88%E6%88%90"><span class="nav-number">7.</span> <span class="nav-text">MoviePy - 聲音合成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MoviePy-%E5%9C%96%E7%89%87%E5%90%88%E6%88%90"><span class="nav-number">8.</span> <span class="nav-text">MoviePy - 圖片合成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MoviePy-%E5%BD%B1%E7%89%87%E8%BC%B8%E5%87%BA"><span class="nav-number">9.</span> <span class="nav-text">MoviePy - 影片輸出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E8%A8%98"><span class="nav-number">10.</span> <span class="nav-text">後記</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

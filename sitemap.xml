@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hao1229.github.io/2021/03/25/moviepy/</loc>
+    
+    <lastmod>2021-03-25</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hao1229.github.io/2021/01/24/leetcode/</loc>
     
     <lastmod>2021-01-24</lastmod>
@@ -256,7 +263,7 @@
 
   <url>
     <loc>https://hao1229.github.io/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -264,119 +271,119 @@
   
   <url>
     <loc>https://hao1229.github.io/tags/Vue-js/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/THE-F2E/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/scss/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/CSS/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/SCSS/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/JavaScript/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/E-commerce/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/Python/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/Crawler/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/React/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/others/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/Vue-Cli-3/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/webpack/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/ES6/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/%E9%9D%9E%E5%90%8C%E6%AD%A5/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/Promise/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/tags/LeetCode/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -385,63 +392,63 @@
   
   <url>
     <loc>https://hao1229.github.io/categories/THE-F2E/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/CSS/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/Vue-js/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/JavaScript/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/Python/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/React/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/others/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/webpack/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://hao1229.github.io/categories/LeetCode/</loc>
-    <lastmod>2021-01-24</lastmod>
+    <lastmod>2021-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
