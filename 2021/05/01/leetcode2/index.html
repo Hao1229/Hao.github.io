@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hao1229.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#fff","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文章目的想要利用系列的文章，來記錄一下自己刷 LeetCode 的解題筆記，方便日後複習。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode-刷題筆記2">
+<meta property="og:url" content="https://hao1229.github.io/2021/05/01/leetcode2/index.html">
+<meta property="og:site_name" content="Hao&#39;s F2E World">
+<meta property="og:description" content="文章目的想要利用系列的文章，來記錄一下自己刷 LeetCode 的解題筆記，方便日後複習。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://images.unsplash.com/photo-1523634921619-37ce98c1877f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80">
+<meta property="og:image" content="https://i.imgur.com/Wt2Wvkw.png">
+<meta property="og:image" content="https://i.imgur.com/6SOmmS2.png">
+<meta property="og:image" content="https://i.imgur.com/DeTjaW4.png">
+<meta property="article:published_time" content="2021-05-01T11:24:11.000Z">
+<meta property="article:modified_time" content="2021-05-01T11:27:50.022Z">
+<meta property="article:author" content="Hao">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="LeetCode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1523634921619-37ce98c1877f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80">
+
+<link rel="canonical" href="https://hao1229.github.io/2021/05/01/leetcode2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>LeetCode-刷題筆記2 | Hao's F2E World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hao's F2E World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的前端小天地</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://hao1229.github.io/2021/05/01/leetcode2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hao">
+      <meta itemprop="description" content="程式技術太多了，腦袋記不起來，就寫成部落格吧~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hao's F2E World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LeetCode-刷題筆記2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-05-01 19:24:11 / 修改時間：19:27:50" itemprop="dateCreated datePublished" datetime="2021-05-01T19:24:11+08:00">2021-05-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://images.unsplash.com/photo-1523634921619-37ce98c1877f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>想要利用系列的文章，來記錄一下自己刷 LeetCode 的解題筆記，方便日後複習。</p>
+<a id="more"></a>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>筆者在前端領域還是個小菜雞XD，目前刷題方向為 LeetCode 免費試題中難度為 Easy 的題目，刷題語言部分則是 JavaScript。</p>
+<h2 id="Kids-With-the-Greatest-Number-of-Candies"><a href="#Kids-With-the-Greatest-Number-of-Candies" class="headerlink" title="Kids With the Greatest Number of Candies"></a>Kids With the Greatest Number of Candies</h2><p><img src="https://i.imgur.com/Wt2Wvkw.png"><br><a target="_blank" rel="noopener" href="https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/">題目連結</a></p>
+<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>此題主要目的，有個陣列裡頭數字代表每個小孩目前擁有的糖果數，並且還有額外的糖果，想要問每個小孩拿到額外糖果後會不會成為最多糖果的人（可以同時存在擁有多個糖果的人），最後回傳含有 boolean 的陣列。</p>
+<h3 id="思考方向"><a href="#思考方向" class="headerlink" title="思考方向"></a>思考方向</h3><p>筆者的想法是透過 <code>map</code> 查看每個小孩的糖果，並且為他們加上額外的糖果數，接著再利用 <code>filter</code> 去篩選出是否有糖果數大於已經加入額外糖果的小孩，如果有就回傳 <code>false</code>，沒有就回傳 <code>true</code>，來看一下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> kidsWithCandies = <span class="function">(<span class="params">candies, extraCandies</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> candies.map(<span class="function">(<span class="params">candy</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> combineCandy = candy + extraCandies</span><br><span class="line">    <span class="keyword">const</span> arr = candies.filter(<span class="function"><span class="params">item</span> =&gt;</span> item &gt; combineCandy)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> arr.length ? <span class="literal">false</span> : <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若 <code>arr</code> 裡存在數值，代表該小孩的糖果數即使加了額外糖果，還是有其他小孩的糖果比他多，所以我們要回傳的陣列就會給他 <code>false</code>，反之就是 <code>true</code>。</p>
+<h3 id="更好方法"><a href="#更好方法" class="headerlink" title="更好方法"></a>更好方法</h3><p>這邊透過 <code>Math.max</code> 可以讓程式碼更為優雅，先利用 <code>Math.max</code> 找出 <code>candies</code> 中最大的糖果數，接著透過 <code>map</code> 為每個糖果加上額外糖果，並檢查是否有大於等於最大糖果數，看一下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> kidsWithCandies = <span class="function">(<span class="params">candies, extraCandies</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> max = <span class="built_in">Math</span>.max(...candies)</span><br><span class="line">  <span class="keyword">return</span> candies.map(<span class="function"><span class="params">candy</span> =&gt;</span> candy + extraCandies &gt;= max)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shuffle-the-Array"><a href="#Shuffle-the-Array" class="headerlink" title="Shuffle the Array"></a>Shuffle the Array</h2><p><img src="https://i.imgur.com/6SOmmS2.png"><br><a target="_blank" rel="noopener" href="https://leetcode.com/problems/shuffle-the-array/">題目連結</a></p>
+<h3 id="目的-1"><a href="#目的-1" class="headerlink" title="目的"></a>目的</h3><p>這題會傳入一個數字陣列與一個整數到函數中，陣列的長度會是整數的兩倍，也就是 2n，函數需要處理的是將陣列從 2n 變成 n n，並將同索引的數字連在一起產出新陣列，例如：<code>[n1[i], n2[i], n1[i+1], n2[i+1]]</code>。</p>
+<h3 id="思考方向-1"><a href="#思考方向-1" class="headerlink" title="思考方向"></a>思考方向</h3><p>筆者透過 <code>filter</code> 將數字分成兩個陣列，再透過對其中一個陣列做迴圈，把兩個陣列的同索引數字塞入新陣列中，並回傳該新陣列，來看一下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">nums, n</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> arr = nums.filter(<span class="function">(<span class="params">item, index</span>) =&gt;</span> index &lt; n)</span><br><span class="line">  <span class="keyword">const</span> arr2 = nums.filter(<span class="function">(<span class="params">item, index</span>) =&gt;</span> index &gt;= n)</span><br><span class="line">  <span class="keyword">let</span> combineArr = []</span><br><span class="line">  </span><br><span class="line">  arr.forEach(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">      combineArr.push(item)</span><br><span class="line">      combineArr.push(arr2[index])</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> combineArr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用 n 把數字拆成兩個陣列，接著用 <code>forEach</code> 把兩陣列同索引的值塞入 <code>combineArr</code> 中。</p>
+<h3 id="更好方法-1"><a href="#更好方法-1" class="headerlink" title="更好方法"></a>更好方法</h3><p>筆者找到一個方法，發現其實這題蠻考驗邏輯的XD。<br>陣列中後半段的數字對應的索引其實就是前半段索引加 n，根據這邏輯可以讓程式碼更簡潔，來看一下程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shuffle = <span class="function">(<span class="params">nums, n</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> res = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    res.push(nums[i], nums[i+n])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透過新的方法改寫，程式碼是不是變優雅很多，而且更易理解了。</p>
+<h2 id="Jewels-and-Stones"><a href="#Jewels-and-Stones" class="headerlink" title="Jewels and Stones"></a>Jewels and Stones</h2><p><img src="https://i.imgur.com/DeTjaW4.png"><br><a target="_blank" rel="noopener" href="https://leetcode.com/problems/jewels-and-stones/">題目連結</a></p>
+<h3 id="目的-2"><a href="#目的-2" class="headerlink" title="目的"></a>目的</h3><p>這題我覺得蠻有趣的，你會有一堆石頭，並且你知道寶石的種類，然後要你找出石頭裡有幾種寶石。<br>寶石與石頭都是由英文大小寫的字串組成，每一個大寫與每一個小寫皆代表一種石頭。</p>
+<h3 id="思考方向-2"><a href="#思考方向-2" class="headerlink" title="思考方向"></a>思考方向</h3><p>大方向來講就是找出石頭堆字串中有多少字是與寶石吻合的。<br>筆者想法是先將兩串文字拆出來組成兩個陣列，再用陣列去比對並算出符合的數量，接著來看看程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numJewelsInStones = <span class="function"><span class="keyword">function</span>(<span class="params">jewels, stones</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> jewelsTotal = jewels.length;</span><br><span class="line">  <span class="keyword">const</span> stonesTotal = stones.length;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> stonesBox = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; stonesTotal; i++) &#123;</span><br><span class="line">      stone = i === stonesTotal ? stones.substring(i) : stones.substring(i, i+<span class="number">1</span>);</span><br><span class="line">      stonesBox.push(stone);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> jewelsBox = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; jewelsTotal; i++) &#123;</span><br><span class="line">      jewel = i === jewelsTotal ? jewels.substring(i) : jewels.substring(i, i+<span class="number">1</span>);</span><br><span class="line">      jewelsBox.push(jewel);</span><br><span class="line">  &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">  jewelsBox.forEach(<span class="function">(<span class="params">jewel</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> jewelsCount = stonesBox.filter(<span class="function"><span class="params">stone</span> =&gt;</span> stone === jewel).length;</span><br><span class="line">      count += jewelsCount;</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> count</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更好方法-2"><a href="#更好方法-2" class="headerlink" title="更好方法"></a>更好方法</h3><p>不得不說筆者對於 JS 部分的方法還不是這麼的熟練，看完別人分享的解法，真的讓我眼睛為之一亮，這邊分享一個我覺得很不錯的方法，直接來看看程式碼：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numJewelsInStones = <span class="function">(<span class="params">J, S</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> jewels = <span class="keyword">new</span> <span class="built_in">Set</span>(J)</span><br><span class="line">  <span class="keyword">return</span> S.split(<span class="string">&#x27;&#x27;</span>).reduce(<span class="function">(<span class="params">res, s</span>) =&gt;</span> res + jewels.has(s), <span class="number">0</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這方法是 <code>Set</code> 與 <code>reduce</code> 結合的應用，先將寶石種類製作成 <code>Set</code>，那為什麼適合這樣做？<br>是因為寶石每個種類皆是唯一，所以適合組成 <code>Set</code> 來幫我們比對。</p>
+<p>透過 <code>split</code> 將字串拆成陣列（哎，當初怎麼沒想到有這招），接著透過 <code>reduce</code> 搜尋每一個符合的石頭並加總，這邊利用了 <code>true</code> 在做運算時可當作 1 的特性（<code>false</code> 的話會是0），因此省略了不少步驟。</p>
+<p>短短幾行程式碼就解決了這次的問題，真是優雅啊。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/25/moviepy/" rel="prev" title="Python - 利用 MoviePy 處理影片">
+      <i class="fa fa-chevron-left"></i> Python - 利用 MoviePy 處理影片
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">文章目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kids-With-the-Greatest-Number-of-Candies"><span class="nav-number">3.</span> <span class="nav-text">Kids With the Greatest Number of Candies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">3.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E6%96%B9%E5%90%91"><span class="nav-number">3.2.</span> <span class="nav-text">思考方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">更好方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shuffle-the-Array"><span class="nav-number">4.</span> <span class="nav-text">Shuffle the Array</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84-1"><span class="nav-number">4.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E6%96%B9%E5%90%91-1"><span class="nav-number">4.2.</span> <span class="nav-text">思考方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E6%96%B9%E6%B3%95-1"><span class="nav-number">4.3.</span> <span class="nav-text">更好方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jewels-and-Stones"><span class="nav-number">5.</span> <span class="nav-text">Jewels and Stones</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84-2"><span class="nav-number">5.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E6%96%B9%E5%90%91-2"><span class="nav-number">5.2.</span> <span class="nav-text">思考方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E6%96%B9%E6%B3%95-2"><span class="nav-number">5.3.</span> <span class="nav-text">更好方法</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hao</p>
+  <div class="site-description" itemprop="description">程式技術太多了，腦袋記不起來，就寫成部落格吧~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Hao1229" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Hao1229" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-basketball-ball"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
