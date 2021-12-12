@@ -1477,4 +1477,66 @@
         <tag>LeetCode</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Nuxt3 潮在哪?</title>
+    <url>/2021/12/07/Nuxt3Note/</url>
+    <content><![CDATA[<p><img src="https://miro.medium.com/max/1144/1*GzDBs0lKGg35RRK50dTNtQ.jpeg"></p>
+<h2 id="文章目的"><a href="#文章目的" class="headerlink" title="文章目的"></a>文章目的</h2><p>公司未來專案開發要逐漸轉向使用 Nuxt3，因此利用此文章記錄 Nuxt3 的學習。</p>
+<a id="more"></a>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>撰寫這篇文章時，Nuxt3 還是 Beta 階段，很多新奇潮到爆的技術，但也因此可能會跟 bug 不期而遇，或是遇到部分工具、套件不相容問題，待未來版本越來越成熟，相依套件、工具一定會越來越多，奇怪的 bug 當然相對減少。<br>此篇文章會記錄一些我在使用 Nuxt3 時遇到的問題，或是如何引入一些我們以前常用的工具。</p>
+<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>Nuxt3 是基於 Vue3 的 SSR 框架，同時 default 支援 TypeScript，在打包處理上也做了相當多的優化，像是引入 Vite 等，相較 Nuxt2 對於專案的瘦身與效能都有相當程度的提升。<br>更多 Nuxt3 的特色我就不多加介紹，如果有興趣可以去看看<a href="https://v3.nuxtjs.org/">官方文件</a>。</p>
+<h2 id="資料夾結構"><a href="#資料夾結構" class="headerlink" title="資料夾結構"></a>資料夾結構</h2><p>主要介紹幾個與 Nuxt2 規則不同的資料夾。</p>
+<h3 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h3><p>如果你有用過 Nuxt2，對這資料夾應該不陌生，但在 Nuxt3 中 pages 是選用的，原因是如果專案只用到 <code>app.vue</code> 這隻檔案做開發，就不需要 pages，減少專案大小。<br>但較複雜的專案我們還是會需要 pages 來幫助我們產生不同路徑的頁面，基本上 pages 的結構跟 Nuxt2 沒什麼差異，唯一需要注意的是<strong>動態路由的命名從以前的下底線變成中括號</strong>，例如 <code>_id.vue =&gt; [id].vue</code>。<br>另外 Nuxt3 還提供了一種與 <code>RouterView</code> 相同作用的 component - <code>NuxtChild</code>，在 component 中直接調用 <code>&lt;NuxtChild /&gt;</code> 會有一樣的效果。</p>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><p>Nuxt3 會自動幫我們引入 components 底下的元件，因此我們調用元件只需要根據元件的資料夾結構調用即可，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">| components&#x2F;</span><br><span class="line">--| base&#x2F;</span><br><span class="line">----| foo&#x2F;</span><br><span class="line">------| Button.vue</span><br></pre></td></tr></table></figure>
+
+<p>引入時 tag 名稱就會是 <code>&lt;BaseFooButton /&gt;</code>，但這邊會建議將你的元件命名跟調用的名稱一致，意思是將 <code>Button.vue</code> 變更成 <code>BaseFooButton.vue</code> 會是更好的選擇，不用擔心重複的文字因為 Nuxt3 會自己幫我們刪除。</p>
+<p>components 現在可以透過加入前綴 <code>Lazy</code>，達到元件延遲載入的效果，使用情境通常會是該元件並不需要馬上出現，而是在特定時機出現，就可以透過 Lazy 的方式提升效能，寫法像是 <code>&lt;LazyComponentName /&gt;</code>。</p>
+<h3 id="composables"><a href="#composables" class="headerlink" title="composables"></a>composables</h3><p>這是 Nuxt3 新增的資料夾，這個資料夾專門用來管理 Vue3 的 composition api，而且它會自動 import 裡面的檔案，不需要我們手動處理。<br>composition api <a href="https://v3.vuejs.org/guide/composition-api-introduction.html#why-composition-api">可參考</a>。</p>
+<h3 id="layouts"><a href="#layouts" class="headerlink" title="layouts"></a>layouts</h3><p>Nuxt3 初始是沒有 layouts 資料夾的，當建立 layouts 資料夾並新增 <code>default.vue</code> 時，所有的頁面都會預設使用 default layout，記得要在 layout 裡使用 slot 做注入才能正確渲染畫面。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;slot &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h3><p>Nuxt3 plugins 資料夾底下的檔案一樣會自動幫我們 import，在 plugins 的檔案中起手式需要透過 <code>nuxtApp</code> 對其做對應操作，可以看看下面的程式碼：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineNuxtPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;#app&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineNuxtPlugin(<span class="function"><span class="params">nuxtApp</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// plugin 針對 nuxtApp 的操作都寫在這裡</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我們也可以為 <code>nuxtApp</code> 寫上 Vue3 提供的 <code>provide</code> 寫法做全局注入：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineNuxtPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;#app&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineNuxtPlugin(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    provide: &#123;</span><br><span class="line">      hello: <span class="function">() =&gt;</span> <span class="string">&#x27;world&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>接著我們就可以在任何地方做全局的調用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">  <span class="keyword">const</span> &#123; $hello &#125; = useNuxtApp();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另外，plugins 也可以像以前 Nuxt2 一樣引入我們裝的相關套件，寫法只有些微變化：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineNuxtPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;#app&#x27;</span></span><br><span class="line"><span class="keyword">import</span> VueGtag <span class="keyword">from</span> <span class="string">&#x27;vue-gtag-next&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineNuxtPlugin(<span class="function">(<span class="params">nuxtApp</span>) =&gt;</span> &#123;</span><br><span class="line">  nuxtApp.vueApp.use(VueGtag, &#123;</span><br><span class="line">    property: &#123;</span><br><span class="line">      id: <span class="string">&#x27;GA_MEASUREMENT_ID&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="新用法"><a href="#新用法" class="headerlink" title="新用法"></a>新用法</h2><p>Nuxt3 重新定義了一些新方法，或是將舊有的 Nuxt2 方法重新包裝，我們來看看改變了什麼?<br>目前我還沒嘗試過所有新方法，以下僅列出我有嘗試過的方法做分享，若有興趣可以參考<a href="https://v3.nuxtjs.org/docs/usage/data-fetching">官方文件</a>，未來有接觸更多方法，我會再補上。</p>
+<h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>Nuxt3 新增了一個 <code>useState</code> 的方法，如果你有寫過 React hook 對這個名字應該不陌生。<br>在 Nuxt3 中 <code>useState</code> 可以說是一個輕量版的 vuex，它可以幫我們管理 global state，並隨時做取用、更改。</p>
+<blockquote>
+<p><code>useState</code> 的優勢在於在 server 端時會將 state 的值作保留並沿用到 client 端，寫法也很簡易、取用方便。<br>缺點方面，在我目前看來，是有點太過簡易了，改變值的方法沒有統一的規範，容易造成不同頁面用不同方法去改變 state，管理上可能會有瑕疵。</p>
+</blockquote>
+<p><code>useState</code> 創立時基本上只需要提供一個唯一的 key，並且賦予它 init 的值即可。</p>
+<p>接下來看看範例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// useState 僅能作用在 setup 或是其他生命週期中</span></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">const</span> counter = useState(<span class="string">&#x27;counter&#x27;</span>, <span class="function">() =&gt;</span> <span class="number">0</span>);</span><br><span class="line"><span class="comment">// conter 是 key，init 值是 0</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上面的範例中，我們宣告了一個 counter 的 <code>useState</code>，接著這個 state 就可以在任一個 component 透過 <code>useState(&#39;counter&#39;)</code> 一起共享這個狀態。<br>若要更改 state 的值也很簡單，可以直接針對它做處理，甚至直接賦值，像是：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; counter &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 點擊之後，counter + 1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;counter++&quot;</span>&gt;</span>counter increment<span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 點擊之後，counter 變成 &#x27;我是字串&#x27; --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;counter=&#x27;我是字串&#x27;&quot;</span>&gt;</span>counter to string<span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>相信看了改變 state 的方法，你應該就懂我的疑慮了，state 的改變過於簡單、容易，在比較複雜的專案上可能會導致管理不易。<br>但在較小的專案上利用 <code>useState</code> 處理一些 global 的狀態，會是一個替代 vuex 很好的選擇。</p>
+<p>除了直接在 <code>setup</code> 定義外，也可以將 <code>useState</code> 的定義全部放在 composables 這個資料夾做管理，來看看範例吧：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 將所有的 state 放在 state.js 這隻檔案中</span></span><br><span class="line"><span class="comment">// 路徑 /composables/state.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounter = <span class="function">() =&gt;</span> useState(<span class="string">&#x27;counter&#x27;</span>, <span class="function">() =&gt;</span> <span class="number">0</span>);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useColor = <span class="function">() =&gt;</span> useState(<span class="string">&#x27;color&#x27;</span>, <span class="function">() =&gt;</span> <span class="string">&#x27;pink&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在任何一個 component 中取用</span></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">const</span> counter = useCounter();</span><br><span class="line"><span class="keyword">const</span> color = useColor();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NuxtApp"><a href="#NuxtApp" class="headerlink" title="NuxtApp"></a>NuxtApp</h3><p>如果你有用過 Nuxt2 相信你對 <code>context</code> 這個參數不陌生，在 Nuxt 2 中我們透過 <code>context</code> 取得我們的 nuxtApp。<br>在 Nuxt3 中重新定義了這個參數，我們透過 <code>useNuxtApp</code> 來取得所謂的 <code>context</code>，我們趕緊來看看範例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useNuxtApp &#125; <span class="keyword">from</span> <span class="string">&#x27;#app&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nuxtApp = useNuxtApp();</span><br></pre></td></tr></table></figure>
+
+<p>nuxtApp 可以在 composables、components 還有 plugins 取用，跟 Nuxt2 一樣，在 plugins 中會當作第一個參數做代入。</p>
+<p>若你需要註冊一些全局方法，可以利用 <code>provide</code> 做註冊，若與 Nuxt2 做對應就是 <code>inject</code>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> nuxtApp = useNuxtApp();</span><br><span class="line">nuxtApp.provide(<span class="string">&#x27;hello&#x27;</span>, <span class="function">(<span class="params">name</span>) =&gt;</span> <span class="string">`Hello <span class="subst">$&#123;name&#125;</span>!`</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(nuxtApp.$hello(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// Prints &quot;Hello name!&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Nuxt</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>Vue</tag>
+        <tag>Nuxt</tag>
+      </tags>
+  </entry>
 </search>
