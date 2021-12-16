@@ -1529,7 +1529,49 @@
 
 <p>nuxtApp 可以在 composables、components 還有 plugins 取用，跟 Nuxt2 一樣，在 plugins 中會當作第一個參數做代入。</p>
 <p>若你需要註冊一些全局方法，可以利用 <code>provide</code> 做註冊，若與 Nuxt2 做對應就是 <code>inject</code>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> nuxtApp = useNuxtApp();</span><br><span class="line">nuxtApp.provide(<span class="string">&#x27;hello&#x27;</span>, <span class="function">(<span class="params">name</span>) =&gt;</span> <span class="string">`Hello <span class="subst">$&#123;name&#125;</span>!`</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(nuxtApp.$hello(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// Prints &quot;Hello name!&quot;</span></span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> nuxtApp = useNuxtApp();</span><br><span class="line">nuxtApp.provide(<span class="string">&#x27;hello&#x27;</span>, <span class="function">(<span class="params">name</span>) =&gt;</span> <span class="string">`Hello <span class="subst">$&#123;name&#125;</span>!`</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(nuxtApp.$hello(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// Prints &quot;Hello name!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Data-Fetching"><a href="#Data-Fetching" class="headerlink" title="Data Fetching"></a>Data Fetching</h3><p>Nuxt3 新增了幾個 fetch 功能，這些功能可以讓我們在不需要安裝其他 api 套件的情況下實踐 fetch 資料。<br>提供的 fetch 功能如下：</p>
+<ul>
+<li><code>useAsyncData</code></li>
+<li><code>useLazyAsyncData</code></li>
+<li><code>useFetch</code></li>
+<li><code>useLazyFetch</code></li>
+</ul>
+<!-- 這四個功能基本上大同小異，它們都是將 [ohmyfetch](https://github.com/unjs/ohmyfetch) 這個 api 套件包裝而成的功能，因此一些選項可以參考此套件文件。 -->
+<p>使用它們的時機一樣是只有在 <code>setup</code> 或是其他生命週期。</p>
+<h4 id="useAsyncData"><a href="#useAsyncData" class="headerlink" title="useAsyncData"></a>useAsyncData</h4><p><code>useAsyncData</code> 是這四個功能裡最基本的一個，另外三個都可以說是它的衍生，我們來看看它的用法吧：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; data, pending, refresh, error &#125; = useAsyncData(key, fn, options);</span><br><span class="line"></span><br><span class="line"><span class="comment">// example</span></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> useAsyncData(<span class="string">&#x27;count&#x27;</span>, <span class="function">() =&gt;</span> $fetch(<span class="string">&#x27;/api/count&#x27;</span>));</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>傳入參數：</p>
+<ul>
+<li>key: 確保此 fetch 唯一，避免與其他 request 重疊。</li>
+<li>fn: return 非同步函數的值。</li>
+<li>options:<ul>
+<li>lazy: Boolean，true 的話調用此方法，在進入 router 時並不會因為還在 fetch 而 pending，而是直接進入 router。</li>
+<li>default: 在 fetch 完成之前，設定預設 data，通常會搭配 <code>lazy: true</code> 做使用。</li>
+<li>server: Boolean，是否在 server 端 fetch 資料，預設為 true。</li>
+<li>transform: 函數，用來更改 fn 回傳的結果。</li>
+<li>pick: Array，fetch 結果只取用寫在 array 裡的 key。</li>
+</ul>
+</li>
+</ul>
+<p>回傳結果：</p>
+<ul>
+<li>data: fetch response 的資料。</li>
+<li>pending: Boolean，告訴是否還在 fetch。</li>
+<li>refresh: 用來強制刷新 data 的函數。</li>
+<li>error: 當 response 失敗時，產生的 object。</li>
+</ul>
+<h4 id="useLazyAsyncData"><a href="#useLazyAsyncData" class="headerlink" title="useLazyAsyncData"></a>useLazyAsyncData</h4><p>這方法是 <code>useAsyncData</code> + <code>lazy: true</code> 的組合，其他的參數與回傳的值都會與 <code>useAsyncData</code> 相同。</p>
+<h4 id="useFetch"><a href="#useFetch" class="headerlink" title="useFetch"></a>useFetch</h4><p>它是 <code>useAsyncData</code> 與 <code>$fetch</code> 的結合，並且它也不需要 key，key 會自動根據 url 與選項幫你產生。<br>因此傳入此方法的參數只有兩個，一個是 url，另一個是 options。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> useFetch(<span class="string">&#x27;/api/count&#x27;</span>);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>你一定會問說 <code>$fetch</code> 是啥？這是套件 <a href="https://github.com/unjs/ohmyfetch">ohmyfetch</a> 的方法，<code>useFetch</code> 簡單來講就是把這套件包裝進去。</p>
+<blockquote>
+<p>如果專案 fetch 資料的需求沒有很複雜的話，可以直接用包好的 <code>useFetch</code> 來處理 CRUD。<br>但如果有一定複雜度，目前不建議這樣用，原因是 ohmyfetch 這套件還很新，很多功能沒有很成熟。</p>
+</blockquote>
+<p>跟 <code>useAsyncData</code> 相比，它的 options 多了 <code>method</code>、<code>params</code>、<code>headers</code>、<code>baseURL</code> 可以提供。<br>這四個選項都是 <a href="https://github.com/unjs/ohmyfetch">ohmyfetch</a> 的選項，有興趣可以看看文件。</p>
+<h4 id="useLazyFetch"><a href="#useLazyFetch" class="headerlink" title="useLazyFetch"></a>useLazyFetch</h4><p>這方法是 <code>useFetch</code> + <code>lazy: true</code> 的組合，其他的參數與回傳的值都會與 <code>useFetch</code> 相同。</p>
+]]></content>
       <categories>
         <category>Nuxt</category>
       </categories>
